@@ -7,6 +7,7 @@ namespace SquareChoBrothers
         private Game game;
         protected override void OnPaint (PaintEventArgs e)
         {
+            //branched
         }
 
         void PaintRectangleDrawable(PaintEventArgs e, IRectangleDrawable rectangleDrawable)
