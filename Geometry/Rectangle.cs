@@ -153,5 +153,10 @@ namespace Geometry
         {
             return !(rect1 == rect2);
         }
+
+        public static implicit operator System.Drawing.Rectangle(Rectangle rect)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

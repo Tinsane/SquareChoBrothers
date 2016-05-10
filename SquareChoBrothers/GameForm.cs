@@ -8,6 +8,11 @@ namespace SquareChoBrothers
         protected override void OnPaint (PaintEventArgs e)
         {
         }
+
+        void PaintRectangleDrawable(PaintEventArgs e, IRectangleDrawable rectangleDrawable)
+        {
+            e.Graphics.FillRectangle(rectangleDrawable.Brush, rectangleDrawable.Position);
+        }
         public GameForm(Game game)
         {
             this.game = game;
