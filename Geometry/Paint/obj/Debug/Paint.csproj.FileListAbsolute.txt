@@ -1,0 +1,10 @@
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\bin\Debug\Paint.exe.config
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\bin\Debug\Paint.exe
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\bin\Debug\Paint.pdb
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\bin\Debug\ClassLibrary1.dll
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\bin\Debug\ClassLibrary1.pdb
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\obj\Debug\Paint.csprojResolveAssemblyReference.cache
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\obj\Debug\Paint.Properties.Resources.resources
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\obj\Debug\Paint.csproj.GenerateResource.Cache
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\obj\Debug\Paint.exe
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\Paint\obj\Debug\Paint.pdb

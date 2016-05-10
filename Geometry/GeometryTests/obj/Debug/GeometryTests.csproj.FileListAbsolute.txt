@@ -1,0 +1,7 @@
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\GeometryTests\bin\Debug\GeometryTests.dll
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\GeometryTests\bin\Debug\GeometryTests.pdb
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\GeometryTests\bin\Debug\ClassLibrary1.dll
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\GeometryTests\bin\Debug\ClassLibrary1.pdb
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\GeometryTests\obj\Debug\GeometryTests.csprojResolveAssemblyReference.cache
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\GeometryTests\obj\Debug\GeometryTests.dll
+c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\GeometryTests\obj\Debug\GeometryTests.pdb
