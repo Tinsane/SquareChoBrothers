@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace SquareChoBrothers
 {
@@ -7,6 +6,7 @@ namespace SquareChoBrothers
     {
         private static void Main()
         {
+            //hui
             var game = new Game();
             Application.Run(new GameForm(game));
         }
