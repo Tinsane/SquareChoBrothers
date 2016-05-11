@@ -8,9 +8,6 @@ namespace SquareChoBrothers.Model
     {
         public Monster(Rectangle graphicalPosition, Brush brush) : base(graphicalPosition, brush)
         {
-
         }
-        public override Circle HitBox { get; set; }
-        public override Vector Velocity { get; set; }
     }
 }

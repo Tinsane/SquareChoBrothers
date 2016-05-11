@@ -16,7 +16,6 @@ namespace SquareChoBrothers.View
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             gameModel.EndGame = Close;
-            gameModel.Initialize();
         }
 
         private static void PaintDrawable(PaintEventArgs e, IDrawable drawable)
@@ -27,6 +26,8 @@ namespace SquareChoBrothers.View
         protected override void OnPaint(PaintEventArgs e)
         {
             PaintDrawable(e, gameModel.Background);
+            //foreach (var hero in gameModel.Heroes)
+                //PaintDrawable(e, hero);
         }
     }
 }

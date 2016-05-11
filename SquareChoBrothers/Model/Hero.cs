@@ -8,9 +8,6 @@ namespace SquareChoBrothers.Model
     {
         public Hero(Rectangle graphicalPosition, Brush brush) : base(graphicalPosition, brush)
         {
-
         }
-        public override Vector Velocity { get; set; }
-        public override Rectangle HitBox { get; set; }
     }
 }

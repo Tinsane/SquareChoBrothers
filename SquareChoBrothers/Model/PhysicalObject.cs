@@ -8,7 +8,7 @@ namespace SquareChoBrothers.Model
     public abstract class PhysicalObject<T> : IDrawable 
         where T : IIntersectable<Circle>, IIntersectable<Rectangle>, IHavingIntersectionLine<T>
     {
-        public abstract T HitBox { get; set; }
+        public T HitBox { get; set; }
         public Rectangle GraphicalPosition { get; }
         public Brush Brush { get; }
         protected PhysicalObject(Rectangle graphicalPosition, Brush brush)
