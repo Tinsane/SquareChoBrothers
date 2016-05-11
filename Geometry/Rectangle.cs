@@ -25,10 +25,10 @@ namespace Geometry
         {
             var dx = new[] { -1, -1, 1, 1 };
             var dy = new[] { 1, -1, 1, -1 };
-            List<Point> points = new List<Point>();
-            for (int i = 0; i < dx.Length; ++i)
-                points.Add(new Point(center.x + dx[i] * halfSideSize, center.y + dy[i] * halfSideSize));
-            points = Geometry.OrderClockwise(points.ToArray()).ToList();
+            var points = Geometry.OrderClockwise(dx.Select((t, i) => 
+            new Point(center.x + t * halfSideSize, center.y + dy[i] * halfSideSize))
+            .ToArray())
+            .ToList();
             A = points[0];
             B = points[1];
             C = points[2];
@@ -140,7 +140,7 @@ namespace Geometry
 
         public static bool operator == (Rectangle rect1, Rectangle rect2)
         {
-            for (int i = 0; i < 4; ++i)
+            for (var i = 0; i < 4; ++i)
             {
                 if (rect1.IsAbsolutelyEqual(rect2))
                     return true;
