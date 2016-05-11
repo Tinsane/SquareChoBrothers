@@ -10,6 +10,8 @@ namespace Geometry
     {
         public Point A, B;
 
+        public Point Center => (A + B) / 2;
+
         public Segment(Point A, Point B)
         {
             this.A = A;
@@ -86,15 +88,19 @@ namespace Geometry
         public bool IntersectsWith(Segment segment)
         {
             return !double.IsNaN(Intersect(segment).x) ||
-                (segment.ContainsPoint(A) || segment.ContainsPoint(B)
-                 || ContainsPoint(segment.A) || ContainsPoint(segment.B));
-                
+                (segment.Contains(A) || segment.Contains(B)
+                 || Contains(segment.A) || Contains(segment.B));
+        }
+
+        public bool IntersectsWith(Circle circle) // intersects or inside
+        {
+            return circle.Contains(A) || circle.Contains(B);
         }
 
         public Point Intersect(Segment segment)
         {
             var intersection = GetLine().Intersect(segment.GetLine());
-            if (!(ContainsPoint(intersection) && segment.ContainsPoint(intersection)))
+            if (!(Contains(intersection) && segment.Contains(intersection)))
                 return new Point(double.NaN, double.NaN);
             return intersection;
         }
@@ -117,7 +123,12 @@ namespace Geometry
                 Math.Min(segment.GetDistance(A), segment.GetDistance(B)));
         }
 
-        public bool ContainsPoint(Point point)
+        public Line GetMiddlePerpendicular()
+        {
+            return new Line(Center, Center + new Line(A, B).GetNormalVector());
+        }
+
+        public bool Contains(Point point)
         {
             if (!GetLine().ContainsPoint(point))
                 return false;

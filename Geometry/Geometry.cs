@@ -70,7 +70,7 @@ namespace Geometry
 
         public static bool PointInInsideSegment(Point point, Segment segment)
         {
-            return segment.ContainsPoint(point);
+            return segment.Contains(point);
         }
 
         public static Point[] OrderClockwise(params Point[] points)

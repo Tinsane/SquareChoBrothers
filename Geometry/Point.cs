@@ -16,6 +16,12 @@ namespace Geometry
             this.y = y;
         }
 
+        public Point(Point A)
+        {
+            x = A.x;
+            y = A.y;
+        }
+
         public double GetDistance(Point point)
         {
             var vector = new Vector(this, point);
@@ -86,6 +92,16 @@ namespace Geometry
         public static Point operator -(Point point, Vector vector)
         {
             return new Point(point.x - vector.x, point.y - vector.y);
+        }
+
+        public static Point operator *(Point point, double coeff)
+        {
+            return new Point(point.x * coeff, point.y * coeff);
+        }
+
+        public static Point operator /(Point point, double coeff)
+        {
+            return point * (1 / coeff);
         }
 
         public static bool operator ==(Point A, Point B)
