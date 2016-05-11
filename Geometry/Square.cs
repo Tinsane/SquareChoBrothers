@@ -38,10 +38,10 @@ namespace Geometry
             return Segments.Any(x => x.IntersectsWith(circle));
         }
 
-        public Line GetIntersectionLine(Circle circle)
+        public Line GetIntersectionLine(Circle square)
         {
-            return IntersectsWith(circle) ? 
-                new Segment(Center, circle.Center).GetMiddlePerpendicular() : null;
+            return IntersectsWith(square) ? 
+                new Segment(Center, square.Center).GetMiddlePerpendicular() : null;
         }
 
         public void Transfer(Vector transferVector)

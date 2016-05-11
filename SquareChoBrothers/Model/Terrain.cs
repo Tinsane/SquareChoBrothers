@@ -8,7 +8,5 @@ namespace SquareChoBrothers.Model
         public Terrain(Rectangle graphicalPosition, Brush brush) : base(graphicalPosition, brush)
         {
         }
-
-        public override Rectangle HitBox { get; set; }
     }
 }
