@@ -10,6 +10,8 @@ namespace Geometry
     {
         public double x, y, r;
 
+        public Point Center => GetCentre();
+
         public Circle(double x, double y, double radius)
         {
             this.x = x;
@@ -29,6 +31,11 @@ namespace Geometry
             return new Point(x, y);
         }
 
+        public bool Contains(Point point)
+        {
+            return Center.GetDistance(point) < r + precision;
+        }
+
         public static Circle operator +(Circle circle, Vector vector)
         {
             return new Circle(circle.GetCentre() + vector, circle.r);
@@ -39,31 +46,33 @@ namespace Geometry
             return new Circle(circle.GetCentre() - vector, circle.r);
         }
 
-        public bool IntersectsWith(Rectangle figure)
+        public bool IntersectsWith(Circle circle)
         {
-            throw new NotImplementedException();
+            return Center.GetDistance(circle.Center) < r + circle.r + precision;
+        }
+        
+        public Line GetIntersectionLine(Circle circle)
+        {
+            return IntersectsWith(circle) ?
+                new Segment(Center, circle.Center).GetMiddlePerpendicular() : null;
         }
 
-        public bool IntersectsWith(Circle figure)
+        public void Transfer(Vector transferVector)
         {
-            throw new NotImplementedException();
+            var centre = GetCentre();
+            centre += transferVector;
+            x = centre.x;
+            y = centre.y;
         }
 
-        public Line GetIntersectionLine(Circle figure)
+        public bool IntersectsWith(Square square)
         {
-            throw new NotImplementedException();
+            return square.IntersectsWith(this);
         }
 
-        public Point Center => GetCentre();
-        public double Size => r;
-        public Line GetIntersectionLine(Rectangle figure)
+        public Line GetIntersectionLine(Square square)
         {
-            throw new NotImplementedException();
-        }
-
-        public IGeometryFigure GetTransfered(Vector transferVector)
-        {
-            throw new NotImplementedException();
+            return square.GetIntersectionLine(this);
         }
     }
 }

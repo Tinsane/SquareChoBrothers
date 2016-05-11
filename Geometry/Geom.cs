@@ -8,7 +8,7 @@ namespace Geometry
 {
     public class Geom
     {
-        public static double precision = 1;
+        public static double precision = 1e-6;
 
         public static double GetPrecision()
         {

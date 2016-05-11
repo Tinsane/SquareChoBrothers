@@ -6,10 +6,25 @@ using System.Threading.Tasks;
 
 namespace Geometry
 {
-    public class Rectangle : Geom, IGeometryFigure
+    public class Rectangle : Geom
     {
+        private class MinXMaxYComparer : IComparer<Point>
+        {
+            public int Compare(Point A, Point B)
+            {
+                if (A == B)
+                    return 0;
+                if ((A.x < B.x - GetPrecision()) ||
+                    ((Math.Abs(A.x - B.x) < GetPrecision()) && (A.y > B.y)))
+                    return -1;
+                return 1;
+            }
+        }
+
         public Point A, B, C, D; // Points are ordered clockwise
 
+        public Point Centre => (A + B + C + D) / 4;
+        
         public Rectangle(Point A, Point B, Point C, Point D)
         {
             var orderedPoints = Geometry.OrderClockwise(A, B, C, D);
@@ -21,12 +36,12 @@ namespace Geometry
                 throw new Exception("Incorrect data inputted in Rectangle constructor");
         }
 
-        public Rectangle(Point center, double halfSideSize)
+        public Rectangle(Point center, double halfSideX, double halfSideY)
         {
             var dx = new[] { -1, -1, 1, 1 };
             var dy = new[] { 1, -1, 1, -1 };
             var points = Geometry.OrderClockwise(dx.Select((t, i) => 
-            new Point(center.x + t * halfSideSize, center.y + dy[i] * halfSideSize))
+            new Point(center.x + t * halfSideX, center.y + dy[i] * halfSideY))
             .ToArray())
             .ToList();
             A = points[0];
@@ -119,6 +134,13 @@ namespace Geometry
             return GetRotated(point, Math.Sin(angle), Math.Cos(angle));
         }
 
+        //public Point GetLeftUpPoint()
+        //{
+        //    var points = GetPoints().ToList();
+        //    points.Sort(new MinXMaxYComparer());
+        //    return points[0];
+        //}
+
         public double GetDistance(Point point)
         {
             return GetSegments().Min(x => x.GetDistance(point));
@@ -157,33 +179,6 @@ namespace Geometry
         public static implicit operator System.Drawing.RectangleF(Rectangle rect)
         {
             return new System.Drawing.RectangleF(rect.A, new System.Drawing.SizeF(rect.C - rect.A));
-        }
-
-        public bool IntersectsWith(Circle figure)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IntersectsWith(Rectangle figure)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Line GetIntersectionLine(Rectangle figure)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IGeometryFigure GetTransfered(Vector transferVector)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Point Center { get; }
-        public double Size { get; }
-        public Line GetIntersectionLine(Circle figure)
-        {
-            throw new NotImplementedException();
         }
     }
 }
