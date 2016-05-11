@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Geometry
 {
-    public class Rectangle : Geom
+    public class Rectangle : Geom, IIntersectable<Circle>, IHavingIntersectionLine<Rectangle>
     {
         public Point A, B, C, D; // Points are ordered clockwise
 
@@ -154,7 +154,22 @@ namespace Geometry
             return !(rect1 == rect2);
         }
 
-        public static implicit operator System.Drawing.Rectangle(Rectangle rect)
+        public static implicit operator System.Drawing.RectangleF(Rectangle rect)
+        {
+            return new System.Drawing.RectangleF(rect.A, new System.Drawing.SizeF(rect.C - rect.A));
+        }
+
+        public bool IntersectsWith(Circle figure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IntersectsWith(Rectangle figure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Line GetIntersectionLine(Rectangle figure)
         {
             throw new NotImplementedException();
         }

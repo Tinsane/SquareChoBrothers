@@ -6,3 +6,5 @@ c:\users\владимир\documents\visual studio 2015\Projects\SquareChoBrother
 c:\users\владимир\documents\visual studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.csproj.GenerateResource.Cache
 c:\users\владимир\documents\visual studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.exe
 c:\users\владимир\documents\visual studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.pdb
+C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\Geometry.dll
+C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\Geometry.pdb

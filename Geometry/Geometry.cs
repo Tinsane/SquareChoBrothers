@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Geometry
 {
-    public static class Geometry
+    public class Geometry
     {
         public static void Transfer(Vector transferVector, Point[] points)
         {

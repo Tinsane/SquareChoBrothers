@@ -117,7 +117,17 @@ namespace Geometry
         {
             if (!(obj is Point))
                 return false;
-            return ((Point)obj) == this;
+            return (Point)obj == this;
+        }
+
+        public static implicit operator Vector(Point point)
+        {
+            return new Vector(point.x, point.y);
+        }
+
+        public static implicit operator System.Drawing.PointF(Point point)
+        {
+            return new System.Drawing.PointF((float) point.x, (float) point.y);
         }
     }
 }

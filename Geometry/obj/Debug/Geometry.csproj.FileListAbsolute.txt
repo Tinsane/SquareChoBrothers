@@ -23,3 +23,8 @@ C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\TryGit\Ge
 C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\TryGit\Geometry\obj\Debug\Geometry.csprojResolveAssemblyReference.cache
 C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\TryGit\Geometry\obj\Debug\Geometry.dll
 C:\Users\ISmir\Documents\Visual Studio 2015\Projects\Cvarc\PudgeClient\TryGit\Geometry\obj\Debug\Geometry.pdb
+C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\Geometry\bin\Debug\Geometry.dll
+C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\Geometry\bin\Debug\Geometry.pdb
+C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\Geometry\obj\Debug\Geometry.csprojResolveAssemblyReference.cache
+C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\Geometry\obj\Debug\Geometry.dll
+C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\Geometry\obj\Debug\Geometry.pdb

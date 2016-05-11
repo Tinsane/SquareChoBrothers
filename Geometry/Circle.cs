@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Geometry
 {
-    public class Circle : Geom
+    public class Circle : Geom, IIntersectable<Rectangle>, IHavingIntersectionLine<Circle>
     {
         public double x, y, r;
 
@@ -37,6 +37,21 @@ namespace Geometry
         public static Circle operator -(Circle circle, Vector vector)
         {
             return new Circle(circle.GetCentre() - vector, circle.r);
+        }
+
+        public bool IntersectsWith(Rectangle figure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IntersectsWith(Circle figure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Line GetIntersectionLine(Circle figure)
+        {
+            throw new NotImplementedException();
         }
     }
 }
