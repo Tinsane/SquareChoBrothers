@@ -8,3 +8,6 @@ c:\users\владимир\documents\visual studio 2015\Projects\SquareChoBrother
 c:\users\владимир\documents\visual studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.pdb
 C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\Geometry.dll
 C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\Geometry.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\SquareChoBrothers.exe.config
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.exe
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.pdb

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Geometry
 {
-    public class Rectangle : Geom, IIntersectable<Circle>, IHavingIntersectionLine<Rectangle>
+    public class Rectangle : Geom, IGeometryFigure
     {
         public Point A, B, C, D; // Points are ordered clockwise
 
@@ -170,6 +170,18 @@ namespace Geometry
         }
 
         public Line GetIntersectionLine(Rectangle figure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGeometryFigure GetTransfered(Vector transferVector)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Point Center { get; }
+        public double Size { get; }
+        public Line GetIntersectionLine(Circle figure)
         {
             throw new NotImplementedException();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Geometry
 {
-    public class Circle : Geom, IIntersectable<Rectangle>, IHavingIntersectionLine<Circle>
+    public class Circle : Geom, IGeometryFigure
     {
         public double x, y, r;
 
@@ -50,6 +50,18 @@ namespace Geometry
         }
 
         public Line GetIntersectionLine(Circle figure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Point Center => GetCentre();
+        public double Size => r;
+        public Line GetIntersectionLine(Rectangle figure)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGeometryFigure GetTransfered(Vector transferVector)
         {
             throw new NotImplementedException();
         }

@@ -95,6 +95,6 @@ namespace Geometry
                     }
                 }
             return points;
-        } 
+        }
     }
 }
