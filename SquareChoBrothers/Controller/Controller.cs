@@ -16,10 +16,13 @@ namespace SquareChoBrothers.Controller
             switch ((int) e.KeyChar)
             {
                 case (int) Keys.Left:
+                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(-100000, 0));
                     break;
                 case (int) Keys.Right:
+                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(100000, 0));
                     break;
                 case (int) Keys.Up:
+                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(0, 100000));
                     break;
             }
         }

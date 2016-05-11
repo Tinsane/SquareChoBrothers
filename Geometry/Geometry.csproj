@@ -45,6 +45,7 @@
     <Compile Include="Circle.cs" />
     <Compile Include="Geom.cs" />
     <Compile Include="Geometry.cs" />
+    <Compile Include="IGeometryFigure.cs" />
     <Compile Include="IHavingIntersectionLine.cs" />
     <Compile Include="IIntersectable.cs" />
     <Compile Include="Line.cs" />

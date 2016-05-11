@@ -10,6 +10,7 @@ namespace SquareChoBrothers.Model
     {
         private const double UpdateInterval = 1;
         public Action EndGame;
+        public Action Draw;
         public Picture Background;
         public Hero[] Heroes;
         public Monster[] Monsters;
@@ -18,6 +19,8 @@ namespace SquareChoBrothers.Model
         public GameModel()
         {
             Background = new Picture(new Rectangle(new Point(0, 0), 1e4), Brushes.Maroon);
+            Heroes = new Hero[1];
+            Heroes[0] = new Hero(new Rectangle(new Point(0, 0), 100), Brushes.Green);
             var timer = new Timer(UpdateInterval);
             timer.Elapsed += UpdateState;
         }
@@ -27,6 +30,7 @@ namespace SquareChoBrothers.Model
                 hero.UpdatePosition(UpdateInterval);
             foreach (var monster in Monsters)
                 monster.UpdatePosition(UpdateInterval);
+            Draw();
         }
     }
 }

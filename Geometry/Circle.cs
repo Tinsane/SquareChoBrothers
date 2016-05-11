@@ -61,7 +61,7 @@ namespace Geometry
             throw new NotImplementedException();
         }
 
-        public IGeometryFigure GetTransfered(Vector transferVector)
+        public void Transfer(Vector transferVector)
         {
             throw new NotImplementedException();
         }

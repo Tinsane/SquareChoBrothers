@@ -1,12 +1,11 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Geometry;
 using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
     public abstract class DynamicPhysicalObject<T> : PhysicalObject<T>
-        where T : IIntersectable<Circle>, IIntersectable<Rectangle>, IHavingIntersectionLine<T>
+        where T : IGeometryFigure
     {
         private Vector Velocity { get; set; }
 
@@ -21,7 +20,8 @@ namespace SquareChoBrothers.Model
 
         public void UpdatePosition(double deltaT)
         {
-            throw new NotImplementedException();
+            GraphicalPosition.Transfer(Velocity * deltaT);
+            HitBox.Transfer(Velocity*deltaT);
         }
     }
 }
