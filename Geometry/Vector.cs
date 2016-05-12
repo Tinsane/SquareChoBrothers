@@ -131,6 +131,11 @@ namespace Geometry
             return new Vector(a.x - b.x, a.y - b.y);
         }
 
+        public static Vector operator -(Vector a)
+        {
+            return new Vector(0, 0) - a;
+        }
+
         public static Vector operator *(Vector a, double t)
         {
             return new Vector(a.x * t, a.y * t);
