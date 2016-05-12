@@ -5,12 +5,10 @@ namespace SquareChoBrothers.Model
 {
     public class Hero : DynamicPhysicalObject<Square>
     {
-        private const double Impulse = 300;
-
         public void MoveRight()
         {
             var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
-            Velocity = new Vector(Impulse, oyProjection);
+            Velocity = new Vector(Physics.Impulse, oyProjection);
         }
 
         public void Stay()
@@ -22,13 +20,12 @@ namespace SquareChoBrothers.Model
         public void MoveLeft()
         {
             var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
-            Velocity = new Vector(-Impulse, oyProjection);
+            Velocity = new Vector(-Physics.Impulse, oyProjection);
         }
 
         public void Jump()
         {
-            var oxProjection = Velocity.GetScalarProduct(new Vector(1, 0));
-            Velocity = new Vector(oxProjection, -Impulse);
+            Velocity += new Vector(0, -2 * Physics.Impulse);
         }
 
         public Hero (Square graphicalPosition, Brush brush) :

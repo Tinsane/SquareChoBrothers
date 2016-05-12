@@ -21,6 +21,9 @@ namespace SquareChoBrothers.Controller
                 case Keys.Right:
                     gameModel.Heroes[0].MoveRight();
                     break;
+                case Keys.Down:
+                    gameModel.Heroes[0].Stay();
+                    break;
                 case Keys.Up:
                     gameModel.Heroes[0].Jump();
                     break;
@@ -36,6 +39,8 @@ namespace SquareChoBrothers.Controller
                     break;
                 case Keys.W:
                     break;
+                case Keys.S:
+                    break;
             }
         }
 
@@ -43,30 +48,6 @@ namespace SquareChoBrothers.Controller
         {
             if (keyEventArgs.KeyCode == Keys.Escape)
                 gameModel.EndGame();
-        }
-
-        public void FirstPlayerKeyUp(object sender, KeyEventArgs keyEventArgs)
-        {
-            switch (keyEventArgs.KeyCode)
-            {
-                case Keys.Left:
-                    gameModel.Heroes[0].Stay();
-                    break;
-                case Keys.Right:
-                    gameModel.Heroes[0].Stay();
-                    break;
-            }
-        }
-
-        public void SecondPlayerKeyUp(object sender, KeyEventArgs keyEventArgs)
-        {
-            switch (keyEventArgs.KeyCode)
-            {
-                case Keys.A:
-                    break;
-                case Keys.D:
-                    break;
-            }
         }
     }
 }

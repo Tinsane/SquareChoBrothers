@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Model\DynamicPhysicalObject.cs" />
     <Compile Include="Model\GameModel.cs" />
+    <Compile Include="Model\Physics.cs" />
     <Compile Include="View\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>

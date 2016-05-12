@@ -22,19 +22,19 @@ namespace SquareChoBrothers.Model
             Heroes = new Hero[1];
             Monsters = new Monster[0];
             Terrains = new Terrain[0];
-            Heroes[0] = new Hero(new Square(new Point(100, 100), 100),
+            Heroes[0] = new Hero(new Square(new Point(50, 50), 50),
                 new TextureBrush(Properties.Resources.Hero));
         }
 
         // ReSharper disable once ParameterHidesMember
         public void StartGame(Action draw, Action endGame)
         {
-            previousSignalTime = 0;
+            EndGame = endGame;
+            this.draw += draw;
+            previousSignalTime = DateTime.Now.Ticks;
             var timer = new Timer(UpdateInterval) { AutoReset = true };
             timer.Elapsed += UpdateState;
             timer.Start();
-            this.draw += draw;
-            EndGame = endGame;
         }
         private void UpdateState (object sender, ElapsedEventArgs e)
         {

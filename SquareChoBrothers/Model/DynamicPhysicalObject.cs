@@ -12,10 +12,11 @@ namespace SquareChoBrothers.Model
         public void UpdatePosition(double deltaT)
         {
             deltaT /= TimeSpan.TicksPerSecond;
+            Velocity += Physics.GravityVector*deltaT;
             GraphicalPosition.Transfer(Velocity*deltaT);
             HitBox.Transfer(Velocity*deltaT);
-            (Brush as TextureBrush).ResetTransform();
-            (Brush as TextureBrush).TranslateTransform((float) GraphicalPosition.A.x,
+            ((TextureBrush) Brush).ResetTransform();
+            ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,
                 (float)GraphicalPosition.A.y);
         }
 

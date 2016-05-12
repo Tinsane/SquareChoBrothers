@@ -18,8 +18,6 @@ namespace SquareChoBrothers.View
             KeyDown += controller.GeneralKeyDown;
             KeyDown += controller.FirstPlayerKeyDown;
             KeyDown += controller.SecondPlayerKeyDown;
-            KeyUp += controller.FirstPlayerKeyUp;
-            KeyUp += controller.SecondPlayerKeyUp;
             gameModel.StartGame(Invalidate, Close);
         }
 
