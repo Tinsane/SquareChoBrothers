@@ -11,22 +11,22 @@ namespace SquareChoBrothers.Controller
             this.gameModel = gameModel;
         }
 
-        public void FirstPlayerKeyPress(object sender, KeyEventArgs keyEventArgs)
+        public void FirstPlayerKeyDown(object sender, KeyEventArgs keyEventArgs)
         {
             switch (keyEventArgs.KeyCode)
             {
                 case Keys.Left:
-                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(-10, 0));
+                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(-20, 0));
                     break;
                 case Keys.Right:
-                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(10, 0));
+                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(20, 0));
                     break;
                 case Keys.Up:
-                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(0, -10));
+                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(0, -20));
                     break;
             }
         }
-        public void SecondPlayerKeyPress (object sender, KeyEventArgs keyEventArgs)
+        public void SecondPlayerKeyDown (object sender, KeyEventArgs keyEventArgs)
         {
             switch (keyEventArgs.KeyCode)
             {
@@ -39,7 +39,7 @@ namespace SquareChoBrothers.Controller
             }
         }
 
-        public void GeneralKeyPress(object sender, KeyEventArgs keyEventArgs)
+        public void GeneralKeyUp(object sender, KeyEventArgs keyEventArgs)
         {
             if (keyEventArgs.KeyCode == Keys.Escape)
                 gameModel.EndGame();

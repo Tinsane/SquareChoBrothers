@@ -14,12 +14,10 @@ namespace SquareChoBrothers.View
             WindowState = FormWindowState.Maximized;
 
             this.gameModel = gameModel;
-            KeyDown += controller.GeneralKeyPress;
-            KeyDown += controller.FirstPlayerKeyPress;
-            KeyDown += controller.SecondPlayerKeyPress;
-            gameModel.EndGame = Close;
-            gameModel.Draw = Invalidate;
-            gameModel.Start();
+            KeyDown += controller.GeneralKeyUp;
+            KeyDown += controller.FirstPlayerKeyDown;
+            KeyDown += controller.SecondPlayerKeyDown;
+            gameModel.StartGame(Invalidate, Close);
         }
 
         private static void PaintDrawable(PaintEventArgs e, IDrawable drawable)
@@ -30,6 +28,10 @@ namespace SquareChoBrothers.View
         protected override void OnPaint(PaintEventArgs e)
         {
             PaintDrawable(e, gameModel.Background);
+            foreach (var terrain in gameModel.Terrains)
+                PaintDrawable(e, terrain);
+            foreach (var monster in gameModel.Monsters)
+                PaintDrawable(e, monster);
             foreach (var hero in gameModel.Heroes)
                 PaintDrawable(e, hero);
         }
