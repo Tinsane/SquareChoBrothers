@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 using SquareChoBrothers.Model;
 
 namespace SquareChoBrothers.View
@@ -14,9 +15,11 @@ namespace SquareChoBrothers.View
             WindowState = FormWindowState.Maximized;
 
             this.gameModel = gameModel;
-            KeyDown += controller.GeneralKeyUp;
+            KeyDown += controller.GeneralKeyDown;
             KeyDown += controller.FirstPlayerKeyDown;
             KeyDown += controller.SecondPlayerKeyDown;
+            KeyUp += controller.FirstPlayerKeyUp;
+            KeyUp += controller.SecondPlayerKeyUp;
             gameModel.StartGame(Invalidate, Close);
         }
 

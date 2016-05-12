@@ -8,7 +8,8 @@ namespace Geometry
 {
     public class Point : Geom, IComparable<Point>
     {
-        public double x, y;
+        public double x;
+        public double y;
 
         public Point(double x, double y)
         {
