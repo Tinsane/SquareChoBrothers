@@ -44,15 +44,15 @@ namespace Geometry
             return new Segment(A, B);
         }
 
-        public static Rectangle CreateRectangle(Point A, Point B, Point C, Point D)
-        {
-            return new Rectangle(A, B, C, D);
-        }
-
-        public static bool IsRectangle(Rectangle rect)
-        {
-            return IsRectangle(rect.A, rect.B, rect.C, rect.D);
-        }
+      //public static Rectangle CreateRectangle(Point A, Point B, Point C, Point D)
+      //{
+      //    return new Rectangle(A, B, C, D);
+      //}
+      //
+      //public static bool IsRectangle(Rectangle rect)
+      //{
+      //    return IsRectangle(rect.A, rect.B, rect.C, rect.D);
+      //}
 
         public static bool IsRectangle(Point A, Point B, Point C, Point D)
         {

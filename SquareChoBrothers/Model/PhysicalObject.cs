@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using Geometry;
 using SquareChoBrothers.View;
+using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
@@ -8,9 +9,9 @@ namespace SquareChoBrothers.Model
         where T : IGeometryFigure
     {
         protected T HitBox { get; set; }
-        public Square GraphicalPosition { get; }
+        public Rectangle GraphicalPosition { get; }
         public Brush Brush { get; }
-        protected PhysicalObject(Square graphicalPosition, Brush brush, T hitBox)
+        protected PhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox)
         {
             HitBox = hitBox;
             GraphicalPosition = graphicalPosition;
