@@ -5,7 +5,7 @@ using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
-    public abstract class PhysicalObject<T> : IDrawable 
+    public abstract class PhysicalObject<T> : IDrawable
         where T : IGeometryFigure
     {
         protected T HitBox { get; set; }

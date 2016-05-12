@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using SquareChoBrothers.View;
-using Geometry;
 using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model

@@ -1,10 +1,16 @@
 ﻿using System.Drawing;
 using Geometry;
+using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
-    public class Hero : DynamicPhysicalObject<Square>
+    public class Hero : DynamicPhysicalObject<Rectangle>
     {
+        public Hero(Rectangle graphicalPosition, Brush brush) :
+            base(graphicalPosition, brush, graphicalPosition)
+        {
+        }
+
         public void MoveRight()
         {
             var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
@@ -25,12 +31,7 @@ namespace SquareChoBrothers.Model
 
         public void Jump()
         {
-            Velocity += new Vector(0, -2 * Physics.Impulse);
-        }
-
-        public Hero (Square graphicalPosition, Brush brush) :
-            base(graphicalPosition, brush, graphicalPosition)
-        {
+            Velocity += new Vector(0, -2*Physics.Impulse);
         }
     }
 }

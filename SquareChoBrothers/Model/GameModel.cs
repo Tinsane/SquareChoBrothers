@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Timers;
 using Point = Geometry.Point;
-using Geometry;
+using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
@@ -18,11 +18,11 @@ namespace SquareChoBrothers.Model
         private double previousSignalTime;
         public GameModel()
         {
-            Background = new Picture(new Square(new Point(0, 0), 1e4), Brushes.Maroon);
+            Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), Brushes.Maroon);
             Heroes = new Hero[1];
             Monsters = new Monster[0];
             Terrains = new Terrain[0];
-            Heroes[0] = new Hero(new Square(new Point(50, 50), 50),
+            Heroes[0] = new Hero(new Rectangle(new Point(50, 50), 50, 50),
                 new TextureBrush(Properties.Resources.Hero));
         }
 
