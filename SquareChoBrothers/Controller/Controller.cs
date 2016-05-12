@@ -11,37 +11,37 @@ namespace SquareChoBrothers.Controller
             this.gameModel = gameModel;
         }
 
-        public void FirstPlayerKeyPress(object sender, KeyPressEventArgs e)
+        public void FirstPlayerKeyPress(object sender, KeyEventArgs keyEventArgs)
         {
-            switch ((int) e.KeyChar)
+            switch (keyEventArgs.KeyCode)
             {
-                case (int) Keys.Left:
-                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(-100000, 0));
+                case Keys.Left:
+                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(-10, 0));
                     break;
-                case (int) Keys.Right:
-                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(100000, 0));
+                case Keys.Right:
+                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(10, 0));
                     break;
-                case (int) Keys.Up:
-                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(0, 100000));
+                case Keys.Up:
+                    gameModel.Heroes[0].ChangeVelocity(new Geometry.Vector(0, -10));
                     break;
             }
         }
-        public void SecondPlayerKeyPress (object sender, KeyPressEventArgs e)
+        public void SecondPlayerKeyPress (object sender, KeyEventArgs keyEventArgs)
         {
-            switch ((int) e.KeyChar)
+            switch (keyEventArgs.KeyCode)
             {
-                case (int) Keys.A:
+                case Keys.A:
                     break;
-                case (int) Keys.D:
+                case Keys.D:
                     break;
-                case (int) Keys.W:
+                case Keys.W:
                     break;
             }
         }
 
-        public void GeneralKeyPress(object sender, KeyPressEventArgs e)
+        public void GeneralKeyPress(object sender, KeyEventArgs keyEventArgs)
         {
-            if (e.KeyChar == (int) Keys.Escape)
+            if (keyEventArgs.KeyCode == Keys.Escape)
                 gameModel.EndGame();
         }
     }

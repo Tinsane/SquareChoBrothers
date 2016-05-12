@@ -30,7 +30,7 @@ namespace Geometry
 
         public bool IsOnSegment(Segment segment)
         {
-            return segment.ContainsPoint(this);
+            return segment.Contains(this);
         }
 
         /// <summary>

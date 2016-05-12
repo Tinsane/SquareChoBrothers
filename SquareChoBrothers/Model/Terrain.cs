@@ -1,11 +1,14 @@
 ﻿using System.Drawing;
-using Rectangle = Geometry.Rectangle;
+using Geometry;
 
 namespace SquareChoBrothers.Model
 {
-    public class Terrain : PhysicalObject<Rectangle>
+    public class Terrain : PhysicalObject<Square>
     {
-        public Terrain(Rectangle graphicalPosition, Brush brush) : base(graphicalPosition, brush)
+        public Terrain (Square graphicalPosition, Brush brush) : base(graphicalPosition, brush, graphicalPosition)
+        {
+        }
+        public Terrain(Square graphicalPosition, Brush brush, Square hitBox) : base(graphicalPosition, brush, hitBox)
         {
         }
     }

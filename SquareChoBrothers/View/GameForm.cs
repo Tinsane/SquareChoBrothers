@@ -3,20 +3,23 @@ using SquareChoBrothers.Model;
 
 namespace SquareChoBrothers.View
 {
-    public class GameForm : Form
+    public sealed class GameForm : Form
     {
         private readonly GameModel gameModel;
 
         public GameForm(GameModel gameModel, Controller.Controller controller)
         {
-            this.gameModel = gameModel;
-            KeyPress += controller.GeneralKeyPress;
-            KeyPress += controller.FirstPlayerKeyPress;
-            KeyPress += controller.SecondPlayerKeyPress;
+            DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
+
+            this.gameModel = gameModel;
+            KeyDown += controller.GeneralKeyPress;
+            KeyDown += controller.FirstPlayerKeyPress;
+            KeyDown += controller.SecondPlayerKeyPress;
             gameModel.EndGame = Close;
             gameModel.Draw = Invalidate;
+            gameModel.Start();
         }
 
         private static void PaintDrawable(PaintEventArgs e, IDrawable drawable)

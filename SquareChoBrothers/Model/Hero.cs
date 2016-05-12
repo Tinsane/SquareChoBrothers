@@ -1,12 +1,16 @@
 ﻿using System.Drawing;
 using Geometry;
-using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
-    public class Hero : DynamicPhysicalObject<Rectangle>
+    public class Hero : DynamicPhysicalObject<Square>
     {
-        public Hero(Rectangle graphicalPosition, Brush brush) : base(graphicalPosition, brush)
+        public Hero (Square graphicalPosition, Brush brush) :
+            base(graphicalPosition, brush, graphicalPosition)
+        {
+        }
+        public Hero(Square graphicalPosition, Brush brush, Square hitBox) : 
+            base(graphicalPosition, brush, hitBox)
         {
         }
     }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquareChoBrothers", "Square
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometry", "Geometry\Geometry.csproj", "{0FF9A6D5-033E-4305-B941-3FE7D95DE5FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{7130C7EE-6F7A-459D-8DB5-AED0201A8C0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0FF9A6D5-033E-4305-B941-3FE7D95DE5FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF9A6D5-033E-4305-B941-3FE7D95DE5FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF9A6D5-033E-4305-B941-3FE7D95DE5FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7130C7EE-6F7A-459D-8DB5-AED0201A8C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7130C7EE-6F7A-459D-8DB5-AED0201A8C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7130C7EE-6F7A-459D-8DB5-AED0201A8C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7130C7EE-6F7A-459D-8DB5-AED0201A8C0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

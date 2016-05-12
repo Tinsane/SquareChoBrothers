@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
-using Rectangle = Geometry.Rectangle;
+using Geometry;
 
 namespace SquareChoBrothers.View
 {
     public interface IDrawable
     {
-        Rectangle GraphicalPosition { get; }
+        Square GraphicalPosition { get; }
         Brush Brush { get; }
     }
 }

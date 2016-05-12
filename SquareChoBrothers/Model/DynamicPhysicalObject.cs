@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using Geometry;
-using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
@@ -9,9 +8,6 @@ namespace SquareChoBrothers.Model
     {
         private Vector Velocity { get; set; }
 
-        protected DynamicPhysicalObject(Rectangle graphicalPosition, Brush brush) : base(graphicalPosition, brush)
-        {
-        }
 
         public void ChangeVelocity(Vector vector)
         {
@@ -20,8 +16,15 @@ namespace SquareChoBrothers.Model
 
         public void UpdatePosition(double deltaT)
         {
+            deltaT /= 1000;
             GraphicalPosition.Transfer(Velocity * deltaT);
             HitBox.Transfer(Velocity*deltaT);
+        }
+
+        protected DynamicPhysicalObject(Square graphicalPosition, Brush brush, T hitBox) : 
+            base(graphicalPosition, brush, hitBox)
+        {
+            Velocity = new Vector(0, 0);
         }
     }
 }
