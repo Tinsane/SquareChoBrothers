@@ -1,0 +1,47 @@
+﻿using System.Drawing;
+using Geometry;
+using Rectangle = Geometry.Rectangle;
+
+namespace SquareChoBrothers.Model
+{
+    public class Hero : DynamicPhysicalObject<Rectangle>
+    {
+<<<<<<< HEAD
+        public void MoveRight()
+        {
+            var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
+            Velocity = new Vector(Physics.Impulse, oyProjection);
+        }
+
+        public void Stay()
+        {
+            var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
+            Velocity = new Vector(0, oyProjection);
+        }
+
+        public void MoveLeft()
+        {
+            var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
+            Velocity = new Vector(-Physics.Impulse, oyProjection);
+        }
+
+        public void Jump()
+=======
+        public Hero (Rectangle graphicalPosition, Brush brush) :
+            base(graphicalPosition, brush, graphicalPosition)
+>>>>>>> map_builder
+        {
+            Velocity += new Vector(0, -2 * Physics.Impulse);
+        }
+<<<<<<< HEAD
+
+        public Hero (Square graphicalPosition, Brush brush) :
+            base(graphicalPosition, brush, graphicalPosition)
+=======
+        public Hero(Rectangle graphicalPosition, Brush brush, Rectangle hitBox) : 
+            base(graphicalPosition, brush, hitBox)
+>>>>>>> map_builder
+        {
+        }
+    }
+}

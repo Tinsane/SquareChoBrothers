@@ -65,14 +65,14 @@ namespace Geometry
             y = centre.y;
         }
 
-        public bool IntersectsWith(Square square)
+        public bool IntersectsWith(Rectangle rectangle)
         {
-            return square.IntersectsWith(this);
+            return rectangle.IntersectsWith(this);
         }
 
-        public Line GetIntersectionLine(Square square)
+        public Line GetIntersectionLine(Rectangle rectangle)
         {
-            return square.GetIntersectionLine(this);
+            return rectangle.GetIntersectionLine(this);
         }
     }
 }

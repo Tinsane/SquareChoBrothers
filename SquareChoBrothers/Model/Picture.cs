@@ -1,14 +1,15 @@
 ﻿using System.Drawing;
 using SquareChoBrothers.View;
 using Geometry;
+using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
     public class Picture : IDrawable
     {
-        public Square GraphicalPosition { get; }
+        public Rectangle GraphicalPosition { get; }
         public Brush Brush { get; }
-        public Picture(Square graphicalPosition, Brush brush)
+        public Picture(Rectangle graphicalPosition, Brush brush)
         {
             GraphicalPosition = graphicalPosition;
             Brush = brush;
