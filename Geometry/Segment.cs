@@ -6,10 +6,10 @@ namespace Geometry
     {
         public Point A, B;
 
-        public Segment(Point A, Point B)
+        public Segment(Point a, Point b)
         {
-            this.A = A;
-            this.B = B;
+            A = a;
+            B = b;
         }
 
         public Point Center => (A + B)/2;

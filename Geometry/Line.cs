@@ -14,7 +14,7 @@ namespace Geometry
             c = -a*firstPoint.x - b*firstPoint.y;
         }
 
-        public Vector GetDirectionVector => new Vector(b, -a);
+        public Vector DirectionVector => new Vector(b, -a).GetNormalized(1);
 
         public Vector GetNormalVector => new Vector(a, b);
 
@@ -31,8 +31,8 @@ namespace Geometry
 
         public bool IsParallel(Line line)
         {
-            var firstLineDirectionVector = GetDirectionVector;
-            var secondLineDirectionVector = line.GetDirectionVector;
+            var firstLineDirectionVector = DirectionVector;
+            var secondLineDirectionVector = line.DirectionVector;
             firstLineDirectionVector.Normalize(secondLineDirectionVector.Length);
             if (!(firstLineDirectionVector - secondLineDirectionVector).IsZero)
                 firstLineDirectionVector = firstLineDirectionVector*-1.0;

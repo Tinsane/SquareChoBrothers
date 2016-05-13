@@ -24,7 +24,7 @@ namespace Geometry
 
         public bool IsZero => this == new Vector(0, 0);
 
-        public Vector Reversed => new Vector(-x, -y);
+        public Vector GetNormalized(double length) => this/Length*length;
 
         public void Normalize(double newLength)
         {
@@ -72,12 +72,6 @@ namespace Geometry
 
         public double GetAngle(Vector vector) => Math.Atan2(GetDotProduct(vector), GetScalarProduct(vector));
 
-        public void Reverse()
-        {
-            x = -x;
-            y = -y;
-        }
-
         public static Vector operator +(Vector a, Vector b) => new Vector(a.x + b.x, a.y + b.y);
 
         public static Vector operator -(Vector a, Vector b) => new Vector(a.x - b.x, a.y - b.y);
@@ -98,5 +92,13 @@ namespace Geometry
         }
 
         public static bool operator !=(Vector a, Vector b) => !(a == b);
+
+        public Vector Reflect(Line line)
+        {
+            var directionVector = line.DirectionVector;
+            var collinearComponent = directionVector.GetNormalized(directionVector.GetScalarProduct(this));
+            var normalComponent = this - collinearComponent;
+            return collinearComponent - normalComponent;
+        }
     }
 }
