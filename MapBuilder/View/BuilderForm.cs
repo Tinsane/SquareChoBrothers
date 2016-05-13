@@ -12,9 +12,5 @@ namespace MapBuilder.View
 {
     public partial class BuilderForm : Form
     {
-        public BuilderForm()
-        {
-            InitializeComponent();
-        }
     }
 }

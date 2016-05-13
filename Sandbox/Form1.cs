@@ -18,7 +18,7 @@ namespace Sandbox
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
-            govno = new Rectangle(new Point(100, 100), 100);
+            govno = new Rectangle(new Point(100, 100), 100, 100);
             var timer = new Timer(30) { AutoReset = true };
             timer.Elapsed += Move1;
             timer.Start();

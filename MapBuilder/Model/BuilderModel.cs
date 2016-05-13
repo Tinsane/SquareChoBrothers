@@ -15,17 +15,20 @@ namespace MapBuilder.Model
         public static readonly Vector Down = -Up;
         public static readonly Vector Left = new Vector(squareSize, 0);
         public static readonly Vector Right = -Left;
-        public Action draw, close;
+        public Action draw, Close;
         public double Width, Height;
-        public Terrain[] Terrains;
-        public Picture[] Pictures;
+        public List<Terrain> Terrains;
+        public List<Picture> Pictures;
+        public List<Hero> Heroes;
+        public List<Monster> Monsters;
         public Picture Background;
-        public Point currentLocation;
+        public Rectangle Current;
 
         public BuilderModel()
         {
-            Background = new Picture(new Rectangle(new Point(0, 0), 1e3), System.Drawing.Brushes.White);
-            currentLocation = new Point(squareSize / 2, squareSize / 2);
+            Background = new Picture(new Rectangle(new Point(0, 0), 1e3, 1e3), System.Drawing.Brushes.White);
+            var size = squareSize / 2;
+            Current = new Rectangle(new Point(size, size), size, size);
             Width = 1e3;
             Height = 1e3;
         }
@@ -33,32 +36,38 @@ namespace MapBuilder.Model
         public void StartGame(Action draw, Action close)
         {
             this.draw += draw;
-            this.close += close;
+            this.Close += close;
         }
 
         private bool RightCoordinates(double x, double y) => 
             x >= 0 && x <= Width && y >= 0 && y <= Height;
 
-        private bool RightCoordinates(Point location) => 
-            RightCoordinates(location.x, location.y);
+        private bool RightCoordinates(Rectangle location) =>
+            location.Points.All(x => RightCoordinates(x.x, x.y));
 
-        private bool TryNewLocation(Point newLocation)
+        private bool TryNewLocation(Rectangle newLocation)
         {
             if (RightCoordinates(newLocation))
             {
-                currentLocation = newLocation;
+                Current = newLocation;
                 draw();
                 return true;
             }
             return false;
         }
 
-        public bool TryUp() => TryNewLocation(currentLocation + Up);
+        public bool TryUp() => TryNewLocation(Current.GetTransfered(Up));
 
-        public bool TryDown() => TryNewLocation(currentLocation + Down);
+        public bool TryDown() => TryNewLocation(Current.GetTransfered(Up));
 
-        public bool TryLeft() => TryNewLocation(currentLocation + Left);
+        public bool TryLeft() => TryNewLocation(Current.GetTransfered(Up));
 
-        public bool TryRight() => TryNewLocation(currentLocation + Right);
+        public bool TryRight() => TryNewLocation(Current.GetTransfered(Up));
+
+        public void AddTerrain() => Terrains.Add(new Terrain())
+
+        public void AddHero() =>
+            
+        public void AddMonster() =>
     }
 }

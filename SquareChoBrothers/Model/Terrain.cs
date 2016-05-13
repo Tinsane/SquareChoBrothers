@@ -6,10 +6,7 @@ namespace SquareChoBrothers.Model
 {
     public class Terrain : PhysicalObject<Rectangle>
     {
-        public Terrain (Rectangle graphicalPosition, Brush brush) : base(graphicalPosition, brush, graphicalPosition)
-        {
-        }
-        public Terrain(Rectangle graphicalPosition, Brush brush, Rectangle hitBox) : base(graphicalPosition, brush, hitBox)
+        public Terrain (Rectangle graphicalPosition, Brush brush) : base(graphicalPosition.GetCopy(), brush, graphicalPosition.GetCopy())
         {
         }
     }

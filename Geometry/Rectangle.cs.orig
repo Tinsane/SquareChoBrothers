@@ -65,9 +65,13 @@ namespace Geometry
             points = points.Select(point => point + transferVector).ToArray();
         }
 
+<<<<<<< HEAD
+        public bool StrictlyIntersectsWith(Rectangle rectangle) => Segments.Any(rectangle.IntersectsWith);
+=======
         public Rectangle GetCopy() => new Rectangle(Center, Width, Height);
 
-        public bool StrictlyIntersectsWith(Rectangle rectangle) => Segments.Any(rectangle.IntersectsWith);
+        public bool IntersectsWith(Rectangle rectangle) => Segments.Any(rectangle.IntersectsWith);
+>>>>>>> map_builder3
 
         public Line GetIntersectionLine(Rectangle rectangle)
         {
