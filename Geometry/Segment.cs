@@ -20,7 +20,7 @@ namespace Geometry
 
         public Line ContainingLine => new Line(A, B);
 
-        public Line MiddlePerpendicular => new Line(Center, Center + new Line(A, B).GetNormalVector);
+        public Line MiddlePerpendicular => new Line(Center, Center + new Line(A, B).NormalVector);
 
         /// <summary>
         ///     Возвращает точку на отрезку, делящую его в заданном отношении считая от вершины A.

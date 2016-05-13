@@ -37,7 +37,8 @@ namespace Geometry
 
         public bool IsCodirectional(Vector vector) => IsCollinear(vector) && GetScalarProduct(vector).IsDoubleGreater(0);
 
-        public bool IsContradirectional(Vector vector) => IsCollinear(vector) && GetScalarProduct(vector).IsDoubleLess(0);
+        public bool IsContradirectional(Vector vector)
+            => IsCollinear(vector) && GetScalarProduct(vector).IsDoubleLess(0);
 
         /// <summary>
         ///     Вращает вектор против часовой стрелки на угол, заданный синусом и косинусом.
@@ -99,6 +100,12 @@ namespace Geometry
             var collinearComponent = directionVector.GetNormalized(directionVector.GetScalarProduct(this));
             var normalComponent = this - collinearComponent;
             return collinearComponent - normalComponent;
+        }
+
+        public Vector GetProjection(Line line)
+        {
+            var directionVector = line.DirectionVector;
+            return directionVector.GetNormalized(directionVector.GetScalarProduct(this));
         }
     }
 }

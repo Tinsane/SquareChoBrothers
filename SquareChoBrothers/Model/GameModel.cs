@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Timers;
 using Point = Geometry.Point;
 using Rectangle = Geometry.Rectangle;
+using Geometry;
+using System.Linq;
 
 namespace SquareChoBrothers.Model
 {
@@ -23,7 +26,8 @@ namespace SquareChoBrothers.Model
             Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), Brushes.Maroon);
             Heroes = new Hero[1];
             Monsters = new Monster[0];
-            Terrains = new Terrain[0];
+            Terrains = new Terrain[1];
+            Terrains[0] = new Terrain(new Rectangle(new Point(400, 200), 200, 50), Brushes.Green);
             Pictures = new Picture[0];
             Heroes[0] = new Hero(new Rectangle(new Point(50, 50), 50, 50),
                 new TextureBrush(Properties.Resources.Hero));
@@ -52,11 +56,14 @@ namespace SquareChoBrothers.Model
         private void UpdateState (object sender, ElapsedEventArgs e)
         {
             var deltaT = e.SignalTime.Ticks - previousSignalTime;
+            var reflectables = new List<IGeometryFigure>();
+            reflectables.AddRange(Heroes.Select(hero => hero.HitBox));
+            reflectables.AddRange(Terrains.Select(terrain => terrain.HitBox));
             previousSignalTime = e.SignalTime.Ticks;
             foreach (var hero in Heroes)
-                hero.UpdatePosition(deltaT);
+                hero.Update(deltaT, reflectables);
             foreach (var monster in Monsters)
-                monster.UpdatePosition(deltaT);
+                monster.Update(deltaT, reflectables);
             draw();
         }
     }

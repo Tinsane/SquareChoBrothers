@@ -28,11 +28,14 @@
             }
         }
 
-        public bool StrictlyIntersectsWith(Circle circle) => Center.GetDistance(circle.Center).IsDoubleLess(r + circle.r);
+        public bool StrictlyIntersectsWith(Circle circle)
+            => Center.GetDistance(circle.Center).IsDoubleLess(r + circle.r);
 
         public Line GetIntersectionLine(Circle circle) => StrictlyIntersectsWith(circle)
             ? new Segment(Center, circle.Center).MiddlePerpendicular
             : null;
+
+        public IGeometryFigure GetTransfered(Vector transferVector) => new Circle(Center + transferVector, r);
 
         public void Transfer(Vector transferVector)
         {

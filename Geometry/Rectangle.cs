@@ -65,9 +65,7 @@ namespace Geometry
             points = points.Select(point => point + transferVector).ToArray();
         }
 
-        public Rectangle GetCopy() => new Rectangle(Center, Width, Height);
-
-        public bool StrictlyIntersectsWith(Rectangle rectangle) => Segments.Any(rectangle.IntersectsWith);
+        public bool StrictlyIntersectsWith(Rectangle rectangle) => Points.Any(rectangle.Contains) || rectangle.Points.Any(Contains);
 
         public Line GetIntersectionLine(Rectangle rectangle)
         {
@@ -81,6 +79,11 @@ namespace Geometry
                     : new Line(C, D);
             return A.GetDistance(rectangle.Center) < B.GetDistance(rectangle.Center) ? new Line(A, D) : new Line(B, C);
         }
+
+        IGeometryFigure IGeometryFigure.GetTransfered(Vector transferVector)
+            => new Rectangle(Center + transferVector, Width, Height);
+
+        public Rectangle GetCopy() => new Rectangle(Center, Width, Height);
 
         public static implicit operator RectangleF(Rectangle rectangle) =>
             new RectangleF(rectangle.A, new Size((int) rectangle.Width, (int) rectangle.Height));

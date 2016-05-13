@@ -8,7 +8,7 @@ namespace SquareChoBrothers.Model
     public abstract class PhysicalObject<T> : IDrawable
         where T : IGeometryFigure
     {
-        protected T HitBox { get; set; }
+        public T HitBox { get; protected set; }
         public Rectangle GraphicalPosition { get; }
         public Brush Brush { get; }
         protected PhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox)
