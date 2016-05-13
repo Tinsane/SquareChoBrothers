@@ -26,7 +26,7 @@ namespace SquareChoBrothers.Model
             Terrains = new Terrain[0];
             Pictures = new Picture[0];
             Heroes[0] = new Hero(new Rectangle(new Point(50, 50), 50, 50),
-                new TextureBrush(Properties.Resources.Hero));
+                new TextureBrush(Properties.Resources.Hero1));
         }
 
         public GameModel(Terrain[] terrains, Hero[] heroes,

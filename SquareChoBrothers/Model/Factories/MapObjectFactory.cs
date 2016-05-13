@@ -9,19 +9,15 @@ using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model.Factories
 {
-    public abstract class MapObjectFactory<T>
+    public abstract class MapObjectFactory<TObject, THitBox>
     {
         protected Brush Brush { get; set; }
-        protected Rectangle Rectangle { get; set; }
 
-        public MapObjectFactory(Brush brush, Rectangle rectangle)
+        public MapObjectFactory(Brush brush)
         {
             this.Brush = brush;
-            this.Rectangle = rectangle;
         }
 
-        public abstract T GetNext(Point center);
-
-        public abstract T GetNext(Rectangle rectangle);
+        public abstract TObject GetNext(THitBox hitBox);
     }
 }

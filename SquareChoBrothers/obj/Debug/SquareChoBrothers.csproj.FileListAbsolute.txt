@@ -11,3 +11,10 @@ C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrother
 C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\SquareChoBrothers.exe.config
 C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.exe
 C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\SquareChoBrothers.exe
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\SquareChoBrothers.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\Geometry.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\bin\Debug\Geometry.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.csprojResolveAssemblyReference.cache
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.Properties.Resources.resources
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\obj\Debug\SquareChoBrothers.csproj.GenerateResource.Cache

@@ -9,15 +9,10 @@ using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model.Factories
 {
-    class PictureFactory : MapObjectFactory<Picture>
+    public class PictureFactory : MapObjectFactory<Picture, Rectangle>
     {
-        PictureFactory(Rectangle rectangle, Brush brush) : base(brush, rectangle) { }
-        public override Picture GetNext(Point center) =>
-            new Picture(new Rectangle(center, Rectangle.SizeX, Rectangle.SizeY), Brush);
+        PictureFactory(Brush brush) : base(brush) { }
 
-        public override Picture GetNext(Rectangle rectangle)
-        {
-            throw new NotImplementedException();
-        }
+        public override Picture GetNext(Rectangle rectangle) => new Picture(rectangle.GetCopy(), Brush);
     }
 }

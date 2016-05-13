@@ -1,7 +1,4 @@
-.vs/
-
-Sandbox/
-
-SquareChoBrothers/bin/
-
-SquareChoBrothers/obj/
+.vs/*
+Sandbox/*
+SquareChoBrothers/bin/*
+SquareChoBrothers/obj/*
