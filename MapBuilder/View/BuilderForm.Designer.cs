@@ -15,7 +15,6 @@ namespace MapBuilder.View
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
-
             this.builderModel = builderModel;
             KeyDown += controller.GeneralKeyDown;
             builderModel.StartGame(Invalidate, Close);

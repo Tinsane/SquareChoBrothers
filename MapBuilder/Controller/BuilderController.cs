@@ -33,6 +33,18 @@ namespace MapBuilder.Controller
                 case Keys.Right:
                     builderModel.TryRight();
                     break;
+                case Keys.Escape:
+                    builderModel.Close();
+                    break;
+                case Keys.Space:
+                    builderModel.AddTerrain();
+                    break;
+                case Keys.H:
+                    builderModel.AddHero();
+                    break;
+                case Keys.M:
+                    builderModel.AddMonster();
+                    break;
             }
         }
     }

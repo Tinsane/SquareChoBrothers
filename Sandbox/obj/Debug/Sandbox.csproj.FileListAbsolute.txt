@@ -8,3 +8,13 @@ C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrother
 C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\Sandbox\bin\Debug\Geometry.dll
 C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\Sandbox\bin\Debug\Geometry.pdb
 C:\Users\Владимир\documents\visual studio 2015\Projects\SquareChoBrothers\Sandbox\obj\Debug\Sandbox.csprojResolveAssemblyReference.cache
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\obj\Debug\Sandbox.csprojResolveAssemblyReference.cache
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\obj\Debug\Sandbox.Properties.Resources.resources
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\obj\Debug\Sandbox.csproj.GenerateResource.Cache
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\obj\Debug\Sandbox.exe
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\obj\Debug\Sandbox.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\bin\Debug\Sandbox.exe.config
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\bin\Debug\Sandbox.exe
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\bin\Debug\Sandbox.pdb
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\bin\Debug\Geometry.dll
+C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\Sandbox\bin\Debug\Geometry.pdb

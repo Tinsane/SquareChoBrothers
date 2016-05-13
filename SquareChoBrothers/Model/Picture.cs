@@ -10,7 +10,7 @@ namespace SquareChoBrothers.Model
         public Brush Brush { get; }
         public Picture(Rectangle graphicalPosition, Brush brush)
         {
-            GraphicalPosition = graphicalPosition;
+            GraphicalPosition = graphicalPosition.GetCopy();
             Brush = brush;
         }
     }

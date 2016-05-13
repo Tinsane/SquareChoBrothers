@@ -47,8 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\DynamicPhysicalObject.cs" />
+    <Compile Include="Model\Factories\HeroFactory.cs" />
+    <Compile Include="Model\Factories\MapObjectFactory.cs" />
+    <Compile Include="Model\Factories\PictureFactory.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\Physics.cs" />
+    <Compile Include="Model\Factories\TerrainFactory.cs" />
+    <Compile Include="Model\Factories\MonsterFactory.cs" />
     <Compile Include="View\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>

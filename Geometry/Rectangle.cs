@@ -40,6 +40,10 @@ namespace Geometry
 
         public double Height => B.GetDistance(C);
 
+        public double SizeX => Width;
+
+        public double SizeY => Height;
+
         public Point[] Points => points.Select(x => new Point(x)).ToArray();
 
         public Segment[] Segments => Points.Select((x, i) =>
@@ -61,6 +65,8 @@ namespace Geometry
             for (var i = 0; i < points.Length; ++i)
                 points[i] += transferVector;
         }
+
+        public Rectangle GetCopy() => new Rectangle(Center, Width, Height);
 
         public bool IntersectsWith(Rectangle rectangle) => Segments.Any(rectangle.IntersectsWith);
 

@@ -12,18 +12,31 @@ namespace SquareChoBrothers.Model
         public Action EndGame { get; private set; }
         private Action draw;
         public Picture Background;
+        public Picture[] Pictures;
         public Hero[] Heroes;
         public Monster[] Monsters;
         public Terrain[] Terrains;
         private double previousSignalTime;
+
         public GameModel()
         {
             Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), Brushes.Maroon);
             Heroes = new Hero[1];
             Monsters = new Monster[0];
             Terrains = new Terrain[0];
+            Pictures = new Picture[0];
             Heroes[0] = new Hero(new Rectangle(new Point(50, 50), 50, 50),
                 new TextureBrush(Properties.Resources.Hero));
+        }
+
+        public GameModel(Terrain[] terrains, Hero[] heroes,
+            Monster[] monsters, Picture[] pictures)
+        {
+            Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), Brushes.Maroon);
+            Heroes = heroes;
+            Monsters = monsters;
+            Terrains = terrains;
+            Pictures = pictures;
         }
 
         // ReSharper disable once ParameterHidesMember

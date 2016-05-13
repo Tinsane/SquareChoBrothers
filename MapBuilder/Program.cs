@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MapBuilder.Controller;
+using MapBuilder.Model;
+using MapBuilder.View;
 
 namespace MapBuilder
 {
@@ -16,7 +19,8 @@ namespace MapBuilder
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            var model = new BuilderModel();
+            Application.Run(new BuilderForm(model, new BuilderController(model)));
         }
     }
 }
