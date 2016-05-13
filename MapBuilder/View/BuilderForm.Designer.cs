@@ -27,11 +27,8 @@ namespace MapBuilder.View
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            PaintDrawable(e, builderModel.Background);
-            foreach (var terrain in builderModel.Terrains)
-                PaintDrawable(e, terrain);
-            foreach (var picture in builderModel.Pictures)
-                PaintDrawable(e, picture);
+            foreach (var drawable in builderModel.AllDrawables)
+                PaintDrawable(e, drawable);
         }
     }
 }

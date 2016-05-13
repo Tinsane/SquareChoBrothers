@@ -11,13 +11,10 @@ using SquareChoBrothers.Model.Factories;
 
 namespace SquareChoBrothers
 {
-    public class TerrainFactory : MapObjectFactory<Terrain>
+    public class TerrainFactory : MapObjectFactory<Terrain, Rectangle>
     {
-        public TerrainFactory(Brush brush, Rectangle rectangle) : base(brush, rectangle) { }
+        public TerrainFactory(Brush brush) : base(brush) { }
 
-        public override Terrain GetNext(Point center) =>
-            new Terrain(new Rectangle(center, Rectangle.SizeX, Rectangle.SizeY), Brush);
-
-        public override Terrain GetNext(Rectangle rectangle) => new Terrain(rectangle, Brush);
+        public override Terrain GetNext(Rectangle rectangle) => new Terrain(rectangle.GetCopy(), Brush);
     }
 }

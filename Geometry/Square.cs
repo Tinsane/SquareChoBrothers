@@ -7,5 +7,9 @@
         }
 
         public double Size => Width;
+
+        public new Square GetCopy() => new Square(Center, Size);
+
+        public new Square GetTransfered(Vector transferVector) => new Square(Center + transferVector, Size);
     }
 }
