@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Geometry
 {
@@ -10,21 +6,24 @@ namespace Geometry
     {
         public Point A, B;
 
-        public Point Center => (A + B) / 2;
-
         public Segment(Point A, Point B)
         {
             this.A = A;
             this.B = B;
         }
 
-        public Segment GetReversedSegment()
-        {
-            return new Segment(B, A);
-        }
+        public Point Center => (A + B)/2;
+
+        public Segment Reversed => new Segment(B, A);
+
+        public double Length => A.GetDistance(B);
+
+        public Line ContainingLine => new Line(A, B);
+
+        public Line MiddlePerpendicular => new Line(Center, Center + new Line(A, B).GetNormalVector);
 
         /// <summary>
-        /// Возвращает точку на отрезку, делящую его в заданном отношении считая от вершины A.
+        ///     Возвращает точку на отрезку, делящую его в заданном отношении считая от вершины A.
         /// </summary>
         public Point GetDividingPointByRatio(double ratio)
         {
@@ -32,74 +31,54 @@ namespace Geometry
                 ratio = 0;
             if (ratio > 1)
                 ratio = 1;
-            var fromAToB = new Vector(A, B);
-            fromAToB.Normalize(ratio * GetLength());
-            return A + fromAToB;
+            var fromAtoB = new Vector(A, B);
+            fromAtoB.Normalize(ratio*Length);
+            return A + fromAtoB;
         }
 
         /// <summary>
-        /// Возвращает точку на отрезке, находящуюся на заданном расстоянии от вершины A.
+        ///     Возвращает точку на отрезке, находящуюся на заданном расстоянии от вершины A.
         /// </summary>
         public Point GetPointOnSegmentOnDistanceFromA(double distance)
         {
-            double ratio = distance / GetLength();
+            var ratio = distance/Length;
             return GetDividingPointByRatio(ratio);
         }
 
         /// <summary>
-        /// Возвращает подотрезок, образованный точками, делящими заданный отрезок в заданном отношении.
+        ///     Возвращает подотрезок, образованный точками, делящими заданный отрезок в заданном отношении.
         /// </summary>
-        public Segment GetSubsegmentByDividingPoints(double ratio1, double ratio2)
-        {
-            return new Segment(GetDividingPointByRatio(ratio1), GetDividingPointByRatio(ratio2));
-        }
+        public Segment GetSubsegmentByDividingPoints(double ratio1, double ratio2) =>
+            new Segment(GetDividingPointByRatio(ratio1), GetDividingPointByRatio(ratio2));
 
         /// <summary>
-        /// Возвращает подотрезок, образованный точками, лежащими на заданных расстояниях от точки A.
+        ///     Возвращает подотрезок, образованный точками, лежащими на заданных расстояниях от точки A.
         /// </summary>
-        public Segment GetSubsegmentOnDistancesFromA(double distance1, double distance2)
-        {
-            return new Segment(GetPointOnSegmentOnDistanceFromA(distance1), 
+        public Segment GetSubsegmentOnDistancesFromA(double distance1, double distance2) =>
+            new Segment(GetPointOnSegmentOnDistanceFromA(distance1),
                 GetPointOnSegmentOnDistanceFromA(distance2));
-        }
-
-        public double GetLength()
-        {
-            return A.GetDistance(B);
-        }
 
         private bool IsOnFirstSide(Point point)
         {
             var firstVector = new Vector(A, B);
             var secondVector = new Vector(A, point);
-            return (firstVector.GetScalarProduct(secondVector) < 0);
+            return firstVector.GetScalarProduct(secondVector) < 0;
         }
 
-        private bool IsOnSecondSize(Point point)
-        {
-            return GetReversedSegment().IsOnFirstSide(point);
-        }
+        private bool IsOnSecondSize(Point point) => Reversed.IsOnFirstSide(point);
 
-        public Line GetLine()
-        {
-            return new Line(A, B);
-        }
-
-        public bool IntersectsWith(Segment segment)
-        {
-            return !double.IsNaN(Intersect(segment).x) ||
-                (segment.Contains(A) || segment.Contains(B)
-                 || Contains(segment.A) || Contains(segment.B));
-        }
+        public bool IntersectsWith(Segment segment) => !double.IsNaN(Intersect(segment).x) ||
+                                                       segment.Contains(A) ||
+                                                       segment.Contains(B) ||
+                                                       Contains(segment.A) ||
+                                                       Contains(segment.B);
 
         public bool IntersectsWith(Circle circle) // intersects or inside
-        {
-            return circle.Contains(A) || circle.Contains(B);
-        }
+            => circle.Contains(A) || circle.Contains(B);
 
         public Point Intersect(Segment segment)
         {
-            var intersection = GetLine().Intersect(segment.GetLine());
+            var intersection = ContainingLine.Intersect(segment.ContainingLine);
             if (!(Contains(intersection) && segment.Contains(intersection)))
                 return new Point(double.NaN, double.NaN);
             return intersection;
@@ -111,7 +90,7 @@ namespace Geometry
                 return point.GetDistance(A);
             if (IsOnSecondSize(point))
                 return point.GetDistance(B);
-            var line = GetLine();
+            var line = ContainingLine;
             return line.GetDistance(point);
         }
 
@@ -119,22 +98,17 @@ namespace Geometry
         {
             if (IntersectsWith(segment))
                 return 0;
-            return Math.Min(Math.Min(GetDistance(segment.A), GetDistance(segment.B)), 
+            return Math.Min(Math.Min(GetDistance(segment.A), GetDistance(segment.B)),
                 Math.Min(segment.GetDistance(A), segment.GetDistance(B)));
-        }
-
-        public Line GetMiddlePerpendicular()
-        {
-            return new Line(Center, Center + new Line(A, B).GetNormalVector());
         }
 
         public bool Contains(Point point)
         {
-            if (!GetLine().ContainsPoint(point))
+            if (!ContainingLine.ContainsPoint(point))
                 return false;
             if ((point == A) || (point == B))
                 return true;
-            return new Vector(point, A).DifferentDirected(new Vector(point, B));
+            return new Vector(point, A).IsContradirectional(new Vector(point, B));
         }
     }
 }

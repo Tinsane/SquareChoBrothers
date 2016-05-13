@@ -1,78 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Geometry
+﻿namespace Geometry
 {
     public class Circle : Geom, IGeometryFigure
     {
         public double x, y, r;
 
-        public Point Center => GetCentre();
-
         public Circle(double x, double y, double radius)
         {
             this.x = x;
             this.y = y;
-            this.r = radius;
-        }
-
-        public Circle(Point centre, double radius)
-        {
-            x = centre.x;
-            y = centre.y;
             r = radius;
         }
 
-        public Point GetCentre()
+        public Circle(Point center, double radius)
         {
-            return new Point(x, y);
+            x = center.x;
+            y = center.y;
+            r = radius;
         }
 
-        public bool Contains(Point point)
+        public Point Center
         {
-            return Center.GetDistance(point) < r + precision;
+            get { return new Point(x, y); }
+            set
+            {
+                x = value.x;
+                y = value.y;
+            }
         }
 
-        public static Circle operator +(Circle circle, Vector vector)
-        {
-            return new Circle(circle.GetCentre() + vector, circle.r);
-        }
+        public bool IntersectsWith(Circle circle) => Center.GetDistance(circle.Center) < r + circle.r + Precision;
 
-        public static Circle operator -(Circle circle, Vector vector)
-        {
-            return new Circle(circle.GetCentre() - vector, circle.r);
-        }
-
-        public bool IntersectsWith(Circle circle)
-        {
-            return Center.GetDistance(circle.Center) < r + circle.r + precision;
-        }
-        
-        public Line GetIntersectionLine(Circle circle)
-        {
-            return IntersectsWith(circle) ?
-                new Segment(Center, circle.Center).GetMiddlePerpendicular() : null;
-        }
+        public Line GetIntersectionLine(Circle circle) => IntersectsWith(circle)
+            ? new Segment(Center, circle.Center).MiddlePerpendicular
+            : null;
 
         public void Transfer(Vector transferVector)
         {
-            var centre = GetCentre();
-            centre += transferVector;
-            x = centre.x;
-            y = centre.y;
+            var center = Center;
+            center += transferVector;
+            x = center.x;
+            y = center.y;
         }
 
-        public bool IntersectsWith(Rectangle rectangle)
-        {
-            return rectangle.IntersectsWith(this);
-        }
+        public bool IntersectsWith(Rectangle rectangle) => rectangle.IntersectsWith(this);
 
-        public Line GetIntersectionLine(Rectangle rectangle)
-        {
-            return rectangle.GetIntersectionLine(this);
-        }
+        public Line GetIntersectionLine(Rectangle rectangle) => rectangle.GetIntersectionLine(this);
+
+        public bool Contains(Point point) => Center.GetDistance(point) < r + Precision;
+
+        public static Circle operator +(Circle circle, Vector vector) => new Circle(circle.Center + vector, circle.r);
+
+        public static Circle operator -(Circle circle, Vector vector) => new Circle(circle.Center - vector, circle.r);
     }
 }

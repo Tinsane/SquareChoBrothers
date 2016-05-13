@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Geometry
 {
@@ -10,49 +7,41 @@ namespace Geometry
     {
         public static void Transfer(Vector transferVector, Point[] points)
         {
-            for (int i = 0; i < points.Length; ++i)
+            for (var i = 0; i < points.Length; ++i)
                 points[i] = points[i] + transferVector;
         }
 
         public static void Transfer(Vector transferVector, Circle[] circles)
         {
-            for (int i = 0; i < circles.Length; ++i)
-                circles[i] = circles[i] + transferVector;
+            circles = circles.Select(circle => circle + transferVector).ToArray();
         }
 
         public static void Scale(double scale, Point[] points)
         {
-            for (int i = 0; i < points.Length; ++i)
-            {
-                points[i].x *= scale;
-                points[i].y *= scale;
-            }
+            points = points.Select(point => point * scale).ToArray();
         }
 
         public static void Scale(double scale, Circle[] circles)
         {
-            for (int i = 0; i < circles.Length; ++i)
+            foreach (var circle in circles)
             {
-                circles[i].x *= scale;
-                circles[i].y *= scale;
-                circles[i].r *= scale;
+                circle.x *= scale;
+                circle.y *= scale;
+                circle.r *= scale;
             }
         }
 
-        public static Segment CreateSegment(Point A, Point B)
-        {
-            return new Segment(A, B);
-        }
+        public static Segment CreateSegment(Point a, Point b) => new Segment(a, b);
 
-      //public static Rectangle CreateRectangle(Point A, Point B, Point C, Point D)
-      //{
-      //    return new Rectangle(A, B, C, D);
-      //}
-      //
-      //public static bool IsRectangle(Rectangle rect)
-      //{
-      //    return IsRectangle(rect.A, rect.B, rect.C, rect.D);
-      //}
+        //public static Rectangle CreateRectangle(Point A, Point B, Point C, Point D)
+        //{
+        //    return new Rectangle(A, B, C, D);
+        //}
+        //
+        //public static bool IsRectangle(Rectangle rect)
+        //{
+        //    return IsRectangle(rect.A, rect.B, rect.C, rect.D);
+        //}
 
         public static bool IsRectangle(Point A, Point B, Point C, Point D)
         {
@@ -62,10 +51,10 @@ namespace Geometry
 
         public static bool IsRectangle(Point[] points)
         {
-            return ((new Vector(points[0], points[1]) == new Vector(points[3], points[2])) &&
-                (new Vector(points[1], points[2]) == new Vector(points[0], points[3])) &&
-                (Math.Abs(new Vector(points[0], points[1]).GetScalarProduct
-                (new Vector(points[0], points[3]))) < Geom.GetPrecision()));
+            return (new Vector(points[0], points[1]) == new Vector(points[3], points[2])) &&
+                   (new Vector(points[1], points[2]) == new Vector(points[0], points[3])) &&
+                   (Math.Abs(new Vector(points[0], points[1]).GetScalarProduct
+                       (new Vector(points[0], points[3]))) < Geom.GetPrecision());
         }
 
         public static bool PointInInsideSegment(Point point, Segment segment)
@@ -75,21 +64,21 @@ namespace Geometry
 
         public static Point[] OrderClockwise(params Point[] points)
         {
-            for (int i = 0; i < points.Length; ++i)
+            for (var i = 0; i < points.Length; ++i)
                 if (points[0] > points[i])
                 {
-                    Point forSwap = points[0];
+                    var forSwap = points[0];
                     points[0] = points[i];
                     points[i] = forSwap;
                 }
-            for (int i = 1; i < points.Length; ++i)
-                for (int j = i + 1; j < points.Length; ++j)
+            for (var i = 1; i < points.Length; ++i)
+                for (var j = i + 1; j < points.Length; ++j)
                 {
-                    Vector toI = new Vector(points[0], points[i]);
-                    Vector toJ = new Vector(points[0], points[j]);
+                    var toI = new Vector(points[0], points[i]);
+                    var toJ = new Vector(points[0], points[j]);
                     if (toI.GetDotProduct(toJ) > 0)
                     {
-                        Point forSwap = points[i];
+                        var forSwap = points[i];
                         points[i] = points[j];
                         points[j] = forSwap;
                     }

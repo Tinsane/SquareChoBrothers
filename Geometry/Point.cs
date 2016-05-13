@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Geometry
 {
@@ -17,65 +14,10 @@ namespace Geometry
             this.y = y;
         }
 
-        public Point(Point A)
+        public Point(Point a)
         {
-            x = A.x;
-            y = A.y;
-        }
-
-        public double GetDistance(Point point)
-        {
-            var vector = new Vector(this, point);
-            return vector.GetLength();
-        }
-
-        public bool IsOnSegment(Segment segment)
-        {
-            return segment.Contains(this);
-        }
-
-        /// <summary>
-        /// Вращает исходную точку относительно принимаемой методом точки на угол, заданный синусом
-        /// и косинусом.
-        /// </summary>
-        public void Rotate(Point point, double sin, double cos)
-        {
-            if (this == point)
-                return;
-            Vector toPointVector = new Vector(point, this);
-            toPointVector.Rotate(sin, cos);
-            x = point.x + toPointVector.x;
-            y = point.y + toPointVector.y;
-        }
-
-        /// <summary>
-        /// Возвращает исходную точку, повёрнутую относительно принимаемой методом точки на угол,
-        ///  заданный в синусом и косинусом.
-        /// </summary>
-        public Point GetRotated(Point point, double sin, double cos)
-        {
-            if (this == point)
-                return new Point(x, y);
-            Vector toPointVector = new Vector(point, this);
-            toPointVector.Rotate(sin, cos);
-            return point + toPointVector;
-        }
-
-        /// <summary>
-        /// Вращает исходную точку относительно принимаемой методом точки на угол, заданный в радианах.
-        /// </summary>
-        public void Rotate(Point point, double angle)
-        {
-            Rotate(point, Math.Sin(angle), Math.Cos(angle));
-        }
-
-        /// <summary>
-        /// Возвращает исходную точку, повёрнутую относительно принимаемой методом точки на угол,
-        ///  заданный в радианах.
-        /// </summary>
-        public Point GetRotated(Point point, double angle)
-        {
-            return GetRotated(point, Math.Sin(angle), Math.Cos(angle));
+            x = a.x;
+            y = a.y;
         }
 
         public int CompareTo(Point other)
@@ -85,66 +27,84 @@ namespace Geometry
             return this < other ? -1 : 1;
         }
 
-        public static Point operator +(Point point, Vector vector)
+        public double GetDistance(Point point) => new Vector(this, point).Length;
+
+        public bool IsOnSegment(Segment segment) => segment.Contains(this);
+
+        /// <summary>
+        ///     Вращает исходную точку относительно принимаемой методом точки на угол, заданный синусом
+        ///     и косинусом.
+        /// </summary>
+        public void Rotate(Point point, double sin, double cos)
         {
-            return new Point(point.x + vector.x, point.y + vector.y);
+            if (this == point)
+                return;
+            var toPointVector = new Vector(point, this);
+            toPointVector.Rotate(sin, cos);
+            x = point.x + toPointVector.x;
+            y = point.y + toPointVector.y;
         }
 
-        public static Point operator -(Point point, Vector vector)
+        /// <summary>
+        ///     Возвращает исходную точку, повёрнутую относительно принимаемой методом точки на угол,
+        ///     заданный в синусом и косинусом.
+        /// </summary>
+        public Point GetRotated(Point point, double sin, double cos)
         {
-            return new Point(point.x - vector.x, point.y - vector.y);
+            if (this == point)
+                return new Point(x, y);
+            var toPointVector = new Vector(point, this);
+            toPointVector.Rotate(sin, cos);
+            return point + toPointVector;
         }
 
-        public static Point operator *(Point point, double coeff)
-        {
-            return new Point(point.x * coeff, point.y * coeff);
-        }
+        /// <summary>
+        ///     Вращает исходную точку относительно принимаемой методом точки на угол, заданный в радианах.
+        /// </summary>
+        public void Rotate(Point point, double angle) => Rotate(point, Math.Sin(angle), Math.Cos(angle));
 
-        public static Point operator /(Point point, double coeff)
-        {
-            return point * (1 / coeff);
-        }
+        /// <summary>
+        ///     Возвращает исходную точку, повёрнутую относительно принимаемой методом точки на угол,
+        ///     заданный в радианах.
+        /// </summary>
+        public Point GetRotated(Point point, double angle) => GetRotated(point, Math.Sin(angle), Math.Cos(angle));
 
-        public static bool operator ==(Point A, Point B)
+        public static Point operator +(Point point, Vector vector) => new Point(point.x + vector.x, point.y + vector.y);
+
+        public static Point operator -(Point point, Vector vector) => new Point(point.x - vector.x, point.y - vector.y);
+
+        public static Point operator *(Point point, double coeff) => new Point(point.x*coeff, point.y*coeff);
+
+        public static Point operator /(Point point, double coeff) => point*(1/coeff);
+
+        public static bool operator ==(Point a, Point b)
         {
-            if (Object.ReferenceEquals(A, null) && Object.ReferenceEquals(B, null))
+            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
                 return true;
-            if (Object.ReferenceEquals(A, null) || Object.ReferenceEquals(B, null))
+            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
                 return false;
-            return ((Math.Abs(A.x - B.x) < GetPrecision()) && (Math.Abs(A.y - B.y) < GetPrecision()));
+            return (Math.Abs(a.x - b.x) < GetPrecision()) && (Math.Abs(a.y - b.y) < GetPrecision());
         }
 
-        public static bool operator !=(Point A, Point B)
+        public static bool operator !=(Point a, Point b) => !(a == b);
+
+        public static bool operator <(Point a, Point b)
         {
-            return !(A == B);
+            return (a.x < b.x - GetPrecision()) ||
+                   ((Math.Abs(a.x - b.x) < GetPrecision()) && (a.y < b.y - GetPrecision()));
         }
 
-        public static bool operator < (Point A, Point B)
-        {
-            return ((A.x < B.x - GetPrecision()) || 
-                ((Math.Abs(A.x - B.x) < GetPrecision()) && (A.y < B.y - GetPrecision())));
-        }
-
-        public static bool operator > (Point A, Point B)
-        {
-            return B < A;
-        }
+        public static bool operator >(Point a, Point b) => b < a;
 
         public override bool Equals(object obj)
         {
             if (!(obj is Point))
                 return false;
-            return (Point)obj == this;
+            return (Point) obj == this;
         }
 
-        public static implicit operator Vector(Point point)
-        {
-            return new Vector(point.x, point.y);
-        }
+        public static implicit operator Vector(Point point) => new Vector(point.x, point.y);
 
-        public static implicit operator System.Drawing.PointF(Point point)
-        {
-            return new System.Drawing.PointF((float) point.x, (float) point.y);
-        }
+        public static implicit operator PointF(Point point) => new PointF((float) point.x, (float) point.y);
     }
 }

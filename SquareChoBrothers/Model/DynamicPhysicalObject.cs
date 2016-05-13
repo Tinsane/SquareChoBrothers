@@ -26,5 +26,9 @@ namespace SquareChoBrothers.Model
             ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,
                 (float) GraphicalPosition.A.y);
         }
+
+        public void Reflect(Line line)
+        {
+        }
     }
 }

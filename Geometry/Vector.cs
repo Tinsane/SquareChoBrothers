@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Geometry
 {
@@ -15,95 +11,66 @@ namespace Geometry
             this.x = x;
             this.y = y;
         }
-        
-        public Vector(Point A, Point B)
+
+        public Vector(Point a, Point b)
         {
-            x = B.x - A.x;
-            y = B.y - A.y;
+            x = b.x - a.x;
+            y = b.y - a.y;
         }
+
+        public double PolarAngle => Math.Atan2(y, x);
+
+        public double Length => Math.Sqrt(x*x + y*y);
+
+        public bool IsZero => this == new Vector(0, 0);
+
+        public Vector Reversed => new Vector(-x, -y);
 
         public void Normalize(double newLength)
         {
-            double coefficient = newLength / GetLength();
+            var coefficient = newLength/Length;
             x *= coefficient;
             y *= coefficient;
         }
 
-        public bool Collinear(Vector vector)
-        {
-            return Math.Abs(GetDotProduct(vector)) < GetPrecision();
-        }
+        public bool IsCollinear(Vector vector) => Math.Abs(GetDotProduct(vector)) < GetPrecision();
 
-        public bool SameDirected(Vector vector) // TODO: rename
-        {
-            return (Collinear(vector) && (GetScalarProduct(vector) > 0));
-        }
+        public bool IsCodirectional(Vector vector) => IsCollinear(vector) && (GetScalarProduct(vector) > 0);
 
-        public bool DifferentDirected(Vector vector) // TODO: rename
-        {
-            return (Collinear(vector) && (GetScalarProduct(vector) < 0));
-        }
+        public bool IsContradirectional(Vector vector) => IsCollinear(vector) && (GetScalarProduct(vector) < 0);
 
         /// <summary>
-        /// Вращает вектор против часовой стрелки на угол, заданный синусом и косинусом.
+        ///     Вращает вектор против часовой стрелки на угол, заданный синусом и косинусом.
         /// </summary>
         public void Rotate(double sin, double cos)
         {
-            double oldX = x;
-            double oldY = y;
-            x = oldX * cos - oldY * sin;
-            y = oldX * sin + oldY * cos;
+            var oldX = x;
+            var oldY = y;
+            x = oldX*cos - oldY*sin;
+            y = oldX*sin + oldY*cos;
         }
 
         /// <summary>
-        /// Возвращает исходный вектор, повёрнутый против 
-        /// часовой стрелки на угол, заданный синусом и косинусом.
+        ///     Возвращает исходный вектор, повёрнутый против
+        ///     часовой стрелки на угол, заданный синусом и косинусом.
         /// </summary>
-        public Vector GetRotated(double sin, double cos)
-        {
-            return new Vector(x * cos - y * sin, x * sin + y * cos);
-        }
+        public Vector GetRotated(double sin, double cos) => new Vector(x*cos - y*sin, x*sin + y*cos);
 
         /// <summary>
-        /// Вращает вектор против часовой стрелки на угол, заданный в радианах.
+        ///     Вращает вектор против часовой стрелки на угол, заданный в радианах.
         /// </summary>
-        public void Rotate(double angle)
-        {
-            Rotate(Math.Sin(angle), Math.Cos(angle));
-        }
+        public void Rotate(double angle) => Rotate(Math.Sin(angle), Math.Cos(angle));
 
         /// <summary>
-        /// Возвращает исходный вектор, повёрнутый против часовой стрелки на угол, заданный в радианах.
+        ///     Возвращает исходный вектор, повёрнутый против часовой стрелки на угол, заданный в радианах.
         /// </summary>
-        public Vector GetRotated(double angle)
-        {
-            return GetRotated(Math.Sin(angle), Math.Cos(angle));
-        }
+        public Vector GetRotated(double angle) => GetRotated(Math.Sin(angle), Math.Cos(angle));
 
-        public double GetScalarProduct(Vector vector)
-        {
-            return x * vector.x + y * vector.y;
-        }
+        public double GetScalarProduct(Vector vector) => x*vector.x + y*vector.y;
 
-        public double GetDotProduct(Vector vector)
-        {
-            return x * vector.y - y * vector.x;
-        }
+        public double GetDotProduct(Vector vector) => x*vector.y - y*vector.x;
 
-        public double GetPolarAngle()
-        {
-            return Math.Atan2(y, x);
-        }
-
-        public double GetAngle(Vector vector)
-        {
-            return Math.Atan2(GetDotProduct(vector), GetScalarProduct(vector));
-        }
-
-        public double GetLength()
-        {
-            return Math.Sqrt(x * x + y * y);
-        }
+        public double GetAngle(Vector vector) => Math.Atan2(GetDotProduct(vector), GetScalarProduct(vector));
 
         public void Reverse()
         {
@@ -111,49 +78,25 @@ namespace Geometry
             y = -y;
         }
 
-        public bool IsZeroVector()
-        {
-            return this == new Vector(0, 0);
-        }
+        public static Vector operator +(Vector a, Vector b) => new Vector(a.x + b.x, a.y + b.y);
 
-        public Vector GetReversed()
-        {
-            return new Vector(-x, -y);
-        }
+        public static Vector operator -(Vector a, Vector b) => new Vector(a.x - b.x, a.y - b.y);
 
-        public static Vector operator +(Vector a, Vector b)
-        {
-            return new Vector(a.x + b.x, a.y + b.y);
-        }
+        public static Vector operator -(Vector a) => new Vector(0, 0) - a;
 
-        public static Vector operator -(Vector a, Vector b)
-        {
-            return new Vector(a.x - b.x, a.y - b.y);
-        }
+        public static Vector operator *(Vector a, double t) => new Vector(a.x*t, a.y*t);
 
-        public static Vector operator -(Vector a)
-        {
-            return new Vector(0, 0) - a;
-        }
-
-        public static Vector operator *(Vector a, double t)
-        {
-            return new Vector(a.x * t, a.y * t);
-        }
-
-        public static Vector operator /(Vector a, double t)
-        {
-            return a * (1 / t);
-        }
+        public static Vector operator /(Vector a, double t) => a*(1/t);
 
         public static bool operator ==(Vector a, Vector b)
         {
-            return ((Math.Abs(a.x - b.x) < GetPrecision()) && (Math.Abs(a.y - b.y) < GetPrecision()));
+            if (ReferenceEquals(a, null))
+                return ReferenceEquals(b, null);
+            if (ReferenceEquals(b, null))
+                return false;
+            return (Math.Abs(a.x - b.x) < GetPrecision()) && (Math.Abs(a.y - b.y) < GetPrecision());
         }
 
-        public static bool operator !=(Vector a, Vector b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(Vector a, Vector b) => !(a == b);
     }
 }

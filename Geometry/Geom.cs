@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Geometry
+﻿namespace Geometry
 {
     public class Geom
     {
-        public static double precision = 1e-6;
+        public static double Precision = 1e-6;
 
         public static double GetPrecision()
         {
-            return precision;
+            return Precision;
         }
 
-        public static void SetPrecision(double precisionToSet)
+        public static void SetPrecision(double precision)
         {
-            precision = precisionToSet;
+            Precision = precision;
         }
     }
-
 }
