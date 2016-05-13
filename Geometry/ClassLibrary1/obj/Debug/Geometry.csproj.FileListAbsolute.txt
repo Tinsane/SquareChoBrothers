@@ -1,4 +1,0 @@
-c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\ClassLibrary1\bin\Debug\ClassLibrary1.dll
-c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
-c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\ClassLibrary1\obj\Debug\ClassLibrary1.dll
-c:\Users\ISmir\documents\visual studio 2015\Projects\Geometry\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
