@@ -47,26 +47,25 @@ namespace Geometry
 
         public Point Center => (A + C)/2;
 
-        public bool IntersectsWith(Circle circle) =>
+        public bool StrictlyIntersectsWith(Circle circle) =>
             Segments.Any(x => x.IntersectsWith(circle)) ||
             Contains(circle.Center) ||
             circle.Contains(Center);
 
-        public Line GetIntersectionLine(Circle circle) => !IntersectsWith(circle)
+        public Line GetIntersectionLine(Circle circle) => !StrictlyIntersectsWith(circle)
             ? null
             : GetIntersectionLine(new Rectangle(circle.Center, circle.r*2, circle.r*2));
 
         public void Transfer(Vector transferVector)
         {
-            for (var i = 0; i < points.Length; ++i)
-                points[i] += transferVector;
+            points = points.Select(point => point + transferVector).ToArray();
         }
 
-        public bool IntersectsWith(Rectangle rectangle) => Segments.Any(rectangle.IntersectsWith);
+        public bool StrictlyIntersectsWith(Rectangle rectangle) => Segments.Any(rectangle.IntersectsWith);
 
         public Line GetIntersectionLine(Rectangle rectangle)
         {
-            if (!IntersectsWith(rectangle))
+            if (!StrictlyIntersectsWith(rectangle))
                 return null;
             var coeffX = Math.Abs(Center.x - rectangle.Center.x)/(Width + rectangle.Width);
             var coeffY = Math.Abs(Center.y - rectangle.Center.y)/(Height + rectangle.Height);
@@ -88,12 +87,12 @@ namespace Geometry
                 return true;
             var angle = points.Select((t, i) =>
                 new Vector(point, t).GetAngle(new Vector(point, points[(i + 1)%4]))).Sum();
-            return Math.Abs(Math.Abs(angle) - Math.PI*2) < Precision;
+            return Math.Abs(angle).IsDoubleEqual(Math.PI*2);
         }
 
         public bool IntersectsWith(Segment segment) =>
-            Contains(segment.A)
-            || Contains(segment.B) ||
+            Contains(segment.A) ||
+            Contains(segment.B) ||
             Segments.Any(s => s.IntersectsWith(segment));
     }
 }

@@ -83,15 +83,15 @@ namespace Geometry
                 return true;
             if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
                 return false;
-            return (Math.Abs(a.x - b.x) < GetPrecision()) && (Math.Abs(a.y - b.y) < GetPrecision());
+            return a.x.IsDoubleEqual(b.x) && a.y.IsDoubleEqual(b.y);
         }
 
         public static bool operator !=(Point a, Point b) => !(a == b);
 
         public static bool operator <(Point a, Point b)
         {
-            return (a.x < b.x - GetPrecision()) ||
-                   ((Math.Abs(a.x - b.x) < GetPrecision()) && (a.y < b.y - GetPrecision()));
+            return a.x.IsDoubleLess(b.x) ||
+                   a.x.IsDoubleEqual(b.x) && a.y.IsDoubleLess(b.y);
         }
 
         public static bool operator >(Point a, Point b) => b < a;

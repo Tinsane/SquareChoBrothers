@@ -18,7 +18,7 @@ namespace Geometry
 
         public Vector GetNormalVector => new Vector(a, b);
 
-        public Point PointOnLine => Math.Abs(b) < GetPrecision() ? new Point(-c/a, 0) : new Point(0, -c/b);
+        public Point PointOnLine => b.IsDoubleEqual(0) ? new Point(-c/a, 0) : new Point(0, -c/b);
 
         public double GetDistance(Point point) => Math.Abs((a*point.x + b*point.y + c)/Math.Sqrt(a*a + b*b));
 
@@ -27,7 +27,7 @@ namespace Geometry
         /// </summary>
         public double GetValueOfLineEquation(Point point) => a*point.x + b*point.y + c;
 
-        public bool ContainsPoint(Point point) => Math.Abs(GetValueOfLineEquation(point)) < GetPrecision();
+        public bool ContainsPoint(Point point) => GetValueOfLineEquation(point).IsDoubleEqual(0);
 
         public bool IsParallel(Line line)
         {
@@ -35,7 +35,7 @@ namespace Geometry
             var secondLineDirectionVector = line.DirectionVector;
             firstLineDirectionVector.Normalize(secondLineDirectionVector.Length);
             if (!(firstLineDirectionVector - secondLineDirectionVector).IsZero)
-                firstLineDirectionVector = firstLineDirectionVector*-1.0;
+                firstLineDirectionVector = -firstLineDirectionVector;
             var difference = firstLineDirectionVector - secondLineDirectionVector;
             return difference.IsZero;
         }

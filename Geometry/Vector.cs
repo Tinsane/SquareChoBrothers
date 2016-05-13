@@ -33,11 +33,11 @@ namespace Geometry
             y *= coefficient;
         }
 
-        public bool IsCollinear(Vector vector) => Math.Abs(GetDotProduct(vector)) < GetPrecision();
+        public bool IsCollinear(Vector vector) => Math.Abs(GetDotProduct(vector)).IsDoubleEqual(0);
 
-        public bool IsCodirectional(Vector vector) => IsCollinear(vector) && (GetScalarProduct(vector) > 0);
+        public bool IsCodirectional(Vector vector) => IsCollinear(vector) && GetScalarProduct(vector).IsDoubleGreater(0);
 
-        public bool IsContradirectional(Vector vector) => IsCollinear(vector) && (GetScalarProduct(vector) < 0);
+        public bool IsContradirectional(Vector vector) => IsCollinear(vector) && GetScalarProduct(vector).IsDoubleLess(0);
 
         /// <summary>
         ///     Вращает вектор против часовой стрелки на угол, заданный синусом и косинусом.
@@ -88,7 +88,7 @@ namespace Geometry
                 return ReferenceEquals(b, null);
             if (ReferenceEquals(b, null))
                 return false;
-            return (Math.Abs(a.x - b.x) < GetPrecision()) && (Math.Abs(a.y - b.y) < GetPrecision());
+            return a.x.IsDoubleEqual(b.x) && a.y.IsDoubleEqual(b.y);
         }
 
         public static bool operator !=(Vector a, Vector b) => !(a == b);
