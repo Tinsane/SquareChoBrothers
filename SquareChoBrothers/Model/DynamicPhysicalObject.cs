@@ -31,14 +31,16 @@ namespace SquareChoBrothers.Model
                         if (!movedHitBox.StrictlyIntersectsWith(circle)
                             || (HitBox is Circle && HitBox as Circle == circle)) continue;
                         velocityChanged = true;
-                        Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(circle));
+                        Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(circle));
+                        //Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(circle));
                         continue;
                     }
                     var rectangle = reflectable as Rectangle;
                     if (!movedHitBox.StrictlyIntersectsWith(rectangle) ||
                         (HitBox is Rectangle && HitBox as Rectangle == rectangle)) continue;
                     velocityChanged = true;
-                    Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(rectangle));
+                    Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(rectangle));
+                    //Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(rectangle));
                 }
                 if (!velocityChanged)
                     return;
@@ -48,12 +50,16 @@ namespace SquareChoBrothers.Model
         public void Update(double deltaT, List<IGeometryFigure> reflectables)
         {
             deltaT /= TimeSpan.TicksPerSecond;
-            Velocity += Physics.GravityVector*deltaT;
+            const int Coef = 100;
+            for (var i = 0; i < Coef; ++i)
+            {
+                Velocity += Physics.GravityVector*deltaT/ Coef;
 
-            Reflect(deltaT, reflectables);
+                Reflect(deltaT, reflectables);
 
-            GraphicalPosition.Transfer(Velocity*deltaT);
-            HitBox.Transfer(Velocity*deltaT);
+                GraphicalPosition.Transfer(Velocity*deltaT/ Coef);
+                HitBox.Transfer(Velocity*deltaT/ Coef);
+            }
             ((TextureBrush) Brush).ResetTransform();
             ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,
                 (float) GraphicalPosition.A.y);

@@ -96,8 +96,7 @@ namespace Geometry
 
         public Vector GetReflected(Line line)
         {
-            var directionVector = line.DirectionVector;
-            var collinearComponent = directionVector.GetNormalized(directionVector.GetScalarProduct(this));
+            var collinearComponent = GetProjection(line);
             var normalComponent = this - collinearComponent;
             return collinearComponent - normalComponent;
         }

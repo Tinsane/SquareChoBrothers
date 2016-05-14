@@ -53,7 +53,7 @@ namespace Geometry
 
         public bool StrictlyIntersectsWith(Circle circle) =>
             Segments.Any(x => x.IntersectsWith(circle)) ||
-            Contains(circle.Center) ||
+            StrictlyContains(circle.Center) ||
             circle.Contains(Center);
 
         public Line GetIntersectionLine(Circle circle) => !StrictlyIntersectsWith(circle)
@@ -65,7 +65,7 @@ namespace Geometry
             points = points.Select(point => point + transferVector).ToArray();
         }
 
-        public bool StrictlyIntersectsWith(Rectangle rectangle) => Points.Any(rectangle.Contains) || rectangle.Points.Any(Contains);
+        public bool StrictlyIntersectsWith(Rectangle rectangle) => Points.Any(rectangle.StrictlyContains) || rectangle.Points.Any(StrictlyContains);
 
         public Line GetIntersectionLine(Rectangle rectangle)
         {
@@ -90,18 +90,18 @@ namespace Geometry
 
         public Rectangle GetTransfered(Vector transferVector) => new Rectangle(Center + transferVector, Width, Height);
 
-        public bool Contains(Point point)
+        public bool StrictlyContains(Point point)
         {
             if (Segments.Any(x => x.Contains(point)))
-                return true;
+                return false;
             var angle = points.Select((t, i) =>
                 new Vector(point, t).GetAngle(new Vector(point, points[(i + 1)%4]))).Sum();
             return Math.Abs(angle).IsDoubleEqual(Math.PI*2);
         }
 
         public bool IntersectsWith(Segment segment) =>
-            Contains(segment.A) ||
-            Contains(segment.B) ||
+            StrictlyContains(segment.A) ||
+            StrictlyContains(segment.B) ||
             Segments.Any(s => s.IntersectsWith(segment));
     }
 }
