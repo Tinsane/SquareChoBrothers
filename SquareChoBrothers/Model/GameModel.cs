@@ -5,7 +5,6 @@ using System.Linq;
 using System.Timers;
 using Geometry;
 using SquareChoBrothers.Model.Factories;
-using Newtonsoft.Json;
 using SquareChoBrothers.Properties;
 using Point = Geometry.Point;
 using Rectangle = Geometry.Rectangle;
@@ -14,7 +13,7 @@ namespace SquareChoBrothers.Model
 {
     public class GameModel
     {
-        private const double UpdateInterval = 20;
+        private const double UpdateInterval = 5;
         public const double CellSize = 50;
         public Picture Background;
 
