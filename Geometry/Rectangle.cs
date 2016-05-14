@@ -36,9 +36,9 @@ namespace Geometry
         /// </summary>
         public Point D => new Point(points[3]);
 
-        public double Width => A.GetDistance(B);
+        public double Width => B.GetDistance(C);
 
-        public double Height => B.GetDistance(C);
+        public double Height => A.GetDistance(B);
 
         public double SizeX => Width;
 
@@ -71,9 +71,9 @@ namespace Geometry
         {
             if (!StrictlyIntersectsWith(rectangle))
                 return null;
-            var coeffX = Math.Abs(Center.x - rectangle.Center.x)/(Width + rectangle.Width);
-            var coeffY = Math.Abs(Center.y - rectangle.Center.y)/(Height + rectangle.Height);
-            if (coeffX < coeffY)
+            var coeffX = Math.Abs(Center.x - rectangle.Center.x)/(SizeX + rectangle.SizeX);
+            var coeffY = Math.Abs(Center.y - rectangle.Center.y)/(SizeY + rectangle.SizeY);
+            if (coeffX > coeffY)
                 return A.GetDistance(rectangle.Center) < C.GetDistance(rectangle.Center)
                     ? new Line(A, B)
                     : new Line(C, D);

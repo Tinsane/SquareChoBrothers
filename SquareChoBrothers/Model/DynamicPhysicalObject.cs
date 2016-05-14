@@ -31,14 +31,14 @@ namespace SquareChoBrothers.Model
                         if (!movedHitBox.StrictlyIntersectsWith(circle)
                             || (HitBox is Circle && HitBox as Circle == circle)) continue;
                         velocityChanged = true;
-                        Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(circle));
+                        Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(circle));
                         continue;
                     }
                     var rectangle = reflectable as Rectangle;
                     if (!movedHitBox.StrictlyIntersectsWith(rectangle) ||
                         (HitBox is Rectangle && HitBox as Rectangle == rectangle)) continue;
                     velocityChanged = true;
-                    Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(rectangle));
+                    Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(rectangle));
                 }
                 if (!velocityChanged)
                     return;

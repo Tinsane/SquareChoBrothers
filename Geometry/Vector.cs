@@ -94,7 +94,7 @@ namespace Geometry
 
         public static bool operator !=(Vector a, Vector b) => !(a == b);
 
-        public Vector Reflect(Line line)
+        public Vector GetReflected(Line line)
         {
             var directionVector = line.DirectionVector;
             var collinearComponent = directionVector.GetNormalized(directionVector.GetScalarProduct(this));

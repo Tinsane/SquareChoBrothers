@@ -6,37 +6,49 @@ using Point = Geometry.Point;
 using Rectangle = Geometry.Rectangle;
 using Geometry;
 using System.Linq;
+using SquareChoBrothers.Model.Factories;
 
 namespace SquareChoBrothers.Model
 {
     public class GameModel
     {
-        private const double UpdateInterval = 10;
+        private const double UpdateInterval = 1;
+        public const double CellSize = 50;
         public Action EndGame { get; private set; }
         private Action draw;
         public Picture Background;
-        public Picture[] Pictures;
-        public Hero[] Heroes;
-        public Monster[] Monsters;
-        public Terrain[] Terrains;
+        public List<Picture> Pictures = new List<Picture>();
+        public List<Hero> Heroes = new List<Hero>();
+        public List<Monster> Monsters = new List<Monster>();
+        public List<Terrain> Terrains = new List<Terrain>();
         private double previousSignalTime;
+
+        public MonsterFactory monsterFactory =
+            new MonsterFactory(new TextureBrush(SquareChoBrothers.Properties.Resources.Monster_50));
+
+        public TerrainFactory terrainFactory =
+            new TerrainFactory(new TextureBrush(SquareChoBrothers.Properties.Resources.Terrain1));
+
+        public HeroFactory hero1Factory = new HeroFactory(new TextureBrush(SquareChoBrothers.Properties.Resources.Hero1_50));
+
+        public HeroFactory hero2Factory = new HeroFactory(new TextureBrush(SquareChoBrothers.Properties.Resources.Hero2_50));
 
         public GameModel()
         {
-            Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), Brushes.Maroon);
-            Heroes = new Hero[1];
-            Monsters = new Monster[0];
-            Terrains = new Terrain[1];
-            Terrains[0] = new Terrain(new Rectangle(new Point(400, 200), 200, 50), Brushes.Green);
-            Pictures = new Picture[0];
-            Heroes[0] = new Hero(new Rectangle(new Point(50, 50), 50, 50),
-                new TextureBrush(Properties.Resources.Hero1));
+            Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4),
+                new TextureBrush(SquareChoBrothers.Properties.Resources.background));
+            Terrains.Add(terrainFactory.GetNext(new Rectangle(new Point(25, 300), 50, 600)));
+            Terrains.Add(terrainFactory.GetNext(new Rectangle(new Point(300, 625), 600, 50)));
+            Terrains.Add(terrainFactory.GetNext(new Rectangle(new Point(625, 300), 50, 600)));
+            Terrains.Add(terrainFactory.GetNext(new Rectangle(new Point(325, 25), 600, 50)));
+            Heroes.Add(hero1Factory.GetNext(new Square(new Point(100, 100), CellSize)));
         }
 
-        public GameModel(Terrain[] terrains, Hero[] heroes,
-            Monster[] monsters, Picture[] pictures)
+        public GameModel(List<Terrain> terrains, List<Hero> heroes,
+            List<Monster> monsters, List<Picture> pictures)
         {
-            Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), Brushes.Maroon);
+            Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), 
+                new TextureBrush(SquareChoBrothers.Properties.Resources.background));
             Heroes = heroes;
             Monsters = monsters;
             Terrains = terrains;

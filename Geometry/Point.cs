@@ -106,5 +106,7 @@ namespace Geometry
         public static implicit operator Vector(Point point) => new Vector(point.x, point.y);
 
         public static implicit operator PointF(Point point) => new PointF((float) point.x, (float) point.y);
+
+        public override string ToString() => String.Format("x={0} y={1}", x, y);
     }
 }
