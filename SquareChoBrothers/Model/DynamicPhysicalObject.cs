@@ -25,20 +25,10 @@ namespace SquareChoBrothers.Model
                 var velocityChanged = false;
                 foreach (var reflectable in reflectables)
                 {
-                    if (reflectable is Circle)
-                    {
-                        var circle = reflectable as Circle;
-                        if (!movedHitBox.StrictlyIntersectsWith(circle)
-                            || (HitBox is Circle && HitBox as Circle == circle)) continue;
-                        velocityChanged = true;
-                        Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(circle));
-                        continue;
-                    }
-                    var rectangle = reflectable as Rectangle;
-                    if (!movedHitBox.StrictlyIntersectsWith(rectangle) ||
-                        (HitBox is Rectangle && HitBox as Rectangle == rectangle)) continue;
+                    if (!movedHitBox.StrictlyIntersectsWith(reflectable) ||
+                        (HitBox is Rectangle && HitBox as Rectangle == reflectable)) continue;
                     velocityChanged = true;
-                    Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(rectangle));
+                    Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(reflectable));
                 }
                 if (!velocityChanged)
                     return;

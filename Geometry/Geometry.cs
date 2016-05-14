@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Geometry
 {
-    public class Geometry
+    public static class Geometry
     {
         public static void Transfer(Vector transferVector, Point[] points)
         {
@@ -29,6 +29,22 @@ namespace Geometry
                 circle.y *= scale;
                 circle.r *= scale;
             }
+        }
+
+        public static bool StrictlyIntersectsWith(this IGeometryFigure a, IGeometryFigure b)
+        {
+            var aType = a.GetType();
+            var bType = b.GetType();
+            var intersectMethod = aType.GetMethod("StrictlyIntersectsWith", new Type[] {bType});
+            return (bool)intersectMethod.Invoke(a, new object[] {b});
+        }
+
+        public static Line GetIntersectionLine(this IGeometryFigure a, IGeometryFigure b)
+        {
+            var aType = a.GetType();
+            var bType = b.GetType();
+            var getLineMethod = aType.GetMethod("GetIntersectionLine", new Type[] {bType});
+            return (Line)getLineMethod.Invoke(a, new object[] { b });
         }
 
         public static Segment CreateSegment(Point a, Point b) => new Segment(a, b);

@@ -7,12 +7,13 @@ using Rectangle = Geometry.Rectangle;
 using Geometry;
 using System.Linq;
 using SquareChoBrothers.Model.Factories;
+using Newtonsoft.Json;
 
 namespace SquareChoBrothers.Model
 {
     public class GameModel
     {
-        private const double UpdateInterval = 1;
+        private const double UpdateInterval = 5;
         public const double CellSize = 50;
         public Action EndGame { get; private set; }
         private Action draw;
