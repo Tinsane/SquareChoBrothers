@@ -11,12 +11,13 @@ using SquareChoBrothers.Model.Factories;
 using SquareChoBrothers.View;
 using Point = Geometry.Point;
 using Rectangle = Geometry.Rectangle;
+using Newtonsoft.Json;
 
 namespace MapBuilder.Model
 {
     public class BuilderModel
     {
-        public const double squareSize = 50;
+        public const double squareSize = GameModel.CellSize;
         public static readonly Vector Up = new Vector(0, -squareSize);
         public static readonly Vector Down = -Up;
         public static readonly Vector Left = new Vector(-squareSize, 0);
