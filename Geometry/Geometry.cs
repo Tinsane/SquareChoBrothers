@@ -31,11 +31,11 @@ namespace Geometry
             }
         }
 
-        public static bool StrictlyIntersectsWith(this IGeometryFigure a, IGeometryFigure b)
+        public static bool IntersectsWith(this IGeometryFigure a, IGeometryFigure b)
         {
             var aType = a.GetType();
             var bType = b.GetType();
-            var intersectMethod = aType.GetMethod("StrictlyIntersectsWith", new Type[] {bType});
+            var intersectMethod = aType.GetMethod("IntersectsWith", new Type[] {bType});
             return (bool)intersectMethod.Invoke(a, new object[] {b});
         }
 

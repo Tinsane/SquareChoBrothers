@@ -51,12 +51,12 @@ namespace Geometry
 
         public Point Center => (A + C)/2;
 
-        public bool StrictlyIntersectsWith(Circle circle) =>
+        public bool IntersectsWith(Circle circle) =>
             Segments.Any(x => x.IntersectsWith(circle)) ||
-            StrictlyContains(circle.Center) ||
+            Contains(circle.Center) ||
             circle.Contains(Center);
 
-        public Line GetIntersectionLine(Circle circle) => !StrictlyIntersectsWith(circle)
+        public Line GetIntersectionLine(Circle circle) => !IntersectsWith(circle)
             ? null
             : GetIntersectionLine(new Rectangle(circle.Center, circle.r*2, circle.r*2));
 
@@ -65,11 +65,11 @@ namespace Geometry
             points = points.Select(point => point + transferVector).ToArray();
         }
 
-        public bool StrictlyIntersectsWith(Rectangle rectangle) => Points.Any(rectangle.StrictlyContains) || rectangle.Points.Any(StrictlyContains);
+        public bool IntersectsWith(Rectangle rectangle) => Points.Any(rectangle.Contains) || rectangle.Points.Any(Contains);
 
         public Line GetIntersectionLine(Rectangle rectangle)
         {
-            if (!StrictlyIntersectsWith(rectangle))
+            if (!IntersectsWith(rectangle))
                 return null;
             var coeffX = Math.Abs(Center.x - rectangle.Center.x)/(SizeX + rectangle.SizeX);
             var coeffY = Math.Abs(Center.y - rectangle.Center.y)/(SizeY + rectangle.SizeY);
@@ -90,18 +90,18 @@ namespace Geometry
 
         public Rectangle GetTransfered(Vector transferVector) => new Rectangle(Center + transferVector, Width, Height);
 
-        public bool StrictlyContains(Point point)
+        public bool Contains(Point point)
         {
             if (Segments.Any(x => x.Contains(point)))
-                return false;
+                return true;
             var angle = points.Select((t, i) =>
                 new Vector(point, t).GetAngle(new Vector(point, points[(i + 1)%4]))).Sum();
             return Math.Abs(angle).IsDoubleEqual(Math.PI*2);
         }
 
         public bool IntersectsWith(Segment segment) =>
-            StrictlyContains(segment.A) ||
-            StrictlyContains(segment.B) ||
+            Contains(segment.A) ||
+            Contains(segment.B) ||
             Segments.Any(s => s.IntersectsWith(segment));
     }
 }

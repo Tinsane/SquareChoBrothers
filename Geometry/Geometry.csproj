@@ -52,7 +52,7 @@
     <Compile Include="Geometry.cs" />
     <Compile Include="IGeometryFigure.cs" />
     <Compile Include="IHavingIntersectionLine.cs" />
-    <Compile Include="IStrictIntersectable.cs" />
+    <Compile Include="IIntersectable.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
