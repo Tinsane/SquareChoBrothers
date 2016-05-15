@@ -43,6 +43,7 @@ namespace SquareChoBrothers.Model
                     velocityChanged = true;
                     //Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(reflectable));
                     Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(reflectable));
+                    Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(reflectable));
                 }
                 if (!velocityChanged)
                     return;

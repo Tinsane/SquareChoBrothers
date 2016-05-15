@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Timers;
+using System.Threading;
 using Geometry;
 using SquareChoBrothers.Model.Factories;
 using SquareChoBrothers.Properties;
@@ -13,7 +13,7 @@ namespace SquareChoBrothers.Model
 {
     public class GameModel
     {
-        private const double UpdateInterval = 5;
+        private const double UpdateInterval = 40;
         public const double CellSize = 50;
         public Picture Background;
 
