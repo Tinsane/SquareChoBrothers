@@ -6,10 +6,10 @@ namespace SquareChoBrothers.Model
     {
         public static readonly Vector GravityVector;
         public const double Impulse = 2e4;
-        public const double SpeedOfLight = 6e4;
+        public const double SpeedOfLight = 5e4;
         static Physics()
         {
-            GravityVector = new Vector(0, 1e6);
+            GravityVector = new Vector(0, 2e6);
         }
     }
 }
