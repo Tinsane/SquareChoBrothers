@@ -28,10 +28,10 @@
             }
         }
 
-        public bool StrictlyIntersectsWith(Circle circle)
+        public bool IntersectsWith(Circle circle)
             => Center.GetDistance(circle.Center).IsDoubleLess(r + circle.r);
 
-        public Line GetIntersectionLine(Circle circle) => StrictlyIntersectsWith(circle)
+        public Line GetIntersectionLine(Circle circle) => IntersectsWith(circle)
             ? new Segment(Center, circle.Center).MiddlePerpendicular
             : null;
 
@@ -45,7 +45,7 @@
             y = center.y;
         }
 
-        public bool StrictlyIntersectsWith(Rectangle rectangle) => rectangle.StrictlyIntersectsWith(this);
+        public bool IntersectsWith(Rectangle rectangle) => rectangle.IntersectsWith(this);
 
         public Line GetIntersectionLine(Rectangle rectangle) => rectangle.GetIntersectionLine(this);
 

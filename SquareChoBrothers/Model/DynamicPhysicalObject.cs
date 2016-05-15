@@ -10,10 +10,13 @@ namespace SquareChoBrothers.Model
     public abstract class DynamicPhysicalObject<T> : PhysicalObject<T>
         where T : IGeometryFigure
     {
-        protected DynamicPhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox) :
+        protected DynamicPhysicalObject (Rectangle graphicalPosition, Brush brush, T hitBox) :
+            this(graphicalPosition, brush, hitBox, new Vector(0, 0))
+        { }
+        protected DynamicPhysicalObject (Rectangle graphicalPosition, Brush brush, T hitBox, Vector velocity) :
             base(graphicalPosition, brush, hitBox)
         {
-            Velocity = new Vector(0, 0);
+            Velocity = velocity;
         }
 
         private Vector velocity;
@@ -31,36 +34,38 @@ namespace SquareChoBrothers.Model
             }
         }
 
-        public void Reflect(double deltaT, List<IGeometryFigure> reflectables)
+        public void Reflect(double dTime, List<IGeometryFigure> reflectables)
         {
             while (true)
             {
-                var movedHitBox = HitBox.GetTransfered(Velocity*deltaT);
+                var movedHitBox = HitBox.GetTransfered(Velocity * dTime);
                 var velocityChanged = false;
                 foreach (var reflectable in reflectables.Where(reflectable =>
-                movedHitBox.StrictlyIntersectsWith(reflectable) && !ReferenceEquals(HitBox, reflectable)))
+                movedHitBox.IntersectsWith(reflectable) && !ReferenceEquals(HitBox, reflectable)))
                 {
-                    velocityChanged = true;
+                    var previousVelocity = Velocity;
                     //Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(reflectable));
                     Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(reflectable));
+                    velocityChanged = Velocity != previousVelocity;
                 }
                 if (!velocityChanged)
                     return;
             }
         }
 
-        public void Update(double deltaT, List<IGeometryFigure> reflectables)
+        public void Update(double deltaTime, List<IGeometryFigure> reflectables)
         {
-            deltaT /= TimeSpan.TicksPerSecond;
-            const int coef = 100;
+            deltaTime /= TimeSpan.TicksPerMillisecond;
+            const int coef = 20;
             for (var i = 0; i < coef; ++i)
             {
-                Velocity += Physics.GravityVector*deltaT/ coef;
+                var dTime = deltaTime / coef;
+                Velocity += Physics.GravityVector*dTime;
 
-                Reflect(deltaT, reflectables);
+                Reflect(dTime, reflectables);
 
-                GraphicalPosition.Transfer(Velocity*deltaT/ coef);
-                HitBox.Transfer(Velocity*deltaT/ coef);
+                GraphicalPosition.Transfer(Velocity*dTime);
+                HitBox.Transfer(Velocity * dTime);
             }
             ((TextureBrush) Brush).ResetTransform();
             ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,

@@ -16,7 +16,7 @@ namespace Geometry
 
         public Vector DirectionVector => new Vector(b, -a).GetNormalized(1);
 
-        public Vector NormalVector => new Vector(a, b);
+        public Vector NormalVector => new Vector(a, b).GetNormalized(1);
 
         public Point PointOnLine => b.IsDoubleEqual(0) ? new Point(-c/a, 0) : new Point(0, -c/b);
 

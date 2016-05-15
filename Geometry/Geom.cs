@@ -2,7 +2,7 @@
 {
     public class Geom
     {
-        public static double Precision = 1e-6;
+        public static double Precision = 1e-9;
 
         public static double GetPrecision()
         {

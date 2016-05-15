@@ -104,11 +104,9 @@ namespace Geometry
 
         public bool Contains(Point point)
         {
-            if (!ContainingLine.ContainsPoint(point))
-                return false;
-            if ((point == A) || (point == B))
-                return true;
-            return new Vector(point, A).IsContradirectional(new Vector(point, B));
+            var vA = new Vector(point, A);
+            var vB = new Vector(point, B);
+            return vA.GetDotProduct(vB).IsDoubleEqual(0) && vA.GetDotProduct(vB).IsDoubleLessEqual(0);
         }
     }
 }
