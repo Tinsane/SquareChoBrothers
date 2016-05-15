@@ -27,8 +27,9 @@ namespace MapBuilder.View
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            foreach (var drawable in builderModel.AllDrawables)
+            foreach (var drawable in builderModel.map.AllDrawables)
                 PaintDrawable(e, drawable);
+            PaintDrawable(e, builderModel.CurrentPicture);
         }
     }
 }

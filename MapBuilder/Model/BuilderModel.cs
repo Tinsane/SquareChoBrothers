@@ -24,36 +24,15 @@ namespace MapBuilder.Model
         public static readonly Vector Right = -Left;
         public Action draw, Close;
         public double Width, Height;
-        public List<Terrain> Terrains = new List<Terrain>();
-        public List<Picture> Pictures = new List<Picture>();
-        public List<Hero> Heroes = new List<Hero>();
-        public List<Monster> Monsters = new List<Monster>();
-        public Picture Background;
         public Square Current;
         public Picture CurrentPicture => new Picture(Current, new TextureBrush(SquareChoBrothers.Properties.Resources.me_builder_50));
-
-        public IEnumerable<IDrawable> AllDrawables
-            =>
-                (new[] { Background }).Select(x => (IDrawable) x)
-                    .Concat(Pictures)
-                    .Concat(Heroes)
-                    .Concat(Monsters)
-                    .Concat(Terrains)
-                    .Concat(new [] {CurrentPicture});
-
-        public MonsterFactory monsterFactory =
-            new MonsterFactory(new TextureBrush(SquareChoBrothers.Properties.Resources.Monster_50));
-
-        public TerrainFactory terrainFactory =
-            new TerrainFactory(new TextureBrush(SquareChoBrothers.Properties.Resources.Terrain1));
-
-        public HeroFactory hero1Factory = new HeroFactory(new TextureBrush(SquareChoBrothers.Properties.Resources.Hero1_50));
-
-        public HeroFactory hero2Factory = new HeroFactory(new TextureBrush(SquareChoBrothers.Properties.Resources.Hero2_50));
+        public Map map;
+        
 
         public BuilderModel()
         {
-            Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), System.Drawing.Brushes.DarkGray);
+            map = new Map();
+            map.Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), System.Drawing.Brushes.DarkGray);
             var size = squareSize;
             Current = new Square(new Point(size / 2, size / 2), size);
             Width = 1e4;
@@ -89,16 +68,24 @@ namespace MapBuilder.Model
 
         public bool TryRight() => TryNewLocation(Current.GetTransfered(Right));
 
-        public void AddTerrain() => Terrains.Add(terrainFactory.GetNext(Current));
+        public void AddTerrain() => map.Terrains.Add(map.TerrainFactory.GetNext(Current));
 
         public void AddHero()
         {
-            if (Heroes.Count == 0)
-                Heroes.Add(hero1Factory.GetNext(Current));
-            else if (Heroes.Count == 1)
-                Heroes.Add(hero2Factory.GetNext(Current));
+            if (map.Heroes.Count == 0)
+                map.Heroes.Add(map.Hero1Factory.GetNext(Current));
+            else if (map.Heroes.Count == 1)
+                map.Heroes.Add(map.Hero2Factory.GetNext(Current));
         }
 
-        public void AddMonster() => Monsters.Add(monsterFactory.GetNext(Current));
+        public void AddMonster() => map.Monsters.Add(map.MonsterFactory.GetNext(Current));
+
+        public void Delete()
+        {
+            map.Pictures.RemoveAll(x => x.GraphicalPosition == Current);
+            map.Heroes.RemoveAll(x => x.GraphicalPosition == Current);
+            map.Monsters.RemoveAll(x => x.GraphicalPosition == Current);
+            map.Terrains.RemoveAll(x => x.GraphicalPosition == Current);
+        }
     }
 }

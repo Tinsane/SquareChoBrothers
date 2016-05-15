@@ -60,11 +60,11 @@ namespace SquareChoBrothers.Model
             for (var i = 0; i < coef; ++i)
             {
                 var dTime = deltaTime / coef;
-                Velocity += Physics.GravityVector*dTime;
+                Velocity += Physics.GravityVector * dTime;
 
                 Reflect(dTime, reflectables);
 
-                GraphicalPosition.Transfer(Velocity*dTime);
+                GraphicalPosition.Transfer(Velocity * dTime);
                 HitBox.Transfer(Velocity * dTime);
             }
             ((TextureBrush) Brush).ResetTransform();

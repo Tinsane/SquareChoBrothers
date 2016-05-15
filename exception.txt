@@ -1,0 +1,17 @@
+System.InvalidOperationException не обработано
+  HResult=-2146233079
+  Message=В данный момент объект используется другим процессом.
+  Source=System.Drawing
+  StackTrace:
+       в System.Drawing.TextureBrush.TranslateTransform(Single dx, Single dy, MatrixOrder order)
+       в System.Drawing.TextureBrush.TranslateTransform(Single dx, Single dy)
+       в SquareChoBrothers.Model.DynamicPhysicalObject`1.Update(Double deltaTime, List`1 reflectables) в C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\Model\DynamicPhysicalObject.cs:строка 71
+       в SquareChoBrothers.Model.GameModel.UpdateState(Object state) в C:\Users\ISmir\Documents\Visual Studio 2015\Projects\SquareChoBrothers\SquareChoBrothers\Model\GameModel.cs:строка 85
+       в System.Threading.TimerQueueTimer.CallCallbackInContext(Object state)
+       в System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+       в System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+       в System.Threading.TimerQueueTimer.CallCallback()
+       в System.Threading.TimerQueueTimer.Fire()
+       в System.Threading.TimerQueue.FireNextTimers()
+       в System.Threading.TimerQueue.AppDomainTimerCallback()
+  InnerException: 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Geometry;
 using Rectangle = Geometry.Rectangle;
 
@@ -9,44 +10,46 @@ namespace SquareChoBrothers.Model
     public abstract class DynamicPhysicalObject<T> : PhysicalObject<T>
         where T : IGeometryFigure
     {
-        protected DynamicPhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox) :
+        protected DynamicPhysicalObject (Rectangle graphicalPosition, Brush brush, T hitBox) :
+            this(graphicalPosition, brush, hitBox, new Vector(0, 0))
+        { }
+        protected DynamicPhysicalObject (Rectangle graphicalPosition, Brush brush, T hitBox, Vector velocity) :
             base(graphicalPosition, brush, hitBox)
         {
-            Velocity = new Vector(0, 0);
+            Velocity = velocity;
         }
 
-        protected Vector Velocity { get; set; }
+        private Vector velocity;
 
-        public void Reflect(double deltaT, List<IGeometryFigure> reflectables)
+        protected Vector Velocity {
+            get
+            {
+                return velocity;
+            }
+            set
+            {
+                if (value.Length > Physics.SpeedOfLight)
+                    value.Normalize(Physics.SpeedOfLight);
+                velocity = value;
+            }
+        }
+
+        public void Reflect(double dTime, List<IGeometryFigure> reflectables)
         {
             while (true)
             {
-                var movedHitBox = HitBox.GetTransfered(Velocity*deltaT);
+                var movedHitBox = HitBox.GetTransfered(Velocity * dTime);
                 var velocityChanged = false;
-                foreach (var reflectable in reflectables)
+                foreach (var reflectable in reflectables.Where(reflectable =>
+                movedHitBox.IntersectsWith(reflectable) && !ReferenceEquals(HitBox, reflectable)))
                 {
+                    var previousVelocity = Velocity;
+                    //Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(reflectable));
+                    Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(reflectable));
 <<<<<<< HEAD
-                    if (reflectable is Circle)
-                    {
-                        var circle = reflectable as Circle;
-                        if (!movedHitBox.StrictlyIntersectsWith(circle)
-                            || (HitBox is Circle && HitBox as Circle == circle)) continue;
-                        velocityChanged = true;
-                        Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(circle));
-                        //Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(circle));
-                        continue;
-                    }
-                    var rectangle = reflectable as Rectangle;
-                    if (!movedHitBox.StrictlyIntersectsWith(rectangle) ||
-                        (HitBox is Rectangle && HitBox as Rectangle == rectangle)) continue;
-                    velocityChanged = true;
-                    Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(rectangle));
-                    //Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(rectangle));
+                    velocityChanged = Velocity != previousVelocity;
 =======
-                    if (!movedHitBox.StrictlyIntersectsWith(reflectable) ||
-                        (HitBox is Rectangle && HitBox as Rectangle == reflectable)) continue;
-                    velocityChanged = true;
-                    Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(reflectable));
+                    Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(reflectable));
 >>>>>>> me
                 }
                 if (!velocityChanged)
@@ -54,18 +57,19 @@ namespace SquareChoBrothers.Model
             }
         }
 
-        public void Update(double deltaT, List<IGeometryFigure> reflectables)
+        public void Update(double deltaTime, List<IGeometryFigure> reflectables)
         {
-            deltaT /= TimeSpan.TicksPerSecond;
-            const int Coef = 100;
-            for (var i = 0; i < Coef; ++i)
+            deltaTime /= TimeSpan.TicksPerMillisecond;
+            const int coef = 20;
+            for (var i = 0; i < coef; ++i)
             {
-                Velocity += Physics.GravityVector*deltaT/ Coef;
+                var dTime = deltaTime / coef;
+                Velocity += Physics.GravityVector*dTime;
 
-                Reflect(deltaT, reflectables);
+                Reflect(dTime, reflectables);
 
-                GraphicalPosition.Transfer(Velocity*deltaT/ Coef);
-                HitBox.Transfer(Velocity*deltaT/ Coef);
+                GraphicalPosition.Transfer(Velocity*dTime);
+                HitBox.Transfer(Velocity * dTime);
             }
             ((TextureBrush) Brush).ResetTransform();
             ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,

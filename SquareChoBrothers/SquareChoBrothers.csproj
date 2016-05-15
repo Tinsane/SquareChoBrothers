@@ -55,6 +55,7 @@
     <Compile Include="Model\Factories\MapObjectFactory.cs" />
     <Compile Include="Model\Factories\PictureFactory.cs" />
     <Compile Include="Model\GameModel.cs" />
+    <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Physics.cs" />
     <Compile Include="Model\Factories\TerrainFactory.cs" />
     <Compile Include="Model\Factories\MonsterFactory.cs" />

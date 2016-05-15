@@ -45,6 +45,9 @@ namespace MapBuilder.Controller
                 case Keys.M:
                     builderModel.AddMonster();
                     break;
+                case Keys.Delete:
+                    builderModel.Delete();
+                    break;
             }
         }
     }

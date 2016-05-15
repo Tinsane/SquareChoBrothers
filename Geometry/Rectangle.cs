@@ -103,5 +103,15 @@ namespace Geometry
             Contains(segment.A) ||
             Contains(segment.B) ||
             Segments.Any(s => s.IntersectsWith(segment));
+
+        public static bool operator ==(Rectangle a, Rectangle b)
+        {
+            return a.Center == b.Center && a.SizeX.IsDoubleEqual(b.SizeX) && a.SizeY.IsDoubleEqual(b.SizeY);
+        }
+
+        public static bool operator !=(Rectangle a, Rectangle b)
+        {
+            return !(a == b);
+        }
     }
 }

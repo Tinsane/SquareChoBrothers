@@ -28,13 +28,11 @@ namespace SquareChoBrothers.View
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            PaintDrawable(e, gameModel.Background);
-            foreach (var terrain in gameModel.Terrains)
-                PaintDrawable(e, terrain);
-            foreach (var monster in gameModel.Monsters)
-                PaintDrawable(e, monster);
-            foreach (var hero in gameModel.Heroes)
-                PaintDrawable(e, hero);
+            lock (e)
+            {
+                foreach (var drawable in gameModel.map.AllDrawables)
+                    PaintDrawable(e, drawable);
+            }
         }
     }
 }

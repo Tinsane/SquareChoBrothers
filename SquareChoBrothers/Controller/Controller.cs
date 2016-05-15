@@ -13,41 +13,54 @@ namespace SquareChoBrothers.Controller
 
         public void FirstPlayerKeyDown(object sender, KeyEventArgs keyEventArgs)
         {
-            switch (keyEventArgs.KeyCode)
+            lock (gameModel)
             {
-                case Keys.Left:
-                    gameModel.Heroes[0].MoveLeft();
-                    break;
-                case Keys.Right:
-                    gameModel.Heroes[0].MoveRight();
-                    break;
-                case Keys.Down:
-                    gameModel.Heroes[0].Stay();
-                    break;
-                case Keys.Up:
-                    gameModel.Heroes[0].Jump();
-                    break;
+                switch (keyEventArgs.KeyCode)
+                {
+                    case Keys.Left:
+                        gameModel.map.Heroes[0].MoveLeft();
+                        break;
+                    case Keys.Right:
+                        gameModel.map.Heroes[0].MoveRight();
+                        break;
+                    case Keys.Down:
+                        gameModel.map.Heroes[0].Stay();
+                        break;
+                    case Keys.Up:
+                        gameModel.map.Heroes[0].Jump();
+                        break;
+                }
             }
         }
         public void SecondPlayerKeyDown (object sender, KeyEventArgs keyEventArgs)
         {
-            switch (keyEventArgs.KeyCode)
+            lock (gameModel)
             {
-                case Keys.A:
-                    break;
-                case Keys.D:
-                    break;
-                case Keys.W:
-                    break;
-                case Keys.S:
-                    break;
+                switch (keyEventArgs.KeyCode)
+                {
+                    case Keys.A:
+                        gameModel.map.Heroes[1].MoveLeft();
+                        break;
+                    case Keys.D:
+                        gameModel.map.Heroes[1].MoveRight();
+                        break;
+                    case Keys.W:
+                        gameModel.map.Heroes[1].Jump();
+                        break;
+                    case Keys.S:
+                        gameModel.map.Heroes[1].Stay();
+                        break;
+                }
             }
         }
 
         public void GeneralKeyDown(object sender, KeyEventArgs keyEventArgs)
         {
-            if (keyEventArgs.KeyCode == Keys.Escape)
-                gameModel.EndGame();
+            lock (gameModel)
+            {
+                if (keyEventArgs.KeyCode == Keys.Escape)
+                    gameModel.EndGame();
+            }
         }
     }
 }
