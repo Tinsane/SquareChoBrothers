@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
-using System.Timers;
 using Geometry;
 using SquareChoBrothers.Model.Factories;
 using SquareChoBrothers.Properties;
 using Point = Geometry.Point;
 using Rectangle = Geometry.Rectangle;
-using Timer = System.Threading.Timer;
 
 namespace SquareChoBrothers.Model
 {
@@ -18,6 +16,7 @@ namespace SquareChoBrothers.Model
         private const int UpdateInterval = 2;
         public const double CellSize = 50;
         public Picture Background;
+        private Action draw;
 
         public HeroFactory Hero1Factory = new HeroFactory(new TextureBrush(Resources.Hero1_50));
 
@@ -28,15 +27,14 @@ namespace SquareChoBrothers.Model
             new MonsterFactory(new TextureBrush(Resources.Monster_50));
 
         public List<Monster> Monsters = new List<Monster>();
+
+        private Timer physicsTimer;
         public List<Picture> Pictures = new List<Picture>();
 
         public TerrainFactory TerrainFactory =
             new TerrainFactory(new TextureBrush(Resources.Terrain1));
 
         public List<Terrain> Terrains = new List<Terrain>();
-
-        new Timer physicsTimer;
-        new Timer drawTimer;
 
         public GameModel()
         {
@@ -62,7 +60,6 @@ namespace SquareChoBrothers.Model
         }
 
         public Action EndGame { get; private set; }
-        private Action draw;
 
         // ReSharper disable once ParameterHidesMember
         public void StartGame(Action draw, Action endGame)
@@ -70,8 +67,6 @@ namespace SquareChoBrothers.Model
             this.draw = draw;
             EndGame = endGame;
             physicsTimer = new Timer(UpdateState, null, UpdateInterval, Timeout.Infinite);
-            //drawTimer = new Timer((state) => { draw(); drawTimer.Change(UpdateInterval, Timeout.Infinite); },
-                //null, UpdateInterval, Timeout.Infinite);
         }
 
         private void UpdateState(object state)

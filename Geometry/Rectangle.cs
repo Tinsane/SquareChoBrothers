@@ -65,7 +65,8 @@ namespace Geometry
             points = points.Select(point => point + transferVector).ToArray();
         }
 
-        public bool IntersectsWith(Rectangle rectangle) => Points.Any(rectangle.Contains) || rectangle.Points.Any(Contains);
+        public bool IntersectsWith(Rectangle rectangle)
+            => Points.Any(rectangle.Contains) || rectangle.Points.Any(Contains);
 
         public Line GetIntersectionLine(Rectangle rectangle)
         {
