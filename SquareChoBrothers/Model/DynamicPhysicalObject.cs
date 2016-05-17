@@ -69,16 +69,14 @@ namespace SquareChoBrothers.Model
         {
             deltaTime /= TimeSpan.TicksPerMillisecond;
             const int coef = 40;
+            var dTime = deltaTime/coef;
             for (var i = 0; i < coef; ++i)
-            {
-                var dTime = deltaTime/coef;
                 lock (Velocity)
                 {
                     Velocity += Physics.GravityVector*dTime;
                     Reflect(dTime, reflectables);
                     Transfer(Velocity*dTime);
                 }
-            }
             ((TextureBrush) Brush).ResetTransform();
             ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,
                 (float) GraphicalPosition.A.y);
