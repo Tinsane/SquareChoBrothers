@@ -30,7 +30,7 @@ namespace SquareChoBrothers.View
         {
             lock (e)
             {
-                foreach (var drawable in gameModel.map.AllDrawables)
+                foreach (var drawable in gameModel.Map.Drawables)
                     PaintDrawable(e, drawable);
             }
         }

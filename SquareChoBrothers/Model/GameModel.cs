@@ -12,17 +12,17 @@ namespace SquareChoBrothers.Model
         public const double CellSize = 50;
         private Action draw;
 
-        public Map map;
+        public Map Map;
         private Timer physicsTimer;
 
         public GameModel()
         {
-            map = new Map();
+            Map = new Map();
         }
 
         public GameModel(Map map)
         {
-            this.map = map;
+            Map = map;
         }
 
         public Action EndGame { get; private set; }
@@ -40,11 +40,11 @@ namespace SquareChoBrothers.Model
             lock (this)
             {
                 var reflectables = new List<IGeometryFigure>();
-                reflectables.AddRange(map.Heroes.Select(hero => hero.HitBox));
-                reflectables.AddRange(map.Terrains.Select(terrain => terrain.HitBox));
-                foreach (var hero in map.Heroes)
+                reflectables.AddRange(Map.Heroes.Select(hero => hero.HitBox));
+                reflectables.AddRange(Map.Terrains.Select(terrain => terrain.HitBox));
+                foreach (var hero in Map.Heroes)
                     hero.Update(UpdateInterval, reflectables);
-                foreach (var monster in map.Monsters)
+                foreach (var monster in Map.Monsters)
                     monster.Update(UpdateInterval, reflectables);
                 physicsTimer.Change(UpdateInterval, Timeout.Infinite);
                 draw();

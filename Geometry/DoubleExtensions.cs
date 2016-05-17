@@ -24,7 +24,7 @@ namespace Geometry
             return !x.IsDoubleLessEqual(y);
         }
 
-        public static bool IsDoubleGeaterEqual(this double x, double y)
+        public static bool IsDoubleGreaterEqual(this double x, double y)
         {
             return !x.IsDoubleLess(y);
         }

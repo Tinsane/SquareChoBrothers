@@ -18,16 +18,16 @@ namespace SquareChoBrothers.Controller
                 switch (keyEventArgs.KeyCode)
                 {
                     case Keys.Left:
-                        gameModel.map.Heroes[0].MoveLeft();
+                        gameModel.Map.Heroes[0].MoveLeft();
                         break;
                     case Keys.Right:
-                        gameModel.map.Heroes[0].MoveRight();
+                        gameModel.Map.Heroes[0].MoveRight();
                         break;
                     case Keys.Down:
-                        gameModel.map.Heroes[0].Stay();
+                        gameModel.Map.Heroes[0].Stay();
                         break;
                     case Keys.Up:
-                        gameModel.map.Heroes[0].Jump();
+                        gameModel.Map.Heroes[0].Jump(gameModel.Map);
                         break;
                 }
             }
@@ -39,16 +39,16 @@ namespace SquareChoBrothers.Controller
                 switch (keyEventArgs.KeyCode)
                 {
                     case Keys.A:
-                        gameModel.map.Heroes[1].MoveLeft();
+                        gameModel.Map.Heroes[1].MoveLeft();
                         break;
                     case Keys.D:
-                        gameModel.map.Heroes[1].MoveRight();
+                        gameModel.Map.Heroes[1].MoveRight();
                         break;
                     case Keys.W:
-                        gameModel.map.Heroes[1].Jump();
+                        gameModel.Map.Heroes[1].Jump(gameModel.Map);
                         break;
                     case Keys.S:
-                        gameModel.map.Heroes[1].Stay();
+                        gameModel.Map.Heroes[1].Stay();
                         break;
                 }
             }

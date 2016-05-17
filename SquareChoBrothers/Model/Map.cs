@@ -14,30 +14,24 @@ namespace SquareChoBrothers.Model
     {
         public const double CellSize = GameModel.CellSize;
 
-        public Picture Background;
+        public readonly HeroFactory Hero1Factory = new HeroFactory(new TextureBrush(Resources.Hero1_50));
 
-        public HeroFactory Hero1Factory = new HeroFactory(new TextureBrush(Resources.Hero1_50));
+        public readonly HeroFactory Hero2Factory = new HeroFactory(new TextureBrush(Resources.Hero2_50));
 
-        public HeroFactory Hero2Factory = new HeroFactory(new TextureBrush(Resources.Hero2_50));
-
-        public TerrainFactory TerrainFactory =
-            new TerrainFactory(new TextureBrush(Resources.Terrain1));
-
-        public MonsterFactory MonsterFactory =
+        public readonly MonsterFactory MonsterFactory =
             new MonsterFactory(new TextureBrush(Resources.Monster_50));
 
+        public readonly TerrainFactory TerrainFactory =
+            new TerrainFactory(new TextureBrush(Resources.Terrain1));
+
+        public Picture Background;
+
         public List<Hero> Heroes;
+
         public List<Monster> Monsters;
         public List<Picture> Pictures;
-        public List<Terrain> Terrains;
 
-        public IEnumerable<IDrawable> AllDrawables
-            =>
-                (new[] {Background}).Select(x => (IDrawable) x)
-                    .Concat(Pictures)
-                    .Concat(Heroes)
-                    .Concat(Monsters)
-                    .Concat(Terrains);
+        public List<Terrain> Terrains;
 
         public Map()
         {
@@ -66,5 +60,16 @@ namespace SquareChoBrothers.Model
             Terrains = terrains;
             Pictures = pictures;
         }
+
+        public IEnumerable<IDrawable> Drawables =>
+            new[] {Background}.Select(x => (IDrawable) x)
+                .Concat(Pictures)
+                .Concat(Heroes)
+                .Concat(Monsters)
+                .Concat(Terrains);
+
+        public IEnumerable<IGeometryFigure> HeroReflectables =>
+            Heroes.Select(hero => hero.HitBox)
+                .Concat(Terrains.Select(terrain => terrain.HitBox));
     }
 }

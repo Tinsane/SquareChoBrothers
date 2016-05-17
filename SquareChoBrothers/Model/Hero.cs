@@ -14,7 +14,7 @@ namespace SquareChoBrothers.Model
 
         public void MoveRight()
         {
-            lock (Velocity)
+            lock (this)
             {
                 var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
                 Velocity = new Vector(Physics.Impulse, oyProjection);
@@ -23,7 +23,7 @@ namespace SquareChoBrothers.Model
 
         public void Stay()
         {
-            lock (Velocity)
+            lock (this)
             {
                 var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
                 Velocity = new Vector(0, oyProjection);
@@ -32,18 +32,20 @@ namespace SquareChoBrothers.Model
 
         public void MoveLeft()
         {
-            lock (Velocity)
+            lock (this)
             {
                 var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
                 Velocity = new Vector(-Physics.Impulse, oyProjection);
             }
         }
 
-        public void Jump()
+        public void Jump(Map map)
         {
-            lock (Velocity)
+            lock (this)
             {
-                Velocity += new Vector(0, -2*Physics.Impulse);
+                if (!IsOnGround(map))
+                    return;
+                Velocity += new Vector(0, -1.5*Physics.Impulse);
             }
         }
     }
