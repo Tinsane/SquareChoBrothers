@@ -3,25 +3,20 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
-using System.Timers;
 using Geometry;
 using SquareChoBrothers.Model.Factories;
 using SquareChoBrothers.Properties;
 using Point = Geometry.Point;
 using Rectangle = Geometry.Rectangle;
-using Timer = System.Threading.Timer;
 
 namespace SquareChoBrothers.Model
 {
     public class GameModel
     {
-        private const int UpdateInterval = 20;
+        private const int UpdateInterval = 2;
         public const double CellSize = 50;
 
         public Map map;
-
-        new Timer physicsTimer;
-        new Timer drawTimer;
 
         public GameModel()
         {
@@ -34,7 +29,6 @@ namespace SquareChoBrothers.Model
         }
 
         public Action EndGame { get; private set; }
-        private Action draw;
 
         // ReSharper disable once ParameterHidesMember
         public void StartGame(Action draw, Action endGame)
@@ -42,8 +36,6 @@ namespace SquareChoBrothers.Model
             this.draw = draw;
             EndGame = endGame;
             physicsTimer = new Timer(UpdateState, null, UpdateInterval, Timeout.Infinite);
-            //drawTimer = new Timer((state) => { draw(); drawTimer.Change(UpdateInterval, Timeout.Infinite); },
-                //null, UpdateInterval, Timeout.Infinite);
         }
 
         private void UpdateState(object state)

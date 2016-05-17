@@ -7,8 +7,8 @@ namespace SquareChoBrothers.Model
     public class Hero : DynamicPhysicalObject<Rectangle>
     {
         public Hero(Rectangle graphicalPosition, Brush brush) :
-            base(graphicalPosition, brush, graphicalPosition.GetCopy(), 
-                new Vector(0, 0))
+            base(graphicalPosition, brush, graphicalPosition.GetCopy(),
+                new Vector(Physics.SpeedOfLight / 10, Physics.SpeedOfLight))
         {
         }
 
@@ -43,7 +43,7 @@ namespace SquareChoBrothers.Model
         {
             lock (Velocity)
             {
-                Velocity += new Vector(0, -2 * Physics.Impulse);
+                Velocity += new Vector(0, -2*Physics.Impulse);
             }
         }
     }

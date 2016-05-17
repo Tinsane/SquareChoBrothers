@@ -10,22 +10,22 @@ namespace SquareChoBrothers.Model
     public abstract class DynamicPhysicalObject<T> : PhysicalObject<T>
         where T : IGeometryFigure
     {
-        protected DynamicPhysicalObject (Rectangle graphicalPosition, Brush brush, T hitBox) :
+        private Vector velocity;
+
+        protected DynamicPhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox) :
             this(graphicalPosition, brush, hitBox, new Vector(0, 0))
-        { }
-        protected DynamicPhysicalObject (Rectangle graphicalPosition, Brush brush, T hitBox, Vector velocity) :
+        {
+        }
+
+        protected DynamicPhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox, Vector velocity) :
             base(graphicalPosition, brush, hitBox)
         {
             Velocity = velocity;
         }
 
-        private Vector velocity;
-
-        protected Vector Velocity {
-            get
-            {
-                return velocity;
-            }
+        protected Vector Velocity
+        {
+            get { return velocity; }
             set
             {
                 if (value.Length > Physics.SpeedOfLight)
@@ -34,39 +34,49 @@ namespace SquareChoBrothers.Model
             }
         }
 
-        public void Reflect(double dTime, List<IGeometryFigure> reflectables)
+        private void Transfer(Vector shift)
+        {
+            HitBox.Transfer(shift);
+            GraphicalPosition.Transfer(shift);
+        }
+
+        private void PushAway(IGeometryFigure intersected, Line intersectionLine)
+        {
+            var shift = intersectionLine.NormalVector;
+            shift /= 10;
+            if (HitBox.GetTransfered(shift).IntersectsWith(intersected))
+                shift = -shift;
+            Transfer(shift);
+        }
+
+        private void Reflect(double dTime, List<IGeometryFigure> reflectables)
         {
             while (true)
             {
-                var movedHitBox = HitBox.GetTransfered(Velocity * dTime);
-                var velocityChanged = false;
-                foreach (var reflectable in reflectables.Where(reflectable =>
-                movedHitBox.IntersectsWith(reflectable) && !ReferenceEquals(HitBox, reflectable)))
-                {
-                    var previousVelocity = Velocity;
-                    //Velocity = Velocity.GetReflected(movedHitBox.GetIntersectionLine(reflectable));
-                    Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(reflectable));
-                    velocityChanged = Velocity != previousVelocity;
-                }
-                if (!velocityChanged)
+                var movedHitBox = HitBox.GetTransfered(Velocity*dTime);
+                var intersected = reflectables.FirstOrDefault(reflectable =>
+                !ReferenceEquals(HitBox, reflectable) && movedHitBox.IntersectsWith(reflectable));
+                if (ReferenceEquals(intersected, null))
                     return;
+                var previousVelocity = Velocity;
+                Velocity = Velocity.GetProjection(movedHitBox.GetIntersectionLine(intersected));
+                if (Velocity == previousVelocity)
+                    PushAway(intersected, movedHitBox.GetIntersectionLine(intersected));
             }
         }
 
         public void Update(double deltaTime, List<IGeometryFigure> reflectables)
         {
             deltaTime /= TimeSpan.TicksPerMillisecond;
-            const int coef = 20;
+            const int coef = 40;
+            var dTime = deltaTime/coef;
             for (var i = 0; i < coef; ++i)
-            {
-                var dTime = deltaTime / coef;
-                Velocity += Physics.GravityVector * dTime;
-
-                Reflect(dTime, reflectables);
-
-                GraphicalPosition.Transfer(Velocity * dTime);
-                HitBox.Transfer(Velocity * dTime);
-            }
+                lock (Velocity)
+                {
+                    Velocity += Physics.GravityVector*dTime;
+                    Reflect(dTime, reflectables);
+                    Transfer(Velocity*dTime);
+                }
             ((TextureBrush) Brush).ResetTransform();
             ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,
                 (float) GraphicalPosition.A.y);
