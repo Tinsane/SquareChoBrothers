@@ -10,7 +10,7 @@ namespace SquareChoBrothers.Model
 
         static Physics()
         {
-            GravityVector = new Vector(0, 2e6);
+            GravityVector = new Vector(0, 5e6);
         }
     }
 }
