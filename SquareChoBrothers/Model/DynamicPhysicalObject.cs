@@ -38,7 +38,7 @@ namespace SquareChoBrothers.Model
         {
             var loweredHitBox = HitBox.GetTransfered(new Vector(0, 0.2));
             return map.HeroReflectables.Any(reflectable =>
-            !ReferenceEquals(reflectable, HitBox) && reflectable.IntersectsWith(loweredHitBox));
+                !ReferenceEquals(reflectable, HitBox) && reflectable.IntersectsWith(loweredHitBox));
         }
 
         private void Transfer(Vector shift)
@@ -58,11 +58,11 @@ namespace SquareChoBrothers.Model
 
         private void Reflect(double dTime, List<IGeometryFigure> reflectables)
         {
-            for(var i = 0; i < 2; ++i)
+            for (var i = 0; i < 2; ++i)
             {
                 var movedHitBox = HitBox.GetTransfered(Velocity*dTime);
                 var intersecteds = reflectables.Where(reflectable =>
-                !ReferenceEquals(HitBox, reflectable) && movedHitBox.IntersectsWith(reflectable));
+                    !ReferenceEquals(HitBox, reflectable) && movedHitBox.IntersectsWith(reflectable));
                 foreach (var intersected in intersecteds)
                 {
                     var intersectionLine = movedHitBox.GetIntersectionLine(intersected);

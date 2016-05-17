@@ -45,7 +45,7 @@ namespace SquareChoBrothers.Model
             {
                 if (!IsOnGround(map))
                     return;
-                Velocity += new Vector(0, -1.5*Physics.Impulse);
+                Velocity += new Vector(0, -3*Physics.Impulse);
             }
         }
     }
