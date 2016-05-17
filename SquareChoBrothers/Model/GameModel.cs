@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading;
 using Geometry;
-using SquareChoBrothers.Model.Factories;
-using SquareChoBrothers.Properties;
-using Point = Geometry.Point;
-using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
@@ -15,8 +10,10 @@ namespace SquareChoBrothers.Model
     {
         private const int UpdateInterval = 2;
         public const double CellSize = 50;
+        private Action draw;
 
         public Map map;
+        private Timer physicsTimer;
 
         public GameModel()
         {

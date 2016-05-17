@@ -4,8 +4,8 @@ namespace SquareChoBrothers.Model
 {
     public static class Physics
     {
-        public const double Impulse = 2e4;
-        public const double SpeedOfLight = 5e4;
+        public const double Impulse = 3e4;
+        public const double SpeedOfLight = 7e4;
         public static readonly Vector GravityVector;
 
         static Physics()

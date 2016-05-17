@@ -51,7 +51,7 @@ namespace SquareChoBrothers.Model
 
         private void Reflect(double dTime, List<IGeometryFigure> reflectables)
         {
-            while (true)
+            for(var i = 0; i < 3; ++i)
             {
                 var movedHitBox = HitBox.GetTransfered(Velocity*dTime);
                 var intersected = reflectables.FirstOrDefault(reflectable =>
