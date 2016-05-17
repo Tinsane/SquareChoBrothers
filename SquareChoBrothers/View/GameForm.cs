@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using SquareChoBrothers.Model;
 
 namespace SquareChoBrothers.View
@@ -28,11 +27,10 @@ namespace SquareChoBrothers.View
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            lock (e)
-            {
+            lock(e)
                 foreach (var drawable in gameModel.Map.Drawables)
-                    PaintDrawable(e, drawable);
-            }
+                    lock(drawable)
+                        PaintDrawable(e, drawable);
         }
     }
 }

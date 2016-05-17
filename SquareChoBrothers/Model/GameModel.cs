@@ -35,6 +35,11 @@ namespace SquareChoBrothers.Model
             physicsTimer = new Timer(UpdateState, null, UpdateInterval, Timeout.Infinite);
         }
 
+        private void CongratulateWinner()
+        {
+            throw new NotImplementedException();
+        }
+
         private void UpdateState(object state)
         {
             lock (this)
@@ -42,12 +47,17 @@ namespace SquareChoBrothers.Model
                 var reflectables = new List<IGeometryFigure>();
                 reflectables.AddRange(Map.Heroes.Select(hero => hero.HitBox));
                 reflectables.AddRange(Map.Terrains.Select(terrain => terrain.HitBox));
-                foreach (var hero in Map.Heroes)
-                    hero.Update(UpdateInterval, reflectables);
                 foreach (var monster in Map.Monsters)
                     monster.Update(UpdateInterval, reflectables);
-                physicsTimer.Change(UpdateInterval, Timeout.Infinite);
+                foreach (var hero in Map.Heroes)
+                    hero.Update(UpdateInterval, reflectables, Map.Monsters);
                 draw();
+                if (!Map.Heroes[0].IsAlive || !Map.Heroes[1].IsAlive)
+                {
+                    CongratulateWinner();
+                    return;
+                }
+                physicsTimer.Change(UpdateInterval, Timeout.Infinite);
             }
         }
     }

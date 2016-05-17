@@ -47,25 +47,25 @@ namespace SquareChoBrothers.Model
             GraphicalPosition.Transfer(shift);
         }
 
-        private void PushAway(IGeometryFigure intersected, Line intersectionLine)
-        {
-            var shift = intersectionLine.NormalVector;
-            shift /= 10;
-            if (HitBox.GetTransfered(shift).IntersectsWith(intersected))
-                shift = -shift;
-            Transfer(shift);
-        }
+        //private void PushAway(IGeometryFigure intersected, Line intersectionLine)
+        //{
+        //    var shift = intersectionLine.NormalVector;
+        //    shift /= 10;
+        //    if (HitBox.GetTransfered(shift).IntersectsWith(intersected))
+        //        shift = -shift;
+        //    Transfer(shift);
+        //}
 
         private void Reflect(double dTime, List<IGeometryFigure> reflectables)
         {
             for (var i = 0; i < 2; ++i)
             {
                 var movedHitBox = HitBox.GetTransfered(Velocity*dTime);
-                var intersecteds = reflectables.Where(reflectable =>
-                    !ReferenceEquals(HitBox, reflectable) && movedHitBox.IntersectsWith(reflectable));
-                foreach (var intersected in intersecteds)
+                foreach (var intersected in reflectables)
                 {
                     var intersectionLine = movedHitBox.GetIntersectionLine(intersected);
+                    if (ReferenceEquals(intersected, HitBox) || ReferenceEquals(intersectionLine, null))
+                        continue;
                     var projection = Velocity.GetProjection(intersectionLine);
                     var normal = Velocity - projection;
                     if (normal.GetScalarProduct(intersected.Center - HitBox.Center).IsDoubleLess(0))
@@ -78,19 +78,21 @@ namespace SquareChoBrothers.Model
 
         public void Update(double deltaTime, List<IGeometryFigure> reflectables)
         {
-            deltaTime /= TimeSpan.TicksPerMillisecond;
-            const int coef = 20;
-            var dTime = deltaTime/coef;
-            for (var i = 0; i < coef; ++i)
-                lock (Velocity)
+            lock (this)
+            {
+                deltaTime /= TimeSpan.TicksPerMillisecond;
+                const int coef = 10;
+                var dTime = deltaTime/coef;
+                for (var i = 0; i < coef; ++i)
                 {
                     Velocity += Physics.GravityVector*dTime;
                     Reflect(dTime, reflectables);
                     Transfer(Velocity*dTime);
                 }
-            ((TextureBrush) Brush).ResetTransform();
-            ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,
-                (float) GraphicalPosition.A.y);
+                ((TextureBrush) Brush).ResetTransform();
+                ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,
+                    (float) GraphicalPosition.A.y);
+            }
         }
     }
 }

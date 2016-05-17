@@ -74,7 +74,7 @@ namespace Geometry
                                                        Contains(segment.B);
 
         public bool IntersectsWith(Circle circle) // intersects or inside
-            => circle.Contains(A) || circle.Contains(B);
+            => GetDistance(circle.Center).IsDoubleLessEqual(circle.r);
 
         public Point Intersect(Segment segment)
         {
