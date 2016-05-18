@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SquareChoBrothers.Model;
-using Point = Geometry.Point;
+﻿using System.Drawing;
 using Rectangle = Geometry.Rectangle;
-using SquareChoBrothers.Model.Factories;
 
-namespace SquareChoBrothers
+namespace SquareChoBrothers.Model.Factories
 {
     public class TerrainFactory : MapObjectFactory<Terrain, Rectangle>
     {
-        public TerrainFactory(Brush brush) : base(brush) { }
+        public TerrainFactory(Brush brush) : base(brush)
+        {
+        }
 
         public override Terrain GetNext(Rectangle rectangle) => new Terrain(rectangle.GetCopy(), Brush);
     }

@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Point = Geometry.Point;
-using Rectangle = Geometry.Rectangle;
+﻿using System.Drawing;
 
 namespace SquareChoBrothers.Model.Factories
 {
     public abstract class MapObjectFactory<TObject, THitBox>
     {
-        protected Brush Brush { get; set; }
-
-        public MapObjectFactory(Brush brush)
+        protected MapObjectFactory(Brush brush)
         {
-            this.Brush = brush;
+            Brush = brush;
         }
+
+        protected Brush Brush { get; set; }
 
         public abstract TObject GetNext(THitBox hitBox);
     }

@@ -18,9 +18,9 @@ namespace SquareChoBrothers.Model
             JumpImpulseVector = new Vector(0, -JumpImpulse);
         }
 
-        public Hero(Rectangle graphicalPosition, Brush brush) :
+        public Hero(Rectangle graphicalPosition, Brush brush, double mass) :
             base(graphicalPosition, brush, graphicalPosition.GetCopy(),
-                new Vector(MovementImpulse, JumpImpulse*2))
+                new Vector(MovementImpulse, JumpImpulse*2), mass)
         {
             IsAlive = true;
         }
@@ -56,11 +56,8 @@ namespace SquareChoBrothers.Model
         public void Jump(Map map)
         {
             lock (this)
-            {
-                if (!IsOnGround(map))
-                    return;
-                Velocity += JumpImpulseVector;
-            }
+                if (IsOnGround(map))
+                    Velocity += JumpImpulseVector;
         }
 
         public void Update(double deltaTime, List<IGeometryFigure> reflectables, List<Monster> enemies)

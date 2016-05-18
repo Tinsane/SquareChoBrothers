@@ -8,8 +8,9 @@ namespace SquareChoBrothers.Model
     public class Monster : DynamicPhysicalObject<Circle>
     {
         private float rotationAngle;
-        public Monster(Square graphicalPosition, Brush brush)
-            : base(new Square(graphicalPosition.Center, graphicalPosition.Size), brush, new Circle(graphicalPosition.Center, graphicalPosition.Size/2))
+        public Monster(Square graphicalPosition, Brush brush, double mass)
+            : base(graphicalPosition, brush,
+                  new Circle(graphicalPosition), mass)
         {
             rotationAngle = 0;
         }
@@ -20,10 +21,11 @@ namespace SquareChoBrothers.Model
             lock (this)
             {
                 rotationAngle += (float) deltaTime;
-                ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.Width/2,
+                var textureBrush = (TextureBrush) Brush;
+                textureBrush.TranslateTransform((float) GraphicalPosition.Width/2,
                     (float) GraphicalPosition.Height/2);
-                ((TextureBrush) Brush).RotateTransform(rotationAngle*2);
-                ((TextureBrush) Brush).TranslateTransform((float) -GraphicalPosition.Width/2,
+                textureBrush.RotateTransform(rotationAngle*2);
+                textureBrush.TranslateTransform((float) -GraphicalPosition.Width/2,
                     (float) -GraphicalPosition.Height/2);
             }
         }
