@@ -27,6 +27,17 @@ namespace Geometry
             return this < other ? -1 : 1;
         }
 
+        public Point GetProjection(Line line)
+        {
+            var a = line.PointOnLine;
+            return a + ((Vector)(this - a)).GetProjection(line);
+        }
+
+        public Vector GetHeight(Line line)
+        {
+            return GetProjection(line) - this;
+        }
+
         public double GetDistance(Point point) => new Vector(this, point).Length;
 
         public bool IsOnSegment(Segment segment) => segment.Contains(this);

@@ -29,10 +29,16 @@ namespace SquareChoBrothers.Model
             }
         }
 
-        public void Update(double deltaTime, Map map)
+        public new void Update(double deltaTime, Map map)
         {
-            Update(deltaTime, map.Terrains);
+            base.Update(deltaTime, map);
             Rotate(deltaTime);
+        }
+
+        protected override void ResolveCollisions(double dTime, Map map)
+        {
+            Reflect(dTime, map.Terrains);
+            Reflect(dTime, map.Monsters);
         }
     }
 }

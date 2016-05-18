@@ -35,6 +35,8 @@ namespace Geometry
 
         public bool IsZero => this == new Vector(0, 0);
 
+        public Vector Reversed => -this;
+
         public Vector GetNormalized(double length) => this/Length*length;
 
         public void Normalize(double newLength)

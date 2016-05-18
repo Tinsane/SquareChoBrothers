@@ -59,10 +59,16 @@ namespace SquareChoBrothers.Model
                     Velocity += JumpImpulseVector;
         }
 
-        public void Update(double deltaTime, Map map)
+        public new void Update(double deltaTime, Map map)
         {
-            Update(deltaTime, map.Terrains);
+            base.Update(deltaTime, map);
             Alive = !map.Monsters.Any(monster => monster.HitBox.IntersectsWith(HitBox));
+        }
+
+        protected override void ResolveCollisions(double dTime, Map map)
+        {
+            Reflect(dTime, map.Terrains);
+            Reflect(dTime, map.Heroes);
         }
     }
 }

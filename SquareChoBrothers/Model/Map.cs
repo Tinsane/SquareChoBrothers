@@ -49,7 +49,7 @@ namespace SquareChoBrothers.Model
             Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(325, 25), 600, 50)));
             Heroes.Add(Hero1Factory.GetNext(new Square(new Point(125, 125), CellSize)));
             Heroes.Add(Hero2Factory.GetNext(new Square(new Point(225, 225), CellSize)));
-            Monsters.Add(MonsterFactory.GetNext(new Square(new Point(500, 500), CellSize)));
+            Monsters.Add(MonsterFactory.GetNext(new Square(new Point(400, 500), CellSize)));
         }
 
         public Map(List<Terrain> terrains, List<Hero> heroes,
