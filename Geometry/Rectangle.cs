@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Geometry
 {
+    [JsonObjectAttribute(MemberSerialization.Fields)]
     public class Rectangle : Geom, IGeometryFigure
     {
         private Point[] points;
@@ -113,6 +115,11 @@ namespace Geometry
         public static bool operator !=(Rectangle a, Rectangle b)
         {
             return !(a == b);
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0}___{1}___{2}___{3}", A, B, C, D);
         }
     }
 }

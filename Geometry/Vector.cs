@@ -18,6 +18,11 @@ namespace Geometry
             y = b.y - a.y;
         }
 
+        public Vector()
+        {
+            x = y = 0;
+        }
+
         public double PolarAngle => Math.Atan2(y, x);
 
         public double Length => Math.Sqrt(x*x + y*y);

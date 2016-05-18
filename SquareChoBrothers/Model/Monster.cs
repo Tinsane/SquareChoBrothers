@@ -6,8 +6,8 @@ namespace SquareChoBrothers.Model
 {
     public class Monster : DynamicPhysicalObject<Circle>
     {
-        public Monster(Square graphicalPosition, Brush brush)
-            : base(graphicalPosition.GetCopy(), brush, new Circle(graphicalPosition.Center, graphicalPosition.Size))
+        public Monster(Square graphicalPosition, string imageName)
+            : base(graphicalPosition.GetCopy(), imageName, new Circle(graphicalPosition.Center, graphicalPosition.Size))
         {
             
         }

@@ -6,8 +6,8 @@ namespace SquareChoBrothers.Model
 {
     public class Hero : DynamicPhysicalObject<Rectangle>
     {
-        public Hero(Rectangle graphicalPosition, Brush brush) :
-            base(graphicalPosition, brush, graphicalPosition.GetCopy(),
+        public Hero(Rectangle graphicalPosition, string imageName) :
+            base(graphicalPosition, imageName, graphicalPosition.GetCopy(),
                 new Vector(Physics.SpeedOfLight / 10, Physics.SpeedOfLight))
         {
         }

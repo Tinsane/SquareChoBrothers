@@ -12,13 +12,13 @@ namespace SquareChoBrothers.Model
     {
         private Vector velocity;
 
-        protected DynamicPhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox) :
-            this(graphicalPosition, brush, hitBox, new Vector(0, 0))
+        protected DynamicPhysicalObject(Rectangle graphicalPosition, string imageName, T hitBox) :
+            this(graphicalPosition, imageName, hitBox, new Vector(0, 0))
         {
         }
 
-        protected DynamicPhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox, Vector velocity) :
-            base(graphicalPosition, brush, hitBox)
+        protected DynamicPhysicalObject(Rectangle graphicalPosition, string imageName, T hitBox, Vector velocity) :
+            base(graphicalPosition, imageName, hitBox)
         {
             Velocity = velocity;
         }
