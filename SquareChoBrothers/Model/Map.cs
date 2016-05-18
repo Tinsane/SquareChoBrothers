@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Geometry;
-using SquareChoBrothers.Model.Factories;
-using SquareChoBrothers.Properties;
 using Newtonsoft.Json;
+using SquareChoBrothers.Model.Factories;
 using SquareChoBrothers.View;
-using Point = Geometry.Point;
-using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
-    [JsonObjectAttribute(MemberSerialization.Fields)]
+    [JsonObject(MemberSerialization.Fields)]
     public class Map
     {
         public const double CellSize = GameModel.CellSize;

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using Geometry;
-using SquareChoBrothers.Model;
-using SquareChoBrothers.Properties;
 using Newtonsoft.Json;
-using Point = Geometry.Point;
-using Rectangle = Geometry.Rectangle;
-using System.Web.Script.Serialization;
-using SquareChoBrothers.Model.Factories;
+using SquareChoBrothers.Model;
 
 namespace MapBuilder.Model
 {
@@ -28,8 +22,11 @@ namespace MapBuilder.Model
 
         public BuilderModel()
         {
-            Map = new Map{Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4), 
-                "background")};
+            Map = new Map
+            {
+                Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4),
+                    "background")
+            };
             const double size = SquareSize;
             Current = new Square(new Point(size/2, size/2), size);
             Width = 1e4;
@@ -41,11 +38,11 @@ namespace MapBuilder.Model
         public void StartGame(Action draw, Action close)
         {
             Draw += draw;
-            Close += () => save("map.txt");
+            Close += () => Save("map.txt");
             Close += close;
         }
 
-        private void save(string fileName)
+        private void Save(string fileName)
         {
             var data = JsonConvert.SerializeObject(Map);
             File.WriteAllText(fileName, data);

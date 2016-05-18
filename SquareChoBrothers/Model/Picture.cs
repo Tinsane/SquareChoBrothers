@@ -6,20 +6,20 @@ using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
-    [JsonObjectAttribute(MemberSerialization.Fields)]
+    [JsonObject(MemberSerialization.Fields)]
     public class Picture : IDrawable
     {
         public Rectangle GraphicalPosition { get; }
-        public Brush Brush => brush ?? (brush = new TextureBrush((Image)(Resources.ResourceManager.GetObject(imageName))));
+        public Brush Brush => brush ?? (brush = new TextureBrush((Image)Resources.ResourceManager.GetObject(ImageName)));
         [JsonIgnore]
         private Brush brush;
-        public string imageName { get; }
+        public string ImageName { get; }
 
         public Picture(Rectangle graphicalPosition, string imageName)
         {
             GraphicalPosition = graphicalPosition.GetCopy();
-            this.imageName = imageName;
-            brush = new TextureBrush((Image)(Resources.ResourceManager.GetObject(imageName)));
+            ImageName = imageName;
+            brush = new TextureBrush((Image)Resources.ResourceManager.GetObject(imageName));
         }
     }
 }
