@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Point = Geometry.Point;
+﻿using System.Drawing;
 using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model.Factories
 {
     public class HeroFactory : MapObjectFactory<Hero, Rectangle>
     {
-        public HeroFactory(string imageName) : base(imageName)
+        private readonly double density;
+        public HeroFactory(string imageName, double density) : base(imageName)
         {
+            this.density = density;
         }
 
-        public override Hero GetNext(Rectangle rectangle) => new Hero(rectangle.GetCopy(), imageName);
+        public override Hero GetNext(Rectangle rectangle) => new Hero(rectangle.GetCopy(), imageName, density*rectangle.Area);
     }
 }

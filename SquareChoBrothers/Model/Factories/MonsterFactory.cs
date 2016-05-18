@@ -10,14 +10,16 @@ using SquareChoBrothers.Model.Factories;
 using Point = Geometry.Point;
 using Rectangle = Geometry.Rectangle;
 
-namespace SquareChoBrothers
+namespace SquareChoBrothers.Model.Factories
 {
     public class MonsterFactory : MapObjectFactory<Monster, Square>
     {
-        public MonsterFactory(string imageName) : base(imageName)
+        private readonly double density;
+        public MonsterFactory(string imageName, double density) : base(imageName)
         {
+            this.density = density;
         }
         
-        public override Monster GetNext(Square square) => new Monster(square.GetCopy(), imageName);
+        public override Monster GetNext(Square square) => new Monster(square.GetCopy(), imageName, density * new Circle(square).Area);
     }
 }

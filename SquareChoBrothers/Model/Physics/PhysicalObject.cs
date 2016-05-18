@@ -19,7 +19,6 @@ namespace SquareChoBrothers.Model.Physics
             this.imageName = imageName;
             brush = new TextureBrush((Image) (Resources.ResourceManager.GetObject(imageName)));
         }
-
         public T HitBox { get; protected set; }
         public Rectangle GraphicalPosition { get; set; }
         [JsonIgnore]

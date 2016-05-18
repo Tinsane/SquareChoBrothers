@@ -2,21 +2,17 @@
 using System.Drawing;
 using System.Linq;
 using Geometry;
+using Newtonsoft.Json;
 using SquareChoBrothers.Model.Physics;
 using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
+    [JsonObject(MemberSerialization.Fields)]
     public class Hero : DynamicPhysicalObject<Rectangle>
     {
         private const double MovementImpulse = PhysicalLaws.SpeedOfLight/5;
         private const double JumpImpulse = MovementImpulse*3;
-
-        public Hero(Rectangle graphicalPosition, string imageName) :
-            base(graphicalPosition, imageName, graphicalPosition.GetCopy())
-        {
-            IsAlive = true;
-        }
 
         static Hero()
         {
@@ -24,9 +20,15 @@ namespace SquareChoBrothers.Model
             JumpImpulseVector = new Vector(0, -JumpImpulse);
         }
 
+        public Hero(Rectangle graphicalPosition, string imageName, double mass) :
+            base(graphicalPosition, imageName, graphicalPosition.GetCopy(),
+                new Vector(MovementImpulse, JumpImpulse*2), mass)
+        {
+        }
+
         private static Vector MovementImpulseVector { get; }
         private static Vector JumpImpulseVector { get; }
-        public bool IsAlive { get; private set; }
+        public bool Alive { get; set; }
 
         public void MoveRight()
         {
@@ -55,17 +57,20 @@ namespace SquareChoBrothers.Model
         public void Jump(Map map)
         {
             lock (this)
-            {
-                if (!IsOnGround(map))
-                    return;
-                Velocity += JumpImpulseVector;
-            }
+                if (IsOnGround(map))
+                    Velocity += JumpImpulseVector;
         }
 
-        public void Update(double deltaTime, List<IGeometryFigure> reflectables, List<Monster> enemies)
+        public new void Update(double deltaTime, Map map)
         {
-            Update(deltaTime, reflectables);
-            IsAlive = !enemies.Any(enemy => enemy.HitBox.IntersectsWith(HitBox));
+            base.Update(deltaTime, map);
+            Alive = !map.Monsters.Any(monster => monster.HitBox.IntersectsWith(HitBox));
+        }
+
+        protected override void ResolveCollisions(double dTime, Map map)
+        {
+            Reflect(dTime, map.Terrains);
+            Reflect(dTime, map.Heroes);
         }
     }
 }

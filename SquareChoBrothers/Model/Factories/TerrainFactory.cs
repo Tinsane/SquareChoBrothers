@@ -9,7 +9,7 @@ using Point = Geometry.Point;
 using Rectangle = Geometry.Rectangle;
 using SquareChoBrothers.Model.Factories;
 
-namespace SquareChoBrothers
+namespace SquareChoBrothers.Model.Factories
 {
     public class TerrainFactory : MapObjectFactory<Terrain, Rectangle>
     {

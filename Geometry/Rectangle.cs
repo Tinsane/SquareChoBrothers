@@ -46,6 +46,8 @@ namespace Geometry
 
         public double SizeY => Height;
 
+        public double Area => Width*Height;
+
         public Point[] Points => points.Select(x => new Point(x)).ToArray();
 
         public Segment[] Segments => Points.Select((x, i) =>

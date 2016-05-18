@@ -1,4 +1,6 @@
-﻿namespace Geometry
+﻿using System;
+
+namespace Geometry
 {
     public class Circle : Geom, IGeometryFigure
     {
@@ -17,6 +19,12 @@
             y = center.y;
             r = radius;
         }
+
+        public Circle(Square square) : this(square.Center, square.Size/2)
+        {
+        }
+
+        public double Area => r*r*Math.PI;
 
         public Point Center
         {

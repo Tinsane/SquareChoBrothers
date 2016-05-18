@@ -17,12 +17,12 @@ namespace SquareChoBrothers.Model
     {
         public const double CellSize = GameModel.CellSize;
 
-        public readonly HeroFactory Hero1Factory = new HeroFactory("Hero1_50");
+        public readonly HeroFactory Hero1Factory = new HeroFactory("Hero1_50", 1);
 
-        public readonly HeroFactory Hero2Factory = new HeroFactory("Hero2_50");
+        public readonly HeroFactory Hero2Factory = new HeroFactory("Hero2_50", 1);
 
         public readonly MonsterFactory MonsterFactory =
-            new MonsterFactory("Monster_50");
+            new MonsterFactory("Monster_50", 1);
 
         public readonly TerrainFactory TerrainFactory =
             new TerrainFactory("Terrain1");

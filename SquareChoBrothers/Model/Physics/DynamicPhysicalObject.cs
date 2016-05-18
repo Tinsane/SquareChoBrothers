@@ -3,24 +3,36 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Geometry;
+using Newtonsoft.Json;
 using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model.Physics
 {
+    [JsonObject(MemberSerialization.Fields)]
     public abstract class DynamicPhysicalObject<T> : PhysicalObject<T>
         where T : IGeometryFigure
     {
         private Vector velocity;
 
-        protected DynamicPhysicalObject(Rectangle graphicalPosition, string imageName, T hitBox) :
-            this(graphicalPosition, imageName, hitBox, new Vector(0, 0))
+        protected DynamicPhysicalObject(Rectangle graphicalPosition, string imageName, T hitBox, double mass) :
+            this(graphicalPosition, imageName, hitBox, new Vector(0, 0), mass)
         {
         }
 
-        protected DynamicPhysicalObject(Rectangle graphicalPosition, string imageName, T hitBox, Vector velocity) :
-            base(graphicalPosition, imageName, hitBox)
+        protected DynamicPhysicalObject(Rectangle graphicalPosition, string imageName, T hitBox, Vector velocity, double mass)
+            :
+                base(graphicalPosition, imageName, hitBox)
         {
             Velocity = velocity;
+            Mass = mass;
+        }
+
+        protected double Mass { get; set; }
+
+        public Vector Impulse
+        {
+            get { return Velocity*Mass; }
+            protected set { Velocity = value/Mass; }
         }
 
         protected Vector Velocity
@@ -41,42 +53,61 @@ namespace SquareChoBrothers.Model.Physics
                 !ReferenceEquals(reflectable, HitBox) && reflectable.IntersectsWith(loweredHitBox));
         }
 
+        protected abstract void ResolveCollisions(double dTime, Map map);
+
         private void Transfer(Vector shift)
         {
             HitBox.Transfer(shift);
             GraphicalPosition.Transfer(shift);
         }
 
-        //private void PushAway(IGeometryFigure intersected, Line intersectionLine)
-        //{
-        //    var shift = intersectionLine.NormalVector;
-        //    shift /= 10;
-        //    if (HitBox.GetTransfered(shift).IntersectsWith(intersected))
-        //        shift = -shift;
-        //    Transfer(shift);
-        //}
-
-        private void Reflect(double dTime, List<IGeometryFigure> reflectables)
+        private void ResolveCollision<THitBox>(PhysicalObject<THitBox> intersected, Line intersectionLine)
+            where THitBox : IGeometryFigure
         {
-            for (var i = 0; i < 2; ++i)
+            var dynamicPhysicalObjectIntersected = intersected as DynamicPhysicalObject<THitBox>;
+            if (!ReferenceEquals(dynamicPhysicalObjectIntersected, null))
             {
-                var movedHitBox = HitBox.GetTransfered(Velocity*dTime);
-                foreach (var intersected in reflectables)
-                {
-                    var intersectionLine = movedHitBox.GetIntersectionLine(intersected);
-                    if (ReferenceEquals(intersected, HitBox) || ReferenceEquals(intersectionLine, null))
-                        continue;
-                    var projection = Velocity.GetProjection(intersectionLine);
-                    var normal = Velocity - projection;
-                    if (normal.GetScalarProduct(intersected.Center - HitBox.Center).IsDoubleLess(0))
-                        Velocity = projection + normal;
-                    else
-                        Velocity = projection;
-                }
+                ResolveCollision(dynamicPhysicalObjectIntersected, intersectionLine);
+                return;
+            }
+            var projection = Velocity.GetProjection(intersectionLine);
+            var normal = Velocity - projection;
+            if (normal.GetScalarProduct(intersected.HitBox.Center - HitBox.Center).IsDoubleLess(0))
+                Velocity = projection + normal;
+            else
+                Velocity = projection;
+        }
+
+        private void ResolveCollision<THitBox>(DynamicPhysicalObject<THitBox> intersected, Line intersectionLine)
+            where THitBox : IGeometryFigure
+        {
+            var thisProjection = Velocity.GetProjection(intersectionLine);
+            var thisNormal = Velocity - thisProjection;
+            var thatProjection = intersected.Velocity.GetProjection(intersectionLine);
+            var thatNormal = intersected.Velocity - thatProjection;
+            var sumNormalImpulse = thisNormal.Length*Mass + thatNormal.Length*intersected.Mass;
+            var newSumNormalImpulse = sumNormalImpulse * PhysicalLaws.ImpactConstant;
+            var newNormalVelocity = newSumNormalImpulse / (Mass + intersected.Mass);
+            var newThisNormal = HitBox.Center.GetHeight(intersectionLine).Reversed.GetNormalized(newNormalVelocity);
+            var newThatNormal = -newThisNormal;
+            Velocity = thisProjection + newThisNormal;
+            intersected.Velocity = thatProjection + newThatNormal;
+        }
+
+        protected void Reflect<THitBox>(double dTime, IEnumerable<PhysicalObject<THitBox>> reflectables)
+            where THitBox : IGeometryFigure
+        {
+            var movedHitBox = HitBox.GetTransfered(Velocity*dTime);
+            foreach (var reflectable in reflectables)
+            {
+                var intersectionLine = movedHitBox.GetIntersectionLine(reflectable.HitBox);
+                if (ReferenceEquals(reflectable, this) || ReferenceEquals(intersectionLine, null))
+                    continue;
+                ResolveCollision(reflectable, intersectionLine);
             }
         }
 
-        public void Update(double deltaTime, List<IGeometryFigure> reflectables)
+        public void Update(double deltaTime, Map map)
         {
             lock (this)
             {
@@ -86,11 +117,12 @@ namespace SquareChoBrothers.Model.Physics
                 for (var i = 0; i < coef; ++i)
                 {
                     Velocity += PhysicalLaws.GravityVector*dTime;
-                    Reflect(dTime, reflectables);
+                    ResolveCollisions(dTime, map);
                     Transfer(Velocity*dTime);
                 }
-                ((TextureBrush) Brush).ResetTransform();
-                ((TextureBrush) Brush).TranslateTransform((float) GraphicalPosition.A.x,
+                var textureBrush = (TextureBrush) Brush;
+                textureBrush.ResetTransform();
+                textureBrush.TranslateTransform((float) GraphicalPosition.A.x,
                     (float) GraphicalPosition.A.y);
             }
         }
