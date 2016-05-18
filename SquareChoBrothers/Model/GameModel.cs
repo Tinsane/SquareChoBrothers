@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using Geometry;
 
 namespace SquareChoBrothers.Model
 {
@@ -44,15 +41,12 @@ namespace SquareChoBrothers.Model
         {
             lock (this)
             {
-                var reflectables = new List<IGeometryFigure>();
-                reflectables.AddRange(Map.Heroes.Select(hero => hero.HitBox));
-                reflectables.AddRange(Map.Terrains.Select(terrain => terrain.HitBox));
                 foreach (var monster in Map.Monsters)
-                    monster.Update(UpdateInterval, reflectables);
+                    monster.Update(UpdateInterval, Map);
                 foreach (var hero in Map.Heroes)
-                    hero.Update(UpdateInterval, reflectables, Map.Monsters);
+                    hero.Update(UpdateInterval, Map);
                 draw();
-                if (!Map.Heroes[0].IsAlive || !Map.Heroes[1].IsAlive)
+                if (!Map.Heroes[0].Alive || !Map.Heroes[1].Alive)
                 {
                     CongratulateWinner();
                     return;

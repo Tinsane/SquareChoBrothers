@@ -17,10 +17,20 @@ namespace SquareChoBrothers.Model.Physics
         {
         }
 
-        protected DynamicPhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox, Vector velocity, double mass) :
-            base(graphicalPosition, brush, hitBox, mass)
+        protected DynamicPhysicalObject(Rectangle graphicalPosition, Brush brush, T hitBox, Vector velocity, double mass)
+            :
+                base(graphicalPosition, brush, hitBox)
         {
             Velocity = velocity;
+            Mass = mass;
+        }
+
+        protected double Mass { get; set; }
+
+        public Vector Impulse
+        {
+            get { return Velocity*Mass; }
+            protected set { Velocity = value / Mass; }
         }
 
         protected Vector Velocity
@@ -47,21 +57,12 @@ namespace SquareChoBrothers.Model.Physics
             GraphicalPosition.Transfer(shift);
         }
 
-        //private void PushAway(IGeometryFigure intersected, Line intersectionLine)
-        //{
-        //    var shift = intersectionLine.NormalVector;
-        //    shift /= 10;
-        //    if (HitBox.GetTransfered(shift).IntersectsWith(intersected))
-        //        shift = -shift;
-        //    Transfer(shift);
-        //}
-
-        private void Reflect(double dTime, List<IGeometryFigure> reflectables)
+        private void TerrainReflect(double dTime, Rectangle[] terrains)
         {
             for (var i = 0; i < 2; ++i)
             {
                 var movedHitBox = HitBox.GetTransfered(Velocity*dTime);
-                foreach (var intersected in reflectables)
+                foreach (var intersected in terrains)
                 {
                     var intersectionLine = movedHitBox.GetIntersectionLine(intersected);
                     if (ReferenceEquals(intersected, HitBox) || ReferenceEquals(intersectionLine, null))
@@ -76,7 +77,7 @@ namespace SquareChoBrothers.Model.Physics
             }
         }
 
-        public void Update(double deltaTime, List<IGeometryFigure> reflectables)
+        public void Update(double deltaTime, List<Terrain> terrains)
         {
             lock (this)
             {
@@ -86,7 +87,7 @@ namespace SquareChoBrothers.Model.Physics
                 for (var i = 0; i < coef; ++i)
                 {
                     Velocity += PhysicalLaws.GravityVector*dTime;
-                    Reflect(dTime, reflectables);
+                    TerrainReflect(dTime, terrains.Select(reflectable => reflectable.HitBox).ToArray());
                     Transfer(Velocity*dTime);
                 }
                 ((TextureBrush) Brush).ResetTransform();

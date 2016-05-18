@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Geometry;
 using SquareChoBrothers.Model.Physics;
 
@@ -8,16 +7,16 @@ namespace SquareChoBrothers.Model
     public class Monster : DynamicPhysicalObject<Circle>
     {
         private float rotationAngle;
+
         public Monster(Square graphicalPosition, Brush brush, double mass)
             : base(graphicalPosition, brush,
-                  new Circle(graphicalPosition), mass)
+                new Circle(graphicalPosition), mass)
         {
             rotationAngle = 0;
         }
 
-        public new void Update(double deltaTime, List<IGeometryFigure> reflectables)
+        private void Rotate(double deltaTime)
         {
-            base.Update(deltaTime, reflectables);
             lock (this)
             {
                 rotationAngle += (float) deltaTime;
@@ -28,6 +27,12 @@ namespace SquareChoBrothers.Model
                 textureBrush.TranslateTransform((float) -GraphicalPosition.Width/2,
                     (float) -GraphicalPosition.Height/2);
             }
+        }
+
+        public void Update(double deltaTime, Map map)
+        {
+            Update(deltaTime, map.Terrains);
+            Rotate(deltaTime);
         }
     }
 }

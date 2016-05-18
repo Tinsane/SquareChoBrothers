@@ -42,13 +42,14 @@ namespace SquareChoBrothers.Model
             Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4),
                 new TextureBrush(Resources.background));
             Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(25, 300), 50, 600)));
-            Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(300, 625), 600, 50)));
+            Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(150, 625), 300, 50)));
+            Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(450, 625), 300, 50)));
             Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(625, 300), 50, 600)));
             Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(575, 300), 50, 400)));
             Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(325, 25), 600, 50)));
             Heroes.Add(Hero1Factory.GetNext(new Square(new Point(125, 125), CellSize)));
             Heroes.Add(Hero2Factory.GetNext(new Square(new Point(225, 225), CellSize)));
-            Monsters.Add(MonsterFactory.GetNext(new Square(new Point(400, 500), CellSize)));
+            Monsters.Add(MonsterFactory.GetNext(new Square(new Point(500, 500), CellSize)));
         }
 
         public Map(List<Terrain> terrains, List<Hero> heroes,

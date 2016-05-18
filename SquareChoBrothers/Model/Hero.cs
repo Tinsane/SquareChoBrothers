@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using Geometry;
 using SquareChoBrothers.Model.Physics;
@@ -22,12 +21,12 @@ namespace SquareChoBrothers.Model
             base(graphicalPosition, brush, graphicalPosition.GetCopy(),
                 new Vector(MovementImpulse, JumpImpulse*2), mass)
         {
-            IsAlive = true;
+            Alive = true;
         }
 
         private static Vector MovementImpulseVector { get; }
         private static Vector JumpImpulseVector { get; }
-        public bool IsAlive { get; private set; }
+        public bool Alive { get; private set; }
 
         public void MoveRight()
         {
@@ -60,10 +59,10 @@ namespace SquareChoBrothers.Model
                     Velocity += JumpImpulseVector;
         }
 
-        public void Update(double deltaTime, List<IGeometryFigure> reflectables, List<Monster> enemies)
+        public void Update(double deltaTime, Map map)
         {
-            Update(deltaTime, reflectables);
-            IsAlive = !enemies.Any(enemy => enemy.HitBox.IntersectsWith(HitBox));
+            Update(deltaTime, map.Terrains);
+            Alive = !map.Monsters.Any(monster => monster.HitBox.IntersectsWith(HitBox));
         }
     }
 }
