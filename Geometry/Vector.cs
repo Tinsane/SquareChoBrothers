@@ -29,6 +29,11 @@ namespace Geometry
         public Vector OxProjection => OxDirectional*GetScalarProduct(OxDirectional);
         public Vector OyProjection => OyDirectional*GetScalarProduct(OyDirectional);
 
+        public Vector()
+        {
+            x = y = 0;
+        }
+
         public double PolarAngle => Math.Atan2(y, x);
 
         public double Length => Math.Sqrt(x*x + y*y);

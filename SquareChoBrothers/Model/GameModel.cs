@@ -8,7 +8,7 @@ namespace SquareChoBrothers.Model
 {
     public class GameModel
     {
-        private const int UpdateInterval = 2;
+        private const int UpdateInterval = 10;
         public const double CellSize = 50;
         private Action draw;
 

@@ -12,17 +12,16 @@ namespace SquareChoBrothers.Model
         private const double MovementImpulse = PhysicalLaws.SpeedOfLight/5;
         private const double JumpImpulse = MovementImpulse*3;
 
+        public Hero(Rectangle graphicalPosition, string imageName) :
+            base(graphicalPosition, imageName, graphicalPosition.GetCopy())
+        {
+            IsAlive = true;
+        }
+
         static Hero()
         {
             MovementImpulseVector = new Vector(MovementImpulse, 0);
             JumpImpulseVector = new Vector(0, -JumpImpulse);
-        }
-
-        public Hero(Rectangle graphicalPosition, Brush brush) :
-            base(graphicalPosition, brush, graphicalPosition.GetCopy(),
-                new Vector(MovementImpulse, JumpImpulse*2))
-        {
-            IsAlive = true;
         }
 
         private static Vector MovementImpulseVector { get; }

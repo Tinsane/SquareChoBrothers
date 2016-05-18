@@ -14,10 +14,10 @@ namespace SquareChoBrothers
 {
     public class MonsterFactory : MapObjectFactory<Monster, Square>
     {
-        public MonsterFactory(Brush brush) : base(brush)
+        public MonsterFactory(string imageName) : base(imageName)
         {
         }
         
-        public override Monster GetNext(Square square) => new Monster(square.GetCopy(), Brush);
+        public override Monster GetNext(Square square) => new Monster(square.GetCopy(), imageName);
     }
 }

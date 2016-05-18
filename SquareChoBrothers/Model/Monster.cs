@@ -8,8 +8,8 @@ namespace SquareChoBrothers.Model
     public class Monster : DynamicPhysicalObject<Circle>
     {
         private float rotationAngle;
-        public Monster(Square graphicalPosition, Brush brush)
-            : base(new Square(graphicalPosition.Center, graphicalPosition.Size), brush, new Circle(graphicalPosition.Center, graphicalPosition.Size/2))
+        public Monster(Square graphicalPosition, string imageName)
+            : base(graphicalPosition.GetCopy(), imageName, new Circle(graphicalPosition.Center, graphicalPosition.Size / 2))
         {
             rotationAngle = 0;
         }

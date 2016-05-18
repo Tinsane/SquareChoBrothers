@@ -13,8 +13,11 @@ namespace SquareChoBrothers
 {
     public class TerrainFactory : MapObjectFactory<Terrain, Rectangle>
     {
-        public TerrainFactory(Brush brush) : base(brush) { }
+        public TerrainFactory(string imageName) : base(imageName)
+        {
+            
+        }
 
-        public override Terrain GetNext(Rectangle rectangle) => new Terrain(rectangle.GetCopy(), Brush);
+        public override Terrain GetNext(Rectangle rectangle) => new Terrain(rectangle.GetCopy(), imageName);
     }
 }
