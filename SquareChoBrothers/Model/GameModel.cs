@@ -5,12 +5,13 @@ namespace SquareChoBrothers.Model
 {
     public class GameModel
     {
-        private const int UpdateInterval = 10;
+        private const int UpdateInterval = 30;
         public const double CellSize = 50;
         private Action draw;
 
         public Map Map;
         private Timer physicsTimer;
+        private long lastTick;
 
         public GameModel()
         {
@@ -32,6 +33,7 @@ namespace SquareChoBrothers.Model
             foreach (var hero in Map.Heroes)
                 hero.Alive = true;
             physicsTimer = new Timer(UpdateState, null, UpdateInterval, Timeout.Infinite);
+            lastTick = DateTime.Now.Ticks;
         }
 
         private void CongratulateWinner()
@@ -43,10 +45,12 @@ namespace SquareChoBrothers.Model
         {
             lock (this)
             {
+                var now = DateTime.Now.Ticks;
                 foreach (var monster in Map.Monsters)
-                    monster.Update(UpdateInterval, Map);
+                    monster.Update(now - lastTick, Map);
                 foreach (var hero in Map.Heroes)
-                    hero.Update(UpdateInterval, Map);
+                    hero.Update(now - lastTick, Map);
+                lastTick = DateTime.Now.Ticks;
                 draw();
                 if (!Map.Heroes[0].Alive || !Map.Heroes[1].Alive)
                 {

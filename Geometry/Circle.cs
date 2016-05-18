@@ -6,6 +6,12 @@ namespace Geometry
     {
         public double x, y, r;
 
+        public Circle()
+        {
+            Center = new Point();
+            r = 1;
+        }
+
         public Circle(double x, double y, double radius)
         {
             this.x = x;

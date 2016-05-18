@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Geometry;
 using SquareChoBrothers.Model.Physics;
+using System.Linq;
 
 namespace SquareChoBrothers.Model
 {
@@ -19,7 +21,7 @@ namespace SquareChoBrothers.Model
         {
             lock (this)
             {
-                rotationAngle += (float) deltaTime;
+                rotationAngle += (float) deltaTime / TimeSpan.TicksPerMillisecond / 10;
                 var textureBrush = (TextureBrush) Brush;
                 textureBrush.TranslateTransform((float) GraphicalPosition.Width/2,
                     (float) GraphicalPosition.Height/2);
@@ -37,8 +39,8 @@ namespace SquareChoBrothers.Model
 
         protected override void ResolveCollisions(double dTime, Map map)
         {
-            Reflect(dTime, map.Terrains);
             Reflect(dTime, map.Monsters);
+            Reflect(dTime, map.Terrains);
         }
     }
 }

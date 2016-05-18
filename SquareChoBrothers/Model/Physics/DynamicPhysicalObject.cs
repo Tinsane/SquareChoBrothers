@@ -48,7 +48,7 @@ namespace SquareChoBrothers.Model.Physics
 
         protected bool IsOnGround(Map map)
         {
-            var loweredHitBox = HitBox.GetTransfered(new Vector(0, 0.2));
+            var loweredHitBox = HitBox.GetTransfered(new Vector(0, PhysicalLaws.SpeedOfLight / 20));
             return map.HeroReflectables.Any(reflectable =>
                 !ReferenceEquals(reflectable, HitBox) && reflectable.IntersectsWith(loweredHitBox));
         }
@@ -81,17 +81,20 @@ namespace SquareChoBrothers.Model.Physics
         private void ResolveCollision<THitBox>(DynamicPhysicalObject<THitBox> intersected, Line intersectionLine)
             where THitBox : IGeometryFigure
         {
-            var thisProjection = Velocity.GetProjection(intersectionLine);
-            var thisNormal = Velocity - thisProjection;
-            var thatProjection = intersected.Velocity.GetProjection(intersectionLine);
-            var thatNormal = intersected.Velocity - thatProjection;
-            var sumNormalImpulse = thisNormal.Length*Mass + thatNormal.Length*intersected.Mass;
-            var newSumNormalImpulse = sumNormalImpulse * PhysicalLaws.ImpactConstant;
-            var newNormalVelocity = newSumNormalImpulse / (Mass + intersected.Mass);
-            var newThisNormal = HitBox.Center.GetHeight(intersectionLine).Reversed.GetNormalized(newNormalVelocity);
-            var newThatNormal = -newThisNormal;
-            Velocity = thisProjection + newThisNormal;
-            intersected.Velocity = thatProjection + newThatNormal;
+            lock (intersected)
+            {
+                var thisProjection = Velocity.GetProjection(intersectionLine);
+                var thisNormal = Velocity - thisProjection;
+                var thatProjection = intersected.Velocity.GetProjection(intersectionLine);
+                var thatNormal = intersected.Velocity - thatProjection;
+                var sumNormalImpulse = thisNormal.Length*Mass + thatNormal.Length*intersected.Mass;
+                var newSumNormalImpulse = sumNormalImpulse*PhysicalLaws.ImpactConstant;
+                var newNormalVelocity = newSumNormalImpulse/(Mass + intersected.Mass);
+                var newThisNormal = HitBox.Center.GetHeight(intersectionLine).Reversed.GetNormalized(newNormalVelocity);
+                var newThatNormal = -newThisNormal;
+                Velocity = thisProjection + newThisNormal;
+                intersected.Velocity = thatProjection + newThatNormal;
+            }
         }
 
         protected void Reflect<THitBox>(double dTime, IEnumerable<PhysicalObject<THitBox>> reflectables)
@@ -112,7 +115,7 @@ namespace SquareChoBrothers.Model.Physics
             lock (this)
             {
                 deltaTime /= TimeSpan.TicksPerMillisecond;
-                const int coef = 10;
+                const int coef = 20;
                 var dTime = deltaTime/coef;
                 for (var i = 0; i < coef; ++i)
                 {

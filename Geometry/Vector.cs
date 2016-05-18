@@ -1,7 +1,9 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Geometry
 {
+    [JsonObject(MemberSerialization.Fields)]
     public class Vector : Geom
     {
         public double x, y;

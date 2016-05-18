@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Geometry
 {
-    [JsonObjectAttribute(MemberSerialization.Fields)]
+    [JsonObject(MemberSerialization.Fields)]
     public class Rectangle : Geom, IGeometryFigure
     {
         private Point[] points;
@@ -125,7 +125,7 @@ namespace Geometry
 
         public override string ToString()
         {
-            return String.Format("{0}___{1}___{2}___{3}", A, B, C, D);
+            return $"{A}___{B}___{C}___{D}";
         }
     }
 }

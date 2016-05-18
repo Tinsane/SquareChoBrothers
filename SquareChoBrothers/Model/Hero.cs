@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Linq;
 using Geometry;
 using Newtonsoft.Json;
 using SquareChoBrothers.Model.Physics;
-using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
@@ -21,7 +18,7 @@ namespace SquareChoBrothers.Model
         }
 
         public Hero(Rectangle graphicalPosition, string imageName, double mass) :
-            base(graphicalPosition, imageName, graphicalPosition.GetCopy(),
+            base(graphicalPosition.GetCopy(), imageName, graphicalPosition.GetCopy(),
                 new Vector(MovementImpulse, JumpImpulse*2), mass)
         {
         }
@@ -69,8 +66,8 @@ namespace SquareChoBrothers.Model
 
         protected override void ResolveCollisions(double dTime, Map map)
         {
-            Reflect(dTime, map.Terrains);
             Reflect(dTime, map.Heroes);
+            Reflect(dTime, map.Terrains);
         }
     }
 }
