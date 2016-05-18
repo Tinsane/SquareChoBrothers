@@ -65,7 +65,7 @@ namespace Geometry
             return firstVector.GetScalarProduct(secondVector) < 0;
         }
 
-        private bool IsOnSecondSize(Point point) => Reversed.IsOnFirstSide(point);
+        private bool IsOnSecondSide(Point point) => Reversed.IsOnFirstSide(point);
 
         public bool IntersectsWith(Segment segment) => !double.IsNaN(Intersect(segment).x) ||
                                                        segment.Contains(A) ||
@@ -88,7 +88,7 @@ namespace Geometry
         {
             if (IsOnFirstSide(point))
                 return point.GetDistance(A);
-            if (IsOnSecondSize(point))
+            if (IsOnSecondSide(point))
                 return point.GetDistance(B);
             var line = ContainingLine;
             return line.GetDistance(point);

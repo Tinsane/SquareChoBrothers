@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SquareChoBrothers.Model
 {
     public class GameModel
     {
-        private const int UpdateInterval = 30;
+        private const int UpdateInterval = 3;
         public const double CellSize = 50;
         private Action draw;
 

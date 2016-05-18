@@ -38,9 +38,9 @@ namespace Geometry
         /// </summary>
         public Point D => new Point(points[3]);
 
-        public double Width => B.GetDistance(C);
+        public double Width => D.x - B.x;
 
-        public double Height => A.GetDistance(B);
+        public double Height => C.y - A.y;
 
         public double SizeX => Width;
 
@@ -50,8 +50,8 @@ namespace Geometry
 
         public Point[] Points => points.Select(x => new Point(x)).ToArray();
 
-        public Segment[] Segments => Points.Select((x, i) =>
-            new Segment(x, Points[(i + 1)%4])).ToArray();
+        public Segment[] Segments => points.Select((x, i) =>
+            new Segment(x, points[(i + 1)%4])).ToArray();
 
         public Point Center => (A + C)/2;
 
@@ -69,8 +69,8 @@ namespace Geometry
             points = points.Select(point => point + transferVector).ToArray();
         }
 
-        public bool IntersectsWith(Rectangle rectangle)
-            => Points.Any(rectangle.Contains) || rectangle.Points.Any(Contains);
+        public bool IntersectsWith(Rectangle rectangle) =>
+            points.Any(rectangle.Contains) || rectangle.points.Any(Contains);
 
         public Line GetIntersectionLine(Rectangle rectangle)
         {
@@ -97,10 +97,11 @@ namespace Geometry
 
         public bool Contains(Point point)
         {
-            if (Segments.Any(x => x.Contains(point)))
-                return true;
-            var angle = points.Select((t, i) =>
-                new Vector(point, t).GetAngle(new Vector(point, points[(i + 1)%4]))).Sum();
+            var a = new Vector(points[0], point);
+            var b = new Vector(points[1], point);
+            var c = new Vector(points[2], point);
+            var d = new Vector(points[3], point);
+            var angle = a.GetAngle(b) + b.GetAngle(c) + c.GetAngle(d) + d.GetAngle(a);
             return Math.Abs(angle).IsDoubleEqual(Math.PI*2);
         }
 

@@ -12,6 +12,7 @@ namespace Geometry
         {
             OxDirectional = new Vector(1, 0);
             OyDirectional = new Vector(0, 1);
+            ZeroVector = new Vector(0, 0);
         }
 
         public Vector(double x, double y)
@@ -28,6 +29,7 @@ namespace Geometry
 
         public static Vector OxDirectional { get; }
         public static Vector OyDirectional { get; }
+        public static Vector ZeroVector { get; }
         public Vector OxProjection => OxDirectional*GetScalarProduct(OxDirectional);
         public Vector OyProjection => OyDirectional*GetScalarProduct(OyDirectional);
 
@@ -40,7 +42,7 @@ namespace Geometry
 
         public double Length => Math.Sqrt(x*x + y*y);
 
-        public bool IsZero => this == new Vector(0, 0);
+        public bool IsZero => this == ZeroVector;
 
         public Vector Reversed => -this;
 
@@ -97,7 +99,7 @@ namespace Geometry
 
         public static Vector operator -(Vector a, Vector b) => new Vector(a.x - b.x, a.y - b.y);
 
-        public static Vector operator -(Vector a) => new Vector(0, 0) - a;
+        public static Vector operator -(Vector a) => ZeroVector - a;
 
         public static Vector operator *(Vector a, double t) => new Vector(a.x*t, a.y*t);
 

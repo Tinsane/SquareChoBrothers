@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using Geometry;
 using Newtonsoft.Json;
 using Rectangle = Geometry.Rectangle;
@@ -73,41 +74,44 @@ namespace SquareChoBrothers.Model.Physics
             var projection = Velocity.GetProjection(intersectionLine);
             var normal = Velocity - projection;
             if (normal.GetScalarProduct(intersected.HitBox.Center - HitBox.Center).IsDoubleLess(0))
+            {
                 Velocity = projection + normal;
+                Transfer(normal * 0.05);
+            }
             else
+            {
                 Velocity = projection;
+                Transfer(-normal * 0.05);
+            }
         }
 
         private void ResolveCollision<THitBox>(DynamicPhysicalObject<THitBox> intersected, Line intersectionLine)
             where THitBox : IGeometryFigure
         {
-            lock (intersected)
-            {
-                var thisProjection = Velocity.GetProjection(intersectionLine);
-                var thisNormal = Velocity - thisProjection;
-                var thatProjection = intersected.Velocity.GetProjection(intersectionLine);
-                var thatNormal = intersected.Velocity - thatProjection;
-                var sumNormalImpulse = thisNormal.Length*Mass + thatNormal.Length*intersected.Mass;
-                var newSumNormalImpulse = sumNormalImpulse*PhysicalLaws.ImpactConstant;
-                var newNormalVelocity = newSumNormalImpulse/(Mass + intersected.Mass);
-                var newThisNormal = HitBox.Center.GetHeight(intersectionLine).Reversed.GetNormalized(newNormalVelocity);
-                var newThatNormal = -newThisNormal;
-                Velocity = thisProjection + newThisNormal;
-                intersected.Velocity = thatProjection + newThatNormal;
-            }
+            var thisProjection = Velocity.GetProjection(intersectionLine);
+            var thisNormal = Velocity - thisProjection;
+            var thatProjection = intersected.Velocity.GetProjection(intersectionLine);
+            var thatNormal = intersected.Velocity - thatProjection;
+            var sumNormalImpulse = thisNormal.Length*Mass + thatNormal.Length*intersected.Mass;
+            var newSumNormalImpulse = sumNormalImpulse*PhysicalLaws.ImpactConstant;
+            var newNormalVelocity = newSumNormalImpulse/(Mass + intersected.Mass);
+            var newThisNormal = HitBox.Center.GetHeight(intersectionLine).Reversed.GetNormalized(newNormalVelocity);
+            var newThatNormal = -newThisNormal;
+            Velocity = thisProjection + newThisNormal;
+            intersected.Velocity = thatProjection + newThatNormal;
         }
 
         protected void Reflect<THitBox>(double dTime, IEnumerable<PhysicalObject<THitBox>> reflectables)
             where THitBox : IGeometryFigure
         {
-            var movedHitBox = HitBox.GetTransfered(Velocity*dTime);
-            foreach (var reflectable in reflectables)
+            Parallel.ForEach(reflectables, reflectable =>
             {
+                var movedHitBox = HitBox.GetTransfered(Velocity*dTime);
                 var intersectionLine = movedHitBox.GetIntersectionLine(reflectable.HitBox);
-                if (ReferenceEquals(reflectable, this) || ReferenceEquals(intersectionLine, null))
-                    continue;
-                ResolveCollision(reflectable, intersectionLine);
-            }
+                if (ReferenceEquals(reflectable, this) || ReferenceEquals(intersectionLine, null)) return;
+                lock (reflectable)
+                    ResolveCollision(reflectable, intersectionLine);
+            });
         }
 
         public void Update(double deltaTime, Map map)
@@ -115,7 +119,7 @@ namespace SquareChoBrothers.Model.Physics
             lock (this)
             {
                 deltaTime /= TimeSpan.TicksPerMillisecond;
-                const int coef = 20;
+                const int coef = 30;
                 var dTime = deltaTime/coef;
                 for (var i = 0; i < coef; ++i)
                 {
