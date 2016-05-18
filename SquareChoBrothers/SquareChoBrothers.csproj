@@ -50,13 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\DynamicPhysicalObject.cs" />
+    <Compile Include="Model\Physics\DynamicPhysicalObject.cs" />
     <Compile Include="Model\Factories\HeroFactory.cs" />
     <Compile Include="Model\Factories\MapObjectFactory.cs" />
     <Compile Include="Model\Factories\PictureFactory.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\Map.cs" />
-    <Compile Include="Model\Physics.cs" />
+    <Compile Include="Model\Physics\PhysicalLaws.cs" />
     <Compile Include="Model\Factories\TerrainFactory.cs" />
     <Compile Include="Model\Factories\MonsterFactory.cs" />
     <Compile Include="View\GameForm.cs">
@@ -66,7 +66,7 @@
     <Compile Include="Controller\Controller.cs" />
     <Compile Include="View\IDrawable.cs" />
     <Compile Include="Model\Monster.cs" />
-    <Compile Include="Model\PhysicalObject.cs" />
+    <Compile Include="Model\Physics\PhysicalObject.cs" />
     <Compile Include="Model\Picture.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

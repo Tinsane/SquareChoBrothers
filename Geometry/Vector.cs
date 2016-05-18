@@ -6,6 +6,12 @@ namespace Geometry
     {
         public double x, y;
 
+        static Vector()
+        {
+            OxDirectional = new Vector(1, 0);
+            OyDirectional = new Vector(0, 1);
+        }
+
         public Vector(double x, double y)
         {
             this.x = x;
@@ -17,6 +23,11 @@ namespace Geometry
             x = b.x - a.x;
             y = b.y - a.y;
         }
+
+        public static Vector OxDirectional { get; }
+        public static Vector OyDirectional { get; }
+        public Vector OxProjection => OxDirectional*GetScalarProduct(OxDirectional);
+        public Vector OyProjection => OyDirectional*GetScalarProduct(OyDirectional);
 
         public double PolarAngle => Math.Atan2(y, x);
 

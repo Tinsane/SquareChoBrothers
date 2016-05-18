@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using Geometry;
+using SquareChoBrothers.Model.Physics;
 
 namespace SquareChoBrothers.Model
 {

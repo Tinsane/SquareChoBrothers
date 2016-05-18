@@ -2,27 +2,38 @@
 using System.Drawing;
 using System.Linq;
 using Geometry;
+using SquareChoBrothers.Model.Physics;
 using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
     public class Hero : DynamicPhysicalObject<Rectangle>
     {
-        public bool IsAlive { get; private set; }
+        private const double MovementImpulse = PhysicalLaws.SpeedOfLight/5;
+        private const double JumpImpulse = MovementImpulse*3;
+
+        static Hero()
+        {
+            MovementImpulseVector = new Vector(MovementImpulse, 0);
+            JumpImpulseVector = new Vector(0, -JumpImpulse);
+        }
 
         public Hero(Rectangle graphicalPosition, Brush brush) :
             base(graphicalPosition, brush, graphicalPosition.GetCopy(),
-                new Vector(Physics.SpeedOfLight / 10, Physics.SpeedOfLight))
+                new Vector(MovementImpulse, JumpImpulse*2))
         {
             IsAlive = true;
         }
+
+        private static Vector MovementImpulseVector { get; }
+        private static Vector JumpImpulseVector { get; }
+        public bool IsAlive { get; private set; }
 
         public void MoveRight()
         {
             lock (this)
             {
-                var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
-                Velocity = new Vector(Physics.Impulse, oyProjection);
+                Velocity = MovementImpulseVector + Velocity.OyProjection;
             }
         }
 
@@ -30,8 +41,7 @@ namespace SquareChoBrothers.Model
         {
             lock (this)
             {
-                var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
-                Velocity = new Vector(0, oyProjection);
+                Velocity = Velocity.OyProjection;
             }
         }
 
@@ -39,8 +49,7 @@ namespace SquareChoBrothers.Model
         {
             lock (this)
             {
-                var oyProjection = Velocity.GetScalarProduct(new Vector(0, 1));
-                Velocity = new Vector(-Physics.Impulse, oyProjection);
+                Velocity = -MovementImpulseVector + Velocity.OyProjection;
             }
         }
 
@@ -50,7 +59,7 @@ namespace SquareChoBrothers.Model
             {
                 if (!IsOnGround(map))
                     return;
-                Velocity += new Vector(0, -3*Physics.Impulse);
+                Velocity += JumpImpulseVector;
             }
         }
 

@@ -3,7 +3,7 @@ using Geometry;
 using SquareChoBrothers.View;
 using Rectangle = Geometry.Rectangle;
 
-namespace SquareChoBrothers.Model
+namespace SquareChoBrothers.Model.Physics
 {
     public abstract class PhysicalObject<T> : IDrawable
         where T : IGeometryFigure

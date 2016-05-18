@@ -18,7 +18,7 @@ namespace Geometry
 
         public static void Scale(double scale, Point[] points)
         {
-            points = points.Select(point => point * scale).ToArray();
+            points = points.Select(point => point*scale).ToArray();
         }
 
         public static void Scale(double scale, Circle[] circles)
@@ -35,16 +35,16 @@ namespace Geometry
         {
             var aType = a.GetType();
             var bType = b.GetType();
-            var intersectMethod = aType.GetMethod("IntersectsWith", new Type[] {bType});
-            return (bool)intersectMethod.Invoke(a, new object[] {b});
+            var intersectMethod = aType.GetMethod("IntersectsWith", new[] {bType});
+            return (bool) intersectMethod.Invoke(a, new object[] {b});
         }
 
         public static Line GetIntersectionLine(this IGeometryFigure a, IGeometryFigure b)
         {
             var aType = a.GetType();
             var bType = b.GetType();
-            var getLineMethod = aType.GetMethod("GetIntersectionLine", new Type[] {bType});
-            return (Line)getLineMethod.Invoke(a, new object[] { b });
+            var getLineMethod = aType.GetMethod("GetIntersectionLine", new[] {bType});
+            return (Line) getLineMethod.Invoke(a, new object[] {b});
         }
 
         public static Segment CreateSegment(Point a, Point b) => new Segment(a, b);
@@ -59,9 +59,9 @@ namespace Geometry
         //    return IsRectangle(rect.A, rect.B, rect.C, rect.D);
         //}
 
-        public static bool IsRectangle(Point A, Point B, Point C, Point D)
+        public static bool IsRectangle(Point a, Point b, Point c, Point d)
         {
-            var points = OrderClockwise(A, B, C, D);
+            var points = OrderClockwise(a, b, c, d);
             return IsRectangle(points);
         }
 
@@ -92,12 +92,10 @@ namespace Geometry
                 {
                     var toI = new Vector(points[0], points[i]);
                     var toJ = new Vector(points[0], points[j]);
-                    if (toI.GetDotProduct(toJ) > 0)
-                    {
-                        var forSwap = points[i];
-                        points[i] = points[j];
-                        points[j] = forSwap;
-                    }
+                    if (!(toI.GetDotProduct(toJ) > 0)) continue;
+                    var forSwap = points[i];
+                    points[i] = points[j];
+                    points[j] = forSwap;
                 }
             return points;
         }

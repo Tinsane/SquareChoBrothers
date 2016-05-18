@@ -107,6 +107,10 @@ namespace Geometry
 
         public static bool operator ==(Rectangle a, Rectangle b)
         {
+            if (ReferenceEquals(a, null))
+                return ReferenceEquals(b, null);
+            if (ReferenceEquals(b, null))
+                return false;
             return a.Center == b.Center && a.SizeX.IsDoubleEqual(b.SizeX) && a.SizeY.IsDoubleEqual(b.SizeY);
         }
 
