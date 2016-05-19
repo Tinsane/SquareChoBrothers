@@ -61,7 +61,7 @@ namespace SquareChoBrothers.Model
         public new void Update(double deltaTime, Map map)
         {
             base.Update(deltaTime, map);
-            Alive = !map.Monsters.Any(monster => monster.HitBox.IntersectsWith(HitBox));
+            Alive = !map.Enemies.Any(enemy => enemy.HitBox.IntersectsWith(HitBox));
         }
 
         protected override void ResolveCollisions(double dTime, Map map)

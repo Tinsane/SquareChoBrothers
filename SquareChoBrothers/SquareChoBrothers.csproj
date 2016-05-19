@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\BoundaryChainsaw.cs" />
+    <Compile Include="Model\Factories\BoundaryChainsawFactory.cs" />
     <Compile Include="Model\Physics\DynamicPhysicalObject.cs" />
     <Compile Include="Model\Factories\HeroFactory.cs" />
     <Compile Include="Model\Factories\MapObjectFactory.cs" />

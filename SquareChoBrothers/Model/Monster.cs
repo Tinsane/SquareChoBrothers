@@ -2,7 +2,6 @@
 using System.Drawing;
 using Geometry;
 using SquareChoBrothers.Model.Physics;
-using System.Linq;
 
 namespace SquareChoBrothers.Model
 {

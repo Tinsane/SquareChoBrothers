@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Geometry;
-using SquareChoBrothers.Model.Factories;
-using SquareChoBrothers.Properties;
 using Newtonsoft.Json;
+using SquareChoBrothers.Model.Factories;
+using SquareChoBrothers.Model.Physics;
 using SquareChoBrothers.View;
-using Point = Geometry.Point;
-using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model
 {
-    [JsonObjectAttribute(MemberSerialization.Fields)]
+    [JsonObject(MemberSerialization.Fields)]
     public class Map
     {
         public const double CellSize = GameModel.CellSize;
@@ -27,6 +23,9 @@ namespace SquareChoBrothers.Model
         public readonly TerrainFactory TerrainFactory =
             new TerrainFactory("Terrain1");
 
+        public readonly BoundaryChainsawFactory BoundaryChainsawFactory =
+        new BoundaryChainsawFactory("Monster_50");
+
         public Picture Background;
 
         public List<Hero> Heroes;
@@ -35,6 +34,7 @@ namespace SquareChoBrothers.Model
         public List<Picture> Pictures;
 
         public List<Terrain> Terrains;
+        public List<BoundaryChainsaw> BoundaryChainsaws;
 
         public Map()
         {
@@ -42,16 +42,10 @@ namespace SquareChoBrothers.Model
             Monsters = new List<Monster>();
             Pictures = new List<Picture>();
             Terrains = new List<Terrain>();
-            //Background = new Picture(new Rectangle(new Point(0, 0), 1e4, 1e4),
-            //    "background");
-            //Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(25, 300), 50, 600)));
-            //Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(300, 625), 600, 50)));
-            //Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(625, 300), 50, 600)));
-            //Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(575, 300), 50, 400)));
-            //Terrains.Add(TerrainFactory.GetNext(new Rectangle(new Point(325, 25), 600, 50)));
-            //Heroes.Add(Hero1Factory.GetNext(new Square(new Point(125, 125), CellSize)));
-            //Heroes.Add(Hero2Factory.GetNext(new Square(new Point(225, 225), CellSize)));
-            //Monsters.Add(MonsterFactory.GetNext(new Square(new Point(400, 500), CellSize)));
+            BoundaryChainsaws = new List<BoundaryChainsaw>
+            {
+                BoundaryChainsawFactory.GetNext(new Square(new Point(-200, 344), 1e3), new Vector(PhysicalLaws.SpeedOfLight / 300, 0))
+            };
         }
 
         public Map(List<Terrain> terrains, List<Hero> heroes,
@@ -69,10 +63,15 @@ namespace SquareChoBrothers.Model
                 .Concat(Pictures)
                 .Concat(Heroes)
                 .Concat(Monsters)
-                .Concat(Terrains);
+                .Concat(Terrains)
+            .Concat(BoundaryChainsaws);
 
         public IEnumerable<IGeometryFigure> HeroReflectables =>
             Heroes.Select(hero => hero.HitBox)
                 .Concat(Terrains.Select(terrain => terrain.HitBox));
+
+        public IEnumerable<DynamicPhysicalObject<Circle>> Enemies =>
+            Monsters.Select(monster => (DynamicPhysicalObject<Circle>) monster)
+            .Concat(BoundaryChainsaws);
     }
 }

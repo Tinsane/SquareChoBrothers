@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using Newtonsoft.Json;
 using SquareChoBrothers.Properties;
-using Point = Geometry.Point;
-using Rectangle = Geometry.Rectangle;
 
 namespace SquareChoBrothers.Model.Factories
 {
-    [JsonObjectAttribute(MemberSerialization.Fields)]
+    [JsonObject(MemberSerialization.Fields)]
     public abstract class MapObjectFactory<TObject, THitBox>
     {
-        public Brush Brush => brush ?? (brush = new TextureBrush((Image) (Resources.ResourceManager.GetObject(imageName))));
-        [JsonIgnore]
-        private Brush brush;
+        [JsonIgnore] private Brush brush;
 
-        public string imageName { get; }
-
-        public MapObjectFactory(string imageName)
+        protected MapObjectFactory(string imageName)
         {
-            this.imageName = imageName;
-            brush = new TextureBrush((Image)(Resources.ResourceManager.GetObject(imageName)));
+            ImageName = imageName;
+            brush = new TextureBrush((Image) Resources.ResourceManager.GetObject(imageName));
         }
+
+        public Brush Brush
+            => brush ?? (brush = new TextureBrush((Image) Resources.ResourceManager.GetObject(ImageName)));
+
+        public string ImageName { get; }
 
         public abstract TObject GetNext(THitBox hitBox);
     }

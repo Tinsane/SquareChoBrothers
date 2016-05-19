@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SquareChoBrothers.Model
 {
     public class GameModel
     {
-        private const int UpdateInterval = 20;
+        private const int UpdateInterval = 3;
         public const double CellSize = 50;
         private Action draw;
+        private long lastTick;
 
         public Map Map;
         private Timer physicsTimer;
-        private long lastTick;
 
         public GameModel()
         {
@@ -51,6 +50,8 @@ namespace SquareChoBrothers.Model
                     monster.Update(now - lastTick, Map);
                 foreach (var hero in Map.Heroes)
                     hero.Update(now - lastTick, Map);
+                foreach (var boundaryChainsaw in Map.BoundaryChainsaws)
+                    boundaryChainsaw.Update(now - lastTick, Map);
                 lastTick = DateTime.Now.Ticks;
                 draw();
                 if (!Map.Heroes[0].Alive || !Map.Heroes[1].Alive)
