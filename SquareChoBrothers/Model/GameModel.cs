@@ -11,6 +11,7 @@ namespace SquareChoBrothers.Model
         private long lastTick;
 
         public Map Map;
+        public bool GameEnded { get; private set; }
         private Timer physicsTimer;
 
         public GameModel()
@@ -23,13 +24,14 @@ namespace SquareChoBrothers.Model
             Map = map;
         }
 
-        public Action EndGame { get; private set; }
+        public Action CloseGame { get; private set; }
 
         // ReSharper disable once ParameterHidesMember
-        public void StartGame(Action draw, Action endGame)
+        public void StartGame(Action draw, Action closeGame)
         {
             this.draw = draw;
-            EndGame = endGame;
+            GameEnded = false;
+            CloseGame = closeGame;
             foreach (var hero in Map.Heroes)
                 hero.Alive = true;
             physicsTimer = new Timer(UpdateState, null, UpdateInterval, Timeout.Infinite);
@@ -38,7 +40,12 @@ namespace SquareChoBrothers.Model
 
         private void CongratulateWinner()
         {
-            throw new NotImplementedException();
+            lock (this)
+            {
+                Map.Clear();
+                draw();
+                GameEnded = true;
+            }
         }
 
         private void UpdateState(object state)

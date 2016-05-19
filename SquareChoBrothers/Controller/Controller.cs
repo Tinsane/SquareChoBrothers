@@ -15,6 +15,8 @@ namespace SquareChoBrothers.Controller
         {
             lock (gameModel)
             {
+                if (gameModel.GameEnded)
+                    return;
                 switch (keyEventArgs.KeyCode)
                 {
                     case Keys.Left:
@@ -36,6 +38,8 @@ namespace SquareChoBrothers.Controller
         {
             lock (gameModel)
             {
+                if (gameModel.GameEnded)
+                    return;
                 switch (keyEventArgs.KeyCode)
                 {
                     case Keys.A:
@@ -59,7 +63,7 @@ namespace SquareChoBrothers.Controller
             lock (gameModel)
             {
                 if (keyEventArgs.KeyCode == Keys.Escape)
-                    gameModel.EndGame();
+                    gameModel.CloseGame();
             }
         }
     }

@@ -44,7 +44,7 @@ namespace SquareChoBrothers.Model
             Terrains = new List<Terrain>();
             BoundaryChainsaws = new List<BoundaryChainsaw>
             {
-                BoundaryChainsawFactory.GetNext(new Square(new Point(-200, 344), 1e3), new Vector(PhysicalLaws.SpeedOfLight / 300, 0))
+                BoundaryChainsawFactory.GetNext(new Square(new Point(-500, 344), 1e3), new Vector(PhysicalLaws.SpeedOfLight / 500, 0))
             };
         }
 
@@ -56,6 +56,16 @@ namespace SquareChoBrothers.Model
             Monsters = monsters;
             Terrains = terrains;
             Pictures = pictures;
+        }
+
+        public void Clear()
+        {
+            Heroes.Clear();
+            Monsters.Clear();
+            Pictures.Clear();
+            Terrains.Clear();
+            BoundaryChainsaws.Clear();
+            Pictures.Add(Background);
         }
 
         public IEnumerable<IDrawable> Drawables =>
